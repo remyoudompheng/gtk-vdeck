@@ -13,5 +13,8 @@ SET(VDECK_PATCH_VERSION "1")
 Include(FindPkgConfig)
 pkg_check_modules(GTKMM REQUIRED gtkmm-2.4>=2.12)
 
-add_subdirectory(parser src)
+link_directories(${CMAKE_BINARY_DIR}/parser)
+
+add_subdirectory(parser)
+add_subdirectory(src)
 

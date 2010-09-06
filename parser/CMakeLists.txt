@@ -1,3 +1,3 @@
-add_library(libvcard STATIC
+add_library(vcards STATIC
             VCard.cpp VCard.hpp)
 
