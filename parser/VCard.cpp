@@ -63,14 +63,14 @@ VCard::VCard(const char* filename)
 
 VCard::~VCard() {}
 
-void VCard::print_me() const
+ostream& operator<< (ostream &out, VCard const & that)
 {
-  const_iterator iter;
-  for (iter = fields.begin();
-       iter != fields.end();
+  VCard::const_iterator iter;
+  for (iter = that.fields.begin();
+       iter != that.fields.end();
        iter++)
     {
-      cout << iter->first << ":" << iter->second << endl;
+      out << iter->first << ":" << iter->second << endl;
     }
 }
 
@@ -82,7 +82,7 @@ bool VCard::operator<(const VCard & b) const
 	return true;
       }
   }
-  catch(const std::out_of_range & ex) {
+  catch(const out_of_range & ex) {
     cout << "Out of range exception: " << ex.what() << endl;
   }
 }

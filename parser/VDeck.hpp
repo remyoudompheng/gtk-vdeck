@@ -30,8 +30,10 @@ class VDeck : public std::set<VCard>
 {
 public:
   VDeck(const char* path) { import_dir(path); }
+  friend std::ostream& operator<< (std::ostream &out, VDeck const & that);
 private:
   void import_dir(std::string path);
 };
+std::ostream& operator<< (std::ostream &out, VDeck const & that);
 
 #endif //!VDECK_H

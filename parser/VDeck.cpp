@@ -50,3 +50,15 @@ void VDeck::import_dir(string path)
   that = this;
   ftw(path.c_str(), read_path_callback, FD_MAX_USE);
 }
+
+ostream& operator<< (ostream &out, VDeck const & that)
+{
+  VDeck::iterator iter;
+  for (iter = that.begin();
+       iter != that.end();
+       iter++)
+    {
+      out << *iter;
+      out << endl;
+    }
+}

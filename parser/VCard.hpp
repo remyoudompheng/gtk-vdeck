@@ -37,12 +37,14 @@ public:
   // Path of the associated document
   std::string filepath;
 
-  void print_me() const;
-
   bool operator< (const VCard & b) const;
+
+  friend std::ostream& operator<< (std::ostream &out, VCard const & that);
 
 private:
   void read_field(std::string const line);
 };
+
+std::ostream& operator<< (std::ostream &out, VCard const & that);
 
 #endif //!VCARD_H
