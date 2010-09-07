@@ -26,18 +26,20 @@
 #include <gtkmm.h>
 
 #include <VDeck.hpp>
+#include "ListView.hpp"
 
 class MainWindow : public Gtk::Window
 {
 public:
   MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refBuilder);
   virtual ~MainWindow();
-  std::string dir_path;
+  void set_path(std::string path);
 
 protected:
   Glib::RefPtr<Gtk::Builder> uidef;
-
+  ListView *list_view;
   // Data
+  std::string dir_path;
   VDeck directory;
 
   // Callbacks

@@ -7,6 +7,7 @@ add_custom_command(OUTPUT vdeck_xml.h
 
 add_executable(vdeck
   main.cpp vdeck_xml.h
-  MainWindow.cpp MainWindow.hpp)
+  MainWindow.cpp MainWindow.hpp
+  ListView.cpp ListView.hpp)
 target_link_libraries(vdeck vcards ${GTKMM_LIBRARIES})
 

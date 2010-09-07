@@ -20,6 +20,7 @@
  */
 
 #include "MainWindow.hpp"
+using namespace std;
 
 MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refBuilder)
   : Gtk::Window(cobject),
@@ -27,10 +28,20 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 {
   // Actions
   connect_action("act_quit", &MainWindow::_on_quit_activate);
+
+  // List view
+  refBuilder->get_widget_derived("tree_main", list_view);
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::set_path(string dirpath)
+{
+  dir_path = dirpath;
+  directory.import_dir(dir_path);
+  list_view->fill_data(directory);
 }
 
 void MainWindow::_on_quit_activate()
