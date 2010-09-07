@@ -79,9 +79,10 @@
             <child>
               <object class="GtkToolButton" id="tool_add">
                 <property name="visible">True</property>
+                <property name="use_action_appearance">True</property>
+                <property name="related_action">act_add</property>
                 <property name="label" translatable="yes">Add</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-add</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -91,9 +92,10 @@
             <child>
               <object class="GtkToolButton" id="tool_remove">
                 <property name="visible">True</property>
+                <property name="use_action_appearance">True</property>
+                <property name="related_action">act_remove</property>
                 <property name="label" translatable="yes">Remove</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-remove</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -103,9 +105,10 @@
             <child>
               <object class="GtkToolButton" id="tool_quit">
                 <property name="visible">True</property>
+                <property name="use_action_appearance">True</property>
+                <property name="related_action">act_quit</property>
                 <property name="label" translatable="yes">Quit</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-quit</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -194,5 +197,20 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkActionGroup" id="act_group"/>
+  <object class="GtkAction" id="act_quit">
+    <property name="label">Quit</property>
+    <property name="stock_id">gtk-quit</property>
+  </object>
+  <object class="GtkAction" id="act_add">
+    <property name="label">Add contact</property>
+    <property name="short_label">Add</property>
+    <property name="stock_id">gtk-add</property>
+  </object>
+  <object class="GtkAction" id="act_remove">
+    <property name="label">Remove contact</property>
+    <property name="short_label">Remove</property>
+    <property name="stock_id">gtk-remove</property>
   </object>
 </interface>

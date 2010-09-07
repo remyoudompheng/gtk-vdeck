@@ -11,7 +11,10 @@ SET(VDECK_MINOR_VERSION "0")
 SET(VDECK_PATCH_VERSION "1")
 
 Include(FindPkgConfig)
-pkg_check_modules(GTKMM REQUIRED gtkmm-2.4>=2.12)
+pkg_check_modules(GTKMM REQUIRED gtkmm-2.4>=2.16)
+
+find_program(XXD xxd)
+find_program(SED sed)
 
 include_directories(${CMAKE_SOURCE_DIR}/parser)
 link_directories(${CMAKE_BINARY_DIR}/parser)
