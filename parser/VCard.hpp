@@ -32,18 +32,31 @@ public:
   VCard(const char *filename);
   virtual ~VCard();
 
-  typedef std::map<std::string, std::string>::const_iterator const_iterator;
-
-  std::map<std::string, std::string> fields;
+  // Fields from RFC2426 sec. 3.1
+  Glib::ustring fullname;
+  Glib::ustring name;
+  Glib::ustring nickname;
+  Glib::ustring photo;
+  Glib::ustring birthday;
+  // Fields from RFC2426 sec. 3.3
+  Glib::ustring tel;
+  Glib::ustring email;
+  Glib::ustring mailer;
+  // Fields from RFC2426 sec. 3.6
+  std::string uid;
+  Glib::ustring version;
+  // Extra fields
+  typedef std::map<std::string, Glib::ustring>::const_iterator const_iterator;
+  std::map<std::string, Glib::ustring> fields;
   // Path of the associated document
   std::string filepath;
 
   bool operator< (const VCard & b) const;
-
   friend std::ostream& operator<< (std::ostream &out, VCard const & that);
 
 private:
   void read_field(std::string const line);
+  std::string print_me() const;
 };
 
 std::ostream& operator<< (std::ostream &out, VCard const & that);

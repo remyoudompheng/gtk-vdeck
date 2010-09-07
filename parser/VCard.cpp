@@ -32,17 +32,53 @@ void VCard::read_field(const string line)
   size_t t = line.find_first_of(":");
   if(t == string::npos) return;
 
+  // Parse "%field:%content"
+  Glib::ustring field, content;
   if (line.length() >= t) {
-    string field, content;
-    field = line.substr(0, t);
-    if (field == "BEGIN") return;
-    if (field == "END") return;
-    content = line.substr(t+1);
-    fields[field] = content;
+    try {
+      field = line.substr(0, t);
+      content = line.substr(t+1);
+    }
+    catch(Glib::ConvertError & ex) {
+      cerr << "Conversion error: " << ex.what() << endl;
+    }
   }
   else {
-    cout << "Invalid line read: " << line << endl;
+    cerr << "Invalid line read: " << line << endl;
+    return;
   }
+
+  // TODO: fully implement RFC2426
+  field = field.uppercase();
+  // exceptional fields
+  if((field == "BEGIN") || (field == "END")) {
+    if (content.uppercase() != "VCARD")
+      cerr << "VCard " << filepath << ": BEGIN and END must contain 'VCARD'" << endl;
+    return;
+  }
+  // sec 3.1: identification types
+  if (field == "FN") { fullname = content; return; }
+  if (field == "N") { name = content; return; }
+  if (field == "NICKNAME") { nickname = content; return; }
+  if (field == "PHOTO") { photo = content; return; }
+  if (field == "BDAY") { birthday = content; return; }
+   
+  // sec 3.2: delivery addr. types (TODO);
+  // sec 3.3: telecom addr. types;
+  if(field.compare(0, 3, "TEL") == 0) {
+    tel = content; return;
+  }
+  if(field.compare(0, 5, "EMAIL") == 0) {
+    email = content; return;
+  }
+  if (field == "MAILER" ) { mailer = content; return; }
+  // sec 3.6: explanatory types;
+  if (field == "UID" ) { uid = content; return; }
+  if (field == "VERSION" ) { version = content; return; }
+
+  // other types
+  fields[field] = content;
+  return;
 }
 
 VCard::VCard(const char* filename)
@@ -64,19 +100,41 @@ VCard::~VCard() {}
 
 ostream& operator<< (ostream &out, VCard const & that)
 {
+  out << that.print_me() << endl;
+}
+
+string VCard::print_me() const {
+  ostringstream out;
+  out << "BEGIN:VCARD" << endl;
+  // Mandatory fields
+  out << "VERSION:" << version << endl;
+  out << "FN:" << fullname << endl;
+  out << "N:" << name << endl;
+  // standard fields
+  // section 3.1
+  if(nickname.length()) out << "NICKNAME:" << nickname << endl;
+  if(photo.length()) out << "PHOTO:" << photo << endl;
+  if(birthday.length()) out << "BDAY:" << birthday << endl;
+  // section 3.3
+  if(tel.length()) out << "TEL:" << tel << endl;
+  if(email.length()) out << "EMAIL:" << email << endl;
+  if(mailer.length()) out << "MAILER:" << mailer << endl;
+  // other fields
   VCard::const_iterator iter;
-  for (iter = that.fields.begin();
-       iter != that.fields.end();
+  for (iter = fields.begin();
+       iter != fields.end();
        iter++)
     {
       out << iter->first << ":" << iter->second << endl;
     }
+  out << "END:VCARD" << endl;
+  return out.str();
 }
 
 bool VCard::operator<(const VCard & b) const
 {
   try {
-    if (fields.at("UID") < b.fields.at("UID"))
+    if (uid < b.uid)
       {
 	return true;
       }
