@@ -31,17 +31,18 @@ using namespace std;
 void VCard::read_field(const string line)
 {
   size_t t = line.find_first_of(":");
-  string field, content;
+  if(t == string::npos) return;
+
   if (line.length() >= t) {
     string field, content;
-    field = line.substr(0, t-1);
+    field = line.substr(0, t);
     if (field == "BEGIN") return;
     if (field == "END") return;
-    content = line.substr(t);
+    content = line.substr(t+1);
     fields[field] = content;
   }
   else {
-    cout << "Invalid line read: " << line;
+    cout << "Invalid line read: " << line << endl;
   }
 }
 
@@ -52,7 +53,6 @@ VCard::VCard(const char* filename)
 
   ifstream source;
   source.open(filename, ifstream::in);
-
 
   string l;
   while(source.good()) {
