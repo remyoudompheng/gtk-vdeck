@@ -73,6 +73,7 @@ main (int argc, char *argv[])
   refGlade->get_widget_derived("main_win", main_win);
 
   if (main_win) {
+    main_win->dir_path = library_dir;
     main_win->show_all();
     kit.run(*main_win);
   }

@@ -29,6 +29,7 @@
 class VDeck : public std::set<VCard>
 {
 public:
+  VDeck() {}
   VDeck(const char* path) { import_dir(path); }
   friend std::ostream& operator<< (std::ostream &out, VDeck const & that);
 private:

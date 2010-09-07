@@ -24,6 +24,7 @@
 
 #include <string>
 #include <map>
+#include <glibmm.h>
 
 class VCard
 {

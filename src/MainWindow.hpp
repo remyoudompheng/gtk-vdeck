@@ -22,17 +22,23 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
-#include <gtkmm.h>
 #include <string>
+#include <gtkmm.h>
+
+#include <VDeck.hpp>
 
 class MainWindow : public Gtk::Window
 {
 public:
   MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refBuilder);
   virtual ~MainWindow();
+  std::string dir_path;
 
 protected:
   Glib::RefPtr<Gtk::Builder> uidef;
+
+  // Data
+  VDeck directory;
 
   // Callbacks
   typedef void (MainWindow::*callback)();
