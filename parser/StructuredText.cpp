@@ -23,46 +23,48 @@
 
 void CommaStruct::read_str(Glib::ustring s)
 {
-  if(s.empty()) { return; }
   // Find first comma
   size_t n = s.find_first_of(',');
-  if(n == 0) {
-    push_back(buf);
+  // No comma ?
+  if(n == Glib::ustring::npos) {
+    push_back(buf + s);
     buf.clear();
-    read_str(s.substr(1));
     return;
   }
-  if (s[n-1] == '\\') {
+  // Escaped comma
+  if ((n != 0) && (s[n-1] == '\\')) {
     buf += s.substr(0,n-1);
     buf += ",";
     read_str(s.substr(n+1));
     return;
   }
-  
-  buf += s.substr(0,n);
+  // Normal comma
+  push_back(buf + s.substr(0,n));
+  buf.clear();
   read_str(s.substr(n+1));
   return;
 }
 
 void SemicolonStruct::read_str(Glib::ustring s)
 {
-  if(s.empty()) { return; }
   // Find first semicolon
   size_t n = s.find_first_of(';');
-  if(n == 0) {
-    push_back(buf);
+  // No separator ?
+  if(n == Glib::ustring::npos) {
+    push_back(buf + s);
     buf.clear();
-    read_str(s.substr(1));
     return;
   }
-  if (s[n-1] == '\\') {
+  // Escaped separator
+  if ((n != 0) && (s[n-1] == '\\')) {
     buf += s.substr(0,n-1);
     buf += ";";
     read_str(s.substr(n+1));
     return;
   }
-  
-  buf += s.substr(0,n);
+  // Normal separator
+  push_back(buf + s.substr(0,n));
+  buf.clear();
   read_str(s.substr(n+1));
   return;
 }

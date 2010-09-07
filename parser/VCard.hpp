@@ -29,6 +29,7 @@
 class VCard
 {
 public:
+  VCard() {};
   VCard(const char *filename);
   virtual ~VCard();
 

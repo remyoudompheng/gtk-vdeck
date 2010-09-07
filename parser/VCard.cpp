@@ -48,7 +48,7 @@ void VCard::read_field(const string line)
     return;
   }
 
-  // TODO: fully implement RFC2426
+  // TODO: fully implement RFC2426 (VCard 3.0)
   field = field.uppercase();
   // exceptional fields
   if((field == "BEGIN") || (field == "END")) {
@@ -108,6 +108,7 @@ string VCard::print_me() const {
   out << "BEGIN:VCARD" << endl;
   // Mandatory fields
   out << "VERSION:" << version << endl;
+  out << "UID:" << uid << endl;
   out << "FN:" << fullname << endl;
   out << "N:" << name << endl;
   // standard fields
