@@ -37,13 +37,17 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::set_path(string dirpath)
+/** Open the specified directory in the list display.
+ * @param path Path to the directory to display.
+ */
+void MainWindow::set_path(string path)
 {
-  dir_path = dirpath;
+  dir_path = path;
   directory.import_dir(dir_path);
   list_view->fill_data(directory);
 }
 
+/// Quits the program
 void MainWindow::_on_quit_activate()
 {
   Gtk::Main::quit();

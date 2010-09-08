@@ -43,14 +43,19 @@ extern "C" int read_path_callback(const char *path,
   return 0;
 }
 
-// Initialise a library from the zb files in a directory
 #define FD_MAX_USE 5
+/** Find .vcf files in the directory specified by path
+ * @param path The path to the directory to be searched.
+ */
 void VDeck::import_dir(string path)
 {
   that = this;
   ftw(path.c_str(), read_path_callback, FD_MAX_USE);
 }
 
+/** Print a sequence of vCards from the given structure.
+ * @param that The VDeck to print.
+ */
 ostream& operator<< (ostream &out, VDeck const & that)
 {
   VDeck::iterator iter;

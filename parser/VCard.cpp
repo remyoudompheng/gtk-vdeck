@@ -98,6 +98,10 @@ VCard::VCard(const char* filename)
 
 VCard::~VCard() {}
 
+/** Formats data from a vCard structure to a vCard file
+ * @param out Output stream
+ * @param that The structure to print
+ */
 ostream& operator<< (ostream &out, VCard const & that)
 {
   out << that.print_me() << endl;
@@ -133,6 +137,10 @@ string VCard::print_me() const {
   return out.str();
 }
 
+/** Comparison operator:
+ * implementation compares UIDs of vCards.
+ * @param b another vCard
+ */
 bool VCard::operator<(const VCard & b) const
 {
   try {

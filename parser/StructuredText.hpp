@@ -24,29 +24,49 @@
 
 #include <glibmm.h>
 
+/** Class for handling strings with comma or semicolon separated values
+ */
 class StructuredText : public std::list<Glib::ustring>
 {
 public:
   StructuredText() {}
+  /** StructuredText constructor
+   * @param s The string to be parsed
+   */
   StructuredText(Glib::ustring s) { read_str(s); }
 private:
+  /// A buffer
   Glib::ustring buf;
 protected:
+  /// The delimiter character
   std::string delimiter;
+  /** The main parsing function
+   * @param s The string to be parsed
+   */
   void read_str(Glib::ustring s);
 };
 
+/** Parser for comma separated values
+ */
 class CommaStruct : public StructuredText
 {
 public:
   CommaStruct() { delimiter = ","; }
+  /** Constructor
+   * @param s The string to be parsed
+   */
   CommaStruct(Glib::ustring s) { delimiter = ","; read_str(s); }
 };
 
+/** Parser for semicolon separated values
+ */
 class SemicolonStruct : public StructuredText
 {
 public:
   SemicolonStruct() { delimiter = ";"; }
+  /** Constructor
+   * @param s The string to be parsed
+   */
   SemicolonStruct(Glib::ustring s) { delimiter = ";"; read_str(s); }
 };
 

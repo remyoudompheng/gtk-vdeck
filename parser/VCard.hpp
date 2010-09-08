@@ -26,37 +26,65 @@
 #include <map>
 #include <glibmm.h>
 
+/** VCard: a class which represents fields for a vCard
+ * It should represent faithfully the fields described in RFC2426
+ * (version 3.0 of vCard format)
+ */
 class VCard
 {
 public:
   VCard() {}
+  /** Reads a vCard file into memory
+   * @param filename The path of the file to be read
+   */
   VCard(const char *filename);
   virtual ~VCard();
 
   // Fields from RFC2426 sec. 3.1
+  /// Full name of the object
   Glib::ustring fullname;
+  /** A semicolon separated structured text:
+   * - family name
+   * - first name
+   * - additional names
+   * - honorific prefixes
+   * - honorific suffixes
+   */
   Glib::ustring name;
+  /// Nickname
   Glib::ustring nickname;
+  /// A base64 encoded photo
   Glib::ustring photo;
+  /// Birth date
   Glib::ustring birthday;
   // Fields from RFC2426 sec. 3.3
+  /// Telephone number
   Glib::ustring tel;
+  /// E-mail address
   Glib::ustring email;
+  /// The mailer software used by the contact
   Glib::ustring mailer;
   // Fields from RFC2426 sec. 3.6
+  /// A unique identifier for the contact
   std::string uid;
+  /// The version of the vCard (3.0)
   Glib::ustring version;
-  // Extra fields
+  /// The iterator type for custom fields
   typedef std::map<std::string, Glib::ustring>::const_iterator const_iterator;
+  /// A hash map for custom fields
   std::map<std::string, Glib::ustring> fields;
-  // Path of the associated document
+  /// Full path of the associated vCard file
   std::string filepath;
 
   bool operator< (const VCard & b) const;
   friend std::ostream& operator<< (std::ostream &out, VCard const & that);
 
 private:
+  /** Reads a line of the form field:value
+   * @param line The string to be parsed
+   */
   void read_field(std::string const line);
+  // Print a VCard from the stored fields
   std::string print_me() const;
 };
 

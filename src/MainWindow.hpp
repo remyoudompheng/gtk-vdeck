@@ -36,14 +36,22 @@ public:
   void set_path(std::string path);
 
 protected:
+  /// The parent Gtk::Builder object
   Glib::RefPtr<Gtk::Builder> uidef;
+  /// The child ListView widget
   ListView *list_view;
-  // Data
+  /// Path to the library of .vcf files
   std::string dir_path;
+  /// Data structure holding the vCards
   VDeck directory;
 
   // Callbacks
+  /// The type of void(void) callbacks
   typedef void (MainWindow::*callback)();
+  /** Connects a callback f to an action object from the Gtk::Builder uidef
+   * @param name The identifier of the action to connect
+   * @param f The callback
+   */
   void connect_action(Glib::ustring name, callback f) {
     Glib::RefPtr<Gtk::Action> a = Glib::RefPtr<Gtk::Action>::cast_dynamic(uidef->get_object(name));
     a->signal_activate().connect(sigc::mem_fun(*this, f));

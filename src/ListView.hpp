@@ -27,14 +27,26 @@
 
 #include <VDeck.hpp>
 
+/** A Gtk:TreeView derived class to display a VDeck library of VCard structures
+ */
 class ListView : public Gtk::TreeView
 {
 public:
+  /** Standard constructor for derived widget classes
+   * @param cobject The GtkTreeView structure
+   * @param refBuilder A reference to the Gtk::Builder holding the widget
+   */
   ListView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refBuilder);
   virtual ~ListView();
+
+  /** Fills the Gtk::ListStore list_widget with records
+   * @param deck A VDeck structure containing VCards
+   */
   void fill_data(VDeck deck);
 
 protected:
+  /** The Gtk::Builder which created the widget
+   */
   Glib::RefPtr<Gtk::Builder> uidef;
 
   class Columns : public Gtk::TreeModel::ColumnRecord
@@ -49,6 +61,9 @@ protected:
     Gtk::TreeModelColumn<VCard> vcard;
   };
   Columns *cols;
+
+  /** The TreeModel containing data.
+   */
   Glib::RefPtr<Gtk::ListStore> list_widget;
 };
 
