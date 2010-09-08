@@ -24,24 +24,30 @@
 
 #include <glibmm.h>
 
-class CommaStruct : public std::list<Glib::ustring>
+class StructuredText : public std::list<Glib::ustring>
 {
 public:
-  CommaStruct() {};
-  CommaStruct(Glib::ustring s) { read_str(s); };
+  StructuredText() {}
+  StructuredText(Glib::ustring s) { read_str(s); }
 private:
   Glib::ustring buf;
+protected:
+  std::string delimiter;
   void read_str(Glib::ustring s);
 };
 
-class SemicolonStruct : public std::list<Glib::ustring>
+class CommaStruct : public StructuredText
 {
 public:
-  SemicolonStruct() {};
-  SemicolonStruct(Glib::ustring s) { read_str(s); };
-private:
-  Glib::ustring buf;
-  void read_str(Glib::ustring s);
+  CommaStruct() { delimiter = ","; }
+  CommaStruct(Glib::ustring s) { delimiter = ","; read_str(s); }
+};
+
+class SemicolonStruct : public StructuredText
+{
+public:
+  SemicolonStruct() { delimiter = ";"; }
+  SemicolonStruct(Glib::ustring s) { delimiter = ";"; read_str(s); }
 };
 
 #endif //!VDECK_H

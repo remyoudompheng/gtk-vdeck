@@ -21,10 +21,10 @@
 
 #include "StructuredText.hpp"
 
-void CommaStruct::read_str(Glib::ustring s)
+void StructuredText::read_str(Glib::ustring s)
 {
   // Find first comma
-  size_t n = s.find_first_of(',');
+  size_t n = s.find_first_of(delimiter);
   // No comma ?
   if(n == Glib::ustring::npos) {
     push_back(buf + s);
@@ -34,35 +34,11 @@ void CommaStruct::read_str(Glib::ustring s)
   // Escaped comma
   if ((n != 0) && (s[n-1] == '\\')) {
     buf += s.substr(0,n-1);
-    buf += ",";
+    buf += delimiter;
     read_str(s.substr(n+1));
     return;
   }
   // Normal comma
-  push_back(buf + s.substr(0,n));
-  buf.clear();
-  read_str(s.substr(n+1));
-  return;
-}
-
-void SemicolonStruct::read_str(Glib::ustring s)
-{
-  // Find first semicolon
-  size_t n = s.find_first_of(';');
-  // No separator ?
-  if(n == Glib::ustring::npos) {
-    push_back(buf + s);
-    buf.clear();
-    return;
-  }
-  // Escaped separator
-  if ((n != 0) && (s[n-1] == '\\')) {
-    buf += s.substr(0,n-1);
-    buf += ";";
-    read_str(s.substr(n+1));
-    return;
-  }
-  // Normal separator
   push_back(buf + s.substr(0,n));
   buf.clear();
   read_str(s.substr(n+1));
