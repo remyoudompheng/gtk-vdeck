@@ -47,7 +47,7 @@ protected:
   void connect_action(Glib::ustring name, callback f) {
     Glib::RefPtr<Gtk::Action> a = Glib::RefPtr<Gtk::Action>::cast_dynamic(uidef->get_object(name));
     a->signal_activate().connect(sigc::mem_fun(*this, f));
-  };
+  }
 
   void _on_quit_activate();
 };

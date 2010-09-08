@@ -3,6 +3,7 @@
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="main_win">
+    <property name="default_width">800</property>
     <child>
       <object class="GtkVBox" id="vbox_big">
         <property name="visible">True</property>

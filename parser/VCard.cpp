@@ -101,6 +101,7 @@ VCard::~VCard() {}
 ostream& operator<< (ostream &out, VCard const & that)
 {
   out << that.print_me() << endl;
+  return out;
 }
 
 string VCard::print_me() const {
@@ -143,5 +144,7 @@ bool VCard::operator<(const VCard & b) const
   catch(const out_of_range & ex) {
     cout << "Out of range exception: " << ex.what() << endl;
   }
+
+  return false;
 }
 

@@ -17,6 +17,8 @@ pkg_check_modules(GTKMM REQUIRED gtkmm-2.4>=2.16)
 find_program(XXD xxd)
 find_program(SED sed)
 
+SET(CMAKE_CXX_FLAGS "-Wall")
+
 include_directories(${GLIBMM_INCLUDE_DIRS}
   ${CMAKE_SOURCE_DIR}/parser)
 link_directories(${CMAKE_BINARY_DIR}/parser)
