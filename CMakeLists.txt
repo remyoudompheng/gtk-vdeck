@@ -25,5 +25,6 @@ link_directories(${CMAKE_BINARY_DIR}/parser)
 
 add_subdirectory(parser)
 add_subdirectory(src)
+add_subdirectory(editor)
 add_subdirectory(tests)
 
