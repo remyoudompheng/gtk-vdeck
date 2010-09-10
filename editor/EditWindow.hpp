@@ -40,6 +40,15 @@ protected:
   std::string dir_path;
   /// Data structure holding the vCard
   VCard data;
+  
+  /** Update text in a TextEntry widget.
+   * @name Identifier of a widget in Gtk::Builder uidef
+   * @text Text to display
+   */
+  void set_text(Glib::ustring name, Glib::ustring text);
+
+  /// Displays the current VCard
+  void update_display();
 
   // Callbacks
   /// The type of void(void) callbacks

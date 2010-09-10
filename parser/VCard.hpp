@@ -40,6 +40,11 @@ public:
   VCard(const char *filename);
   virtual ~VCard();
 
+  /** Reads a vCard file into memory
+   * @param filename The path of the file to be read
+   */
+  void open(const char* filename);
+  
   // Fields from RFC2426 sec. 3.1
   /// Full name of the object
   Glib::ustring fullname;

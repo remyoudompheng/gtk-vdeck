@@ -20,6 +20,7 @@
  */
 
 #include "EditWindow.hpp"
+#include <StructuredText.hpp>
 #include <iostream>
 
 using namespace std;
@@ -36,12 +37,37 @@ EditWindow::~EditWindow()
 {
 }
 
+void EditWindow::set_text(Glib::ustring name, Glib::ustring text)
+{
+  Gtk::Entry *widget;
+  uidef->get_widget(name, widget);
+  widget->set_text(text);
+}
+
+void EditWindow::update_display()
+{
+  set_text("entry_fullname", data.fullname);
+  SemicolonStruct name(data.name);
+  if (name.size() >= 5) {
+    set_text("entry_familyN", name[0]);
+    set_text("entry_firstN", name[1]);
+    set_text("entry_addN", name[2]);
+    set_text("entry_prefix", name[3]);
+    set_text("entry_suffix", name[4]);
+  } else {
+    cerr << "Invalid N field : " << data.name << endl;
+  }
+}
+
 /** Open the specified file
  * @param path Path to the file.
  */
 void EditWindow::set_path(string path)
 {
   dir_path = path;
+  data.open(path.c_str());
+  cerr << "Read data:" << endl << data;
+  update_display();
 }
 
 void EditWindow::_on_close_activate()

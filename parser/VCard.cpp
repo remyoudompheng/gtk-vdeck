@@ -83,9 +83,13 @@ void VCard::read_field(const string line)
 
 VCard::VCard(const char* filename)
 {
+  open(filename);
+}
+
+void VCard::open(const char* filename)
+{
   // Initialise fields
   filepath = filename;
-
   ifstream source;
   source.open(filename, ifstream::in);
 

@@ -78,6 +78,7 @@ main (int argc, char *argv[])
   refGlade->get_widget_derived("editor_win", main_win);
 
   if (main_win) {
+    main_win->set_path(filename);
     main_win->show_all();
     kit.run(*main_win);
   }

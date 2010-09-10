@@ -26,7 +26,7 @@
 
 /** Class for handling strings with comma or semicolon separated values
  */
-class StructuredText : public std::list<Glib::ustring>
+class StructuredText : public std::vector<Glib::ustring>
 {
 public:
   StructuredText() {}
