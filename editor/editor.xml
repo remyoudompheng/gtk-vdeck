@@ -14,8 +14,8 @@
             <child>
               <object class="GtkToolButton" id="tool_save">
                 <property name="visible">True</property>
-                <property name="related_action">act_save</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">act_save</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
               </object>
@@ -27,8 +27,8 @@
             <child>
               <object class="GtkToolButton" id="tool_quit">
                 <property name="visible">True</property>
-                <property name="related_action">act_close</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">act_close</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
               </object>
@@ -329,7 +329,7 @@
               </object>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label_page2">
+              <object class="GtkLabel" id="label_page1">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Identity</property>
               </object>
@@ -338,10 +338,136 @@
               </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkVBox" id="vbox_page2">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkHBox" id="hbox_emailtitle">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkLabel" id="label_email">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">E-mail addresses</property>
+                      </object>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkToolbar" id="tool_email">
+                        <property name="visible">True</property>
+                        <property name="toolbar_style">icons</property>
+                        <child>
+                          <object class="GtkToolButton" id="tool_email_add">
+                            <property name="visible">True</property>
+                            <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_email_add</property>
+                            <property name="label" translatable="yes">toolbutton1</property>
+                            <property name="use_underline">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="homogeneous">True</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkToolButton" id="tool_email_remove">
+                            <property name="visible">True</property>
+                            <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_email_remove</property>
+                            <property name="label" translatable="yes">toolbutton</property>
+                            <property name="use_underline">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="homogeneous">True</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="padding">2</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkTreeView" id="tree_email">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treecol_type">
+                        <property name="title">Type</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="treecell_email"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treecol_addr">
+                        <property name="title">Address</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="treecell_addr"/>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="padding">2</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkHBox" id="hbox_url">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkLabel" id="label_url">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">URL</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">2</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entry_url">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="invisible_char">&#x25CF;</property>
+                      </object>
+                      <packing>
+                        <property name="padding">2</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="padding">2</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label_page3">
+              <object class="GtkLabel" id="label_page2">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Electronic contact</property>
               </object>
@@ -354,7 +480,7 @@
               <placeholder/>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label_page4">
+              <object class="GtkLabel" id="label_page3">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Details</property>
               </object>
@@ -380,5 +506,15 @@
     <property name="label">Close</property>
     <property name="tooltip">Close without saving</property>
     <property name="stock_id">gtk-close</property>
+  </object>
+  <object class="GtkAction" id="act_email_add">
+    <property name="label">Add an e-mail address</property>
+    <property name="short_label">Add</property>
+    <property name="stock_id">gtk-add</property>
+  </object>
+  <object class="GtkAction" id="act_email_remove">
+    <property name="label">Remove an e-mail address</property>
+    <property name="short_label">Remove</property>
+    <property name="stock_id">gtk-remove</property>
   </object>
 </interface>

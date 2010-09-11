@@ -59,6 +59,7 @@ void EditWindow::set_text(Glib::ustring name, Glib::ustring text)
 
 void EditWindow::update_display()
 {
+  // Page 1
   set_text("entry_fullname", data.fullname);
   SemicolonStruct name(data.name);
   if (name.size() >= 5) {
@@ -70,6 +71,12 @@ void EditWindow::update_display()
   } else {
     cerr << "Invalid N field : " << data.name << endl;
   }
+  set_text("entry_nickname", data.nickname);
+  set_text("entry_uid", data.uid);
+  set_text("entry_cats", data.categories);
+  set_text("entry_bday", data.birthday);
+  // Page 2
+  set_text("entry_url", data.url);
 }
 
 /** Open the specified file

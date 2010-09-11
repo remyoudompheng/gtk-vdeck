@@ -64,6 +64,7 @@ void VCard::read_field(const string line)
     return;
   }
   // sec 3.1: identification types
+  // FN, N, NICKNAME, PHOTO, BDAY
   if (field == "FN") { fullname = content; return; }
   if (field == "N") { name = content; return; }
   if (field == "NICKNAME") { nickname = content; return; }
@@ -71,7 +72,9 @@ void VCard::read_field(const string line)
   if (field == "BDAY") { birthday = content; return; }
    
   // sec 3.2: delivery addr. types (TODO);
+  // ADR, LABEL
   // sec 3.3: telecom addr. types;
+  // TEL, EMAIL, MAILER
   if(field.compare(0, 3, "TEL") == 0) {
     tel = content; return;
   }
@@ -79,8 +82,15 @@ void VCard::read_field(const string line)
     email = content; return;
   }
   if (field == "MAILER" ) { mailer = content; return; }
-  // sec 3.6: explanatory types;
+  // sec 3.4: geographical types
+  // TZ, GEO
+  // sec 3.5: organizational types
+  // TITLE, ROLE, LOGO, AGENT, ORG
+  // sec 3.6: explanatory types
+  // CATEGORIES, NOTE, PRODID, REV, SORT-STRING, SOUND, UID, URL, VERSION
+  if (field == "CATEGORIES" ) { categories = content; return; }
   if (field == "UID" ) { uid = content; return; }
+  if (field == "URL" ) { url = content; return; }
   if (field == "VERSION" ) { version = content; return; }
 
   // other types

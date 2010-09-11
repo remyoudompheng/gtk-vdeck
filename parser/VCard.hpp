@@ -45,11 +45,13 @@ public:
    */
   void open(const char* filename);
   void write_back();
-  
-  // Fields from RFC2426 sec. 3.1
+
+  // Identification fields (RFC2426 3.1)
   /// Full name of the object
   Glib::ustring fullname;
-  /** A semicolon separated structured text:
+  /** @brief Structured name of the contact
+   *
+   * A semicolon separated structured text:
    * - family name
    * - first name
    * - additional names
@@ -63,23 +65,41 @@ public:
   Glib::ustring photo;
   /// Birth date
   Glib::ustring birthday;
-  // Fields from RFC2426 sec. 3.3
+
+  // Delivery addressing fields (RFC2426 3.2)
+
+  // Telecommunications fields (RFC2426 3.3)
   /// Telephone number
   Glib::ustring tel;
   /// E-mail address
   Glib::ustring email;
-  /// The mailer software used by the contact
+  /// Mailer software used by the contact
   Glib::ustring mailer;
-  // Fields from RFC2426 sec. 3.6
-  /// A unique identifier for the contact
+
+  // Geographical fields (RFC2426 3.4)
+
+  // Organizational fields (RFC2426 3.5)
+
+  // Explanatory fields (RFC2426 3.6)
+  /// Comma-separated list of categories
+  Glib::ustring categories;
+  /// Unique identifier for the contact
   std::string uid;
-  /// The version of the vCard (3.0)
+  /// URL for the object
+  std::string url;
+  /// Version of the vCard format (3.0)
   Glib::ustring version;
+
   /// The iterator type for custom fields
   typedef std::map<std::string, Glib::ustring>::const_iterator const_iterator;
   /// A hash map for custom fields
   std::map<std::string, Glib::ustring> fields;
-  /// Full path of the associated vCard file
+  /** @brief Full path of the associated vCard file.
+   *
+   * The string filepath is supposed to refer to an existing
+   * file which will be overwritten upon calling write_back.
+   * @see write_back()
+   */
   std::string filepath;
 
   bool operator< (const VCard & b) const;
