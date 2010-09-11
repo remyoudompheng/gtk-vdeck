@@ -63,6 +63,7 @@ protected:
   }
 
   /// Closes the window.
+  void _on_save_activate();
   void _on_close_activate();
 };
 

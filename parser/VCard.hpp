@@ -114,6 +114,4 @@ private:
   std::string print_me() const;
 };
 
-std::ostream& operator<< (std::ostream &out, VCard const & that);
-
 #endif //!VCARD_H
