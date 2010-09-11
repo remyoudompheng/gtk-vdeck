@@ -5,8 +5,8 @@ add_custom_command(OUTPUT editor_xml.h
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         MAIN_DEPENDENCY editor.xml)
 
-add_executable(vcard_gtk
-  vcard_gtk.cpp editor_xml.h
-  EditWindow.cpp EditWindow.hpp)
-target_link_libraries(vcard_gtk vcards ${GTKMM_LIBRARIES})
+add_library(vdeck_editor EditWindow.cpp EditWindow.hpp editor_xml.h)
+
+add_executable(vcard_gtk vcard_gtk.cpp)
+target_link_libraries(vcard_gtk vdeck_editor vcards ${GTKMM_LIBRARIES})
 

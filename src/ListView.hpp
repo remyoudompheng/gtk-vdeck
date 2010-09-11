@@ -65,6 +65,12 @@ protected:
   /** The TreeModel containing data.
    */
   Glib::RefPtr<Gtk::ListStore> list_widget;
+
+  /** Called when a row is activated
+   * @param path Activated row, given by a path
+   * @param column Activated column
+   */
+  void on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
 };
 
 #endif //!LIST_VIEW_H

@@ -20,6 +20,7 @@
  */
 
 #include "ListView.hpp"
+#include <EditWindow.hpp>
 
 ListView::ListView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refBuilder)
   : Gtk::TreeView(cobject),
@@ -53,4 +54,14 @@ void ListView::fill_data(VDeck deck)
       (*iter)[cols->email] = i->email;
       (*iter)[cols->vcard] = *i;
   }
+}
+
+void ListView::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column)
+{
+  Gtk::TreeIter i = list_widget->get_iter(path);
+  VCard v = (*i)[cols->vcard];
+
+  EditWindow *win = get_with_builder();
+  win->set_path(v.filepath);
+  win->show_all();
 }

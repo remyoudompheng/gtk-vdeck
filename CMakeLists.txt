@@ -20,7 +20,8 @@ find_program(SED sed)
 SET(CMAKE_CXX_FLAGS "-Wall")
 
 include_directories(${GLIBMM_INCLUDE_DIRS}
-  ${CMAKE_SOURCE_DIR}/parser)
+  ${CMAKE_SOURCE_DIR}/parser
+  ${CMAKE_SOURCE_DIR}/editor)
 link_directories(${CMAKE_BINARY_DIR}/parser)
 
 add_subdirectory(parser)

@@ -24,10 +24,8 @@
 
 #include <iostream>
 #include <string>
-#include <cassert>
 
 /* XML definition file */
-#include <editor_xml.h>
 #include "EditWindow.hpp"
 
 using namespace std;
@@ -69,14 +67,8 @@ main (int argc, char *argv[])
 
   // Build up GUI
   Gtk::Main kit(argc, argv);
-  Glib::ustring uidef(editor_xml, editor_xml_len);
-  Glib::RefPtr<Gtk::Builder> refGlade = Gtk::Builder::create();
-  bool ok = refGlade->add_from_string(uidef);
-  assert(ok);
-
-  EditWindow *main_win = 0;
-  refGlade->get_widget_derived("editor_win", main_win);
-
+  EditWindow *main_win = get_with_builder();
+  
   if (main_win) {
     main_win->set_path(filename);
     main_win->show_all();

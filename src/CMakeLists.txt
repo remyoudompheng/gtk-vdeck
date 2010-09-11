@@ -9,5 +9,5 @@ add_executable(vdeck
   main.cpp vdeck_xml.h
   MainWindow.cpp MainWindow.hpp
   ListView.cpp ListView.hpp)
-target_link_libraries(vdeck vcards ${GTKMM_LIBRARIES})
+target_link_libraries(vdeck vdeck_editor vcards ${GTKMM_LIBRARIES})
 

@@ -20,10 +20,23 @@
  */
 
 #include "EditWindow.hpp"
+#include <editor_xml.h>
 #include <StructuredText.hpp>
 #include <iostream>
 
 using namespace std;
+
+EditWindow* get_with_builder()
+{
+  Glib::ustring uidef(editor_xml, editor_xml_len);
+  Glib::RefPtr<Gtk::Builder> refGlade = Gtk::Builder::create();
+  bool ok = refGlade->add_from_string(uidef);
+
+  EditWindow *main_win = 0;
+  refGlade->get_widget_derived("editor_win", main_win);
+  return main_win;
+}
+
 
 EditWindow::EditWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refBuilder)
   : Gtk::Window(cobject),

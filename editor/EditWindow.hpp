@@ -66,4 +66,6 @@ protected:
   void _on_close_activate();
 };
 
+EditWindow* get_with_builder();
+
 #endif //!EDIT_WINDOW_H
