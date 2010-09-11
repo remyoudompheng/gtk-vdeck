@@ -149,7 +149,7 @@ string VCard::print_me() const {
   ostringstream out;
   out << "BEGIN:VCARD" << endl;
   // Mandatory fields
-  out << "VERSION:" << version << endl;
+  out << "VERSION:" << "3.0" << endl;
   out << "UID:" << uid << endl;
   out << "FN:" << fullname << endl;
   out << "N:" << name << endl;

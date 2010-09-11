@@ -48,8 +48,10 @@ EditWindow::EditWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
   cols_email = new EmailColumns;
   store_email = Gtk::ListStore::create(*cols_email);
   tree_email->set_model(store_email);
+  uidef->get_object("treecell_addr")->set_property("editable", true);
   
   // Actions
+  connect_action("act_email_add", &EditWindow::_on_email_add_activate);
   connect_action("act_save", &EditWindow::_on_save_activate);
   connect_action("act_close", &EditWindow::_on_close_activate);
 }
@@ -104,7 +106,7 @@ void EditWindow::update_data()
 {
   // Page 1
   data.fullname = get_text("entry_fullname");
-  assert(data.name.size() >= 5);
+  data.name.resize(5);
   data.name[0] = get_text("entry_familyN");
   data.name[1] = get_text("entry_firstN");
   data.name[2] = get_text("entry_addN");
@@ -127,6 +129,11 @@ void EditWindow::set_path(string path)
   data.open(path.c_str());
   cerr << "Read data:" << endl << data;
   update_display();
+}
+
+void EditWindow::_on_email_add_activate()
+{
+  store_email->append();
 }
 
 void EditWindow::_on_save_activate()

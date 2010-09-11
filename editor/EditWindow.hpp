@@ -78,8 +78,14 @@ protected:
     a->signal_activate().connect(sigc::mem_fun(*this, f));
   }
 
-  /// Closes the window.
+  
+  /// Add an empty e-mail address
+  void _on_email_add_activate();
+  /** Saves the vCard to a file.
+   * @see VCard::write_back()
+   */
   void _on_save_activate();
+  /// Closes the window.
   void _on_close_activate();
 };
 
