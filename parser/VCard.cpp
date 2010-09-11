@@ -76,7 +76,7 @@ void VCard::read_field(const string line)
   // sec 3.3: telecom addr. types;
   // TEL, EMAIL, MAILER
   if(field.compare(0, 3, "TEL") == 0) { tel = content; return; }
-  if(field.compare(0, 5, "EMAIL") == 0) { email = content; return; }
+  if(field.compare(0, 5, "EMAIL") == 0) { email.push_back(content); return; }
   if (field == "MAILER" ) { mailer = content; return; }
   // sec 3.4: geographical types
   // TZ, GEO
@@ -163,7 +163,10 @@ string VCard::print_me() const {
   if(label.length()) out << "LABEL:" << label << endl;
   // section 3.3
   if(tel.length()) out << "TEL:" << tel << endl;
-  if(email.length()) out << "EMAIL:" << email << endl;
+  if(email.size())
+    for (email_t::const_iterator i = email.begin();
+	 i != email.end(); i++)
+      out << "EMAIL:" << *i << endl;
   if(mailer.length()) out << "MAILER:" << mailer << endl;
   // section 3.4
   if(tz.length()) out << "TZ:" << tz << endl;

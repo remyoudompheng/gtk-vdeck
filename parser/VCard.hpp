@@ -47,6 +47,9 @@ public:
   void open(const char* filename);
   void write_back();
 
+  /// Type of e-mail field
+  typedef std::vector<Glib::ustring> email_t;
+
   // Identification fields (RFC2426 3.1)
   /// Full name of the object
   Glib::ustring fullname;
@@ -76,7 +79,7 @@ public:
   /// Telephone number
   Glib::ustring tel;
   /// E-mail address
-  Glib::ustring email;
+  email_t email;
   /// Mailer software used by the contact
   Glib::ustring mailer;
 

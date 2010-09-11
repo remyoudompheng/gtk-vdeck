@@ -83,6 +83,13 @@ void EditWindow::update_display()
   set_text("entry_cats", data.categories);
   set_text("entry_bday", data.birthday);
   // Page 2
+  store_email->clear();
+  for(VCard::email_t::iterator i = data.email.begin();
+      i != data.email.end(); i++) {
+      Gtk::TreeIter iter = store_email->append();
+      (*iter)[cols_email->type] = "";
+      (*iter)[cols_email->adr] = *i;
+  }
   set_text("entry_url", data.url);
 }
 

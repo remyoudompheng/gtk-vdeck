@@ -63,7 +63,7 @@ protected:
   void on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
 };
 
-class Columns : public Gtk::TreeModel::ColumnRecord
+class ListView::Columns : public Gtk::TreeModel::ColumnRecord
 {
 public:
   Columns() {

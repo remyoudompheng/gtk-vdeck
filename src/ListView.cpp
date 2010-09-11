@@ -51,7 +51,8 @@ void ListView::fill_data(VDeck deck)
       Gtk::TreeIter iter;
       iter = list_widget->append();
       (*iter)[cols->fullname] = i->fullname;
-      (*iter)[cols->email] = i->email;
+      if(i->email.size())
+	(*iter)[cols->email] = i->email[0];
       (*iter)[cols->path] = i->filepath;
       (*iter)[cols->vcard] = *i;
   }
