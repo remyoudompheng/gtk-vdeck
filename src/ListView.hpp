@@ -49,22 +49,7 @@ protected:
    */
   Glib::RefPtr<Gtk::Builder> uidef;
 
-  class Columns : public Gtk::TreeModel::ColumnRecord
-  {
-  public:
-    Columns() {
-      add(fullname); add(email); add(path); add(vcard);
-    }
-
-    /// Full name of the entry
-    Gtk::TreeModelColumn<Glib::ustring> fullname; // 0
-    /// E-mail address
-    Gtk::TreeModelColumn<Glib::ustring> email;  // 1
-    /// File path
-    Gtk::TreeModelColumn<Glib::ustring> path; // 2
-    /// Full VCard structure
-    Gtk::TreeModelColumn<VCard> vcard;
-  };
+  class Columns;
   Columns *cols;
 
   /** The TreeModel containing data.
@@ -76,6 +61,23 @@ protected:
    * @param column Activated column
    */
   void on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
+};
+
+class Columns : public Gtk::TreeModel::ColumnRecord
+{
+public:
+  Columns() {
+    add(fullname); add(email); add(path); add(vcard);
+  }
+
+  /// Full name of the entry
+  Gtk::TreeModelColumn<Glib::ustring> fullname; // 0
+  /// E-mail address
+  Gtk::TreeModelColumn<Glib::ustring> email;  // 1
+  /// File path
+  Gtk::TreeModelColumn<Glib::ustring> path; // 2
+  /// Full VCard structure
+  Gtk::TreeModelColumn<VCard> vcard;
 };
 
 #endif //!LIST_VIEW_H

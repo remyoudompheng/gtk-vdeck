@@ -37,6 +37,12 @@ protected:
   /// The parent Gtk::Builder object
   Glib::RefPtr<Gtk::Builder> uidef;
 
+  /// TreeView widget displaying e-mail addresses
+  Gtk::TreeView *tree_email;
+  Glib::RefPtr<Gtk::ListStore> store_email;
+  class EmailColumns;
+  EmailColumns *cols_email;
+
   /// Path to the vCard file
   std::string dir_path;
 
@@ -78,5 +84,18 @@ protected:
 };
 
 EditWindow* get_with_builder();
+
+/// Column template for e-mail addresses
+class EditWindow::EmailColumns : public Gtk::TreeModelColumnRecord
+{
+public:
+  EmailColumns() {
+    add(type); add(adr);
+  }
+  /// Entry type
+  Gtk::TreeModelColumn<Glib::ustring> type; // 0
+  /// E-mail address
+  Gtk::TreeModelColumn<Glib::ustring> adr;  // 1
+};
 
 #endif //!EDIT_WINDOW_H
