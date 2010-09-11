@@ -68,7 +68,10 @@ public:
   Glib::ustring birthday;
 
   // Delivery addressing fields (RFC2426 3.2)
-
+  /// Structured address
+  Glib::ustring adr;
+  /// Formatted address
+  Glib::ustring label;
   // Telecommunications fields (RFC2426 3.3)
   /// Telephone number
   Glib::ustring tel;
@@ -78,12 +81,29 @@ public:
   Glib::ustring mailer;
 
   // Geographical fields (RFC2426 3.4)
-
+  Glib::ustring title;
+  Glib::ustring role;
+  Glib::ustring logo;
+  Glib::ustring agent;
+  Glib::ustring org;
   // Organizational fields (RFC2426 3.5)
-
+  /// Time zone
+  Glib::ustring tz;
+  /// Longitude/latitude of the contact
+  Glib::ustring geo;
   // Explanatory fields (RFC2426 3.6)
   /// Comma-separated list of categories
   Glib::ustring categories;
+  /// Supplemental information
+  std::string note;
+  /// Identification of the product which created the vCard
+  std::string prodid;
+  /// Revision information
+  std::string rev;
+  /// Sorting key
+  std::string sort_string;
+  /// Sound
+  std::string sound;
   /// Unique identifier for the contact
   std::string uid;
   /// URL for the object

@@ -69,25 +69,34 @@ void VCard::read_field(const string line)
   if (field == "NICKNAME") { nickname = content; return; }
   if (field == "PHOTO") { photo = content; return; }
   if (field == "BDAY") { birthday = content; return; }
-
   // sec 3.2: delivery addr. types (TODO);
   // ADR, LABEL
+  if (field.compare(0, 3, "ADR") == 0) { adr = content; return; }
+  if (field.compare(0, 5, "LABEL") == 0) { label = content; return; }
   // sec 3.3: telecom addr. types;
   // TEL, EMAIL, MAILER
-  if(field.compare(0, 3, "TEL") == 0) {
-    tel = content; return;
-  }
-  if(field.compare(0, 5, "EMAIL") == 0) {
-    email = content; return;
-  }
+  if(field.compare(0, 3, "TEL") == 0) { tel = content; return; }
+  if(field.compare(0, 5, "EMAIL") == 0) { email = content; return; }
   if (field == "MAILER" ) { mailer = content; return; }
   // sec 3.4: geographical types
   // TZ, GEO
+  if (field == "TZ" ) { tz = content; return; }
+  if (field == "GEO" ) { geo = content; return; }
   // sec 3.5: organizational types
   // TITLE, ROLE, LOGO, AGENT, ORG
+  if (field == "TITLE" ) { title = content; return; }
+  if (field == "ROLE" ) { role = content; return; }
+  if (field == "LOGO" ) { logo = content; return; }
+  if (field == "AGENT" ) { agent = content; return; }
+  if (field == "ORG" ) { org = content; return; }
   // sec 3.6: explanatory types
   // CATEGORIES, NOTE, PRODID, REV, SORT-STRING, SOUND, UID, URL, VERSION
   if (field == "CATEGORIES" ) { categories = content; return; }
+  if (field == "NOTE" ) { note = content; return; }
+  if (field == "PRODID" ) { prodid = content; return; }
+  if (field == "REV" ) { rev = content; return; }
+  if (field == "SORT-STRING" ) { sort_string = content; return; }
+  if (field == "SOUND" ) { sound = content; return; }
   if (field == "UID" ) { uid = content; return; }
   if (field == "URL" ) { url = content; return; }
   if (field == "VERSION" ) { version = content; return; }
@@ -149,10 +158,31 @@ string VCard::print_me() const {
   if(nickname.length()) out << "NICKNAME:" << nickname << endl;
   if(photo.length()) out << "PHOTO:" << photo << endl;
   if(birthday.length()) out << "BDAY:" << birthday << endl;
+  // section 3.2
+  if(adr.length()) out << "ADR:" << adr << endl;
+  if(label.length()) out << "LABEL:" << label << endl;
   // section 3.3
   if(tel.length()) out << "TEL:" << tel << endl;
   if(email.length()) out << "EMAIL:" << email << endl;
   if(mailer.length()) out << "MAILER:" << mailer << endl;
+  // section 3.4
+  if(tz.length()) out << "TZ:" << tz << endl;
+  if(geo.length()) out << "GEO:" << geo << endl;
+  // section 3.5
+  if(title.length()) out << "TITLE:" << title << endl;
+  if(role.length()) out << "ROLE:" << role << endl;
+  if(logo.length()) out << "LOGO:" << logo << endl;
+  if(agent.length()) out << "AGENT:" << agent << endl;
+  if(org.length()) out << "ORG:" << org << endl;
+  // section 3.6
+  if(categories.length()) out << "CATEGORIES:" << categories << endl;
+  if(note.length()) out << "NOTE:" << note << endl;
+  if(prodid.length()) out << "PRODID:" << prodid << endl;
+  if(rev.length()) out << "REV:" << rev << endl;
+  if(sort_string.length()) out << "SORT-STRING:" << sort_string << endl;
+  if(sound.length()) out << "SOUND:" << sound << endl;
+  if(url.length()) out << "URL:" << url << endl;
+
   // other fields
   VCard::const_iterator iter;
   for (iter = fields.begin();
