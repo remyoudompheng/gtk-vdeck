@@ -25,7 +25,7 @@ using namespace std;
 
 void StructuredText::read_str(Glib::ustring s)
 {
-  erase(begin(), end());
+  clear();
   Glib::ustring buf, tmp(s);
 
   size_t n = tmp.find_first_of(delimiter);

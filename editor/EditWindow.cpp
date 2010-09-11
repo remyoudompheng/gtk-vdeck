@@ -23,6 +23,7 @@
 #include <editor_xml.h>
 #include <StructuredText.hpp>
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
@@ -90,6 +91,7 @@ void EditWindow::update_data()
 {
   // Page 1
   data.fullname = get_text("entry_fullname");
+  assert(data.name.size() >= 5);
   data.name[0] = get_text("entry_familyN");
   data.name[1] = get_text("entry_firstN");
   data.name[2] = get_text("entry_addN");
@@ -116,6 +118,7 @@ void EditWindow::set_path(string path)
 
 void EditWindow::_on_save_activate()
 {
+  update_data();
   data.write_back();
 }
 
