@@ -30,7 +30,7 @@ EditWindow* get_with_builder()
 {
   Glib::ustring uidef(editor_xml, editor_xml_len);
   Glib::RefPtr<Gtk::Builder> refGlade = Gtk::Builder::create();
-  bool ok = refGlade->add_from_string(uidef);
+  refGlade->add_from_string(uidef);
 
   EditWindow *main_win = 0;
   refGlade->get_widget_derived("editor_win", main_win);
@@ -62,15 +62,14 @@ void EditWindow::update_display()
 {
   // Page 1
   set_text("entry_fullname", data.fullname);
-  SemicolonStruct name(data.name);
-  if (name.size() >= 5) {
-    set_text("entry_familyN", name[0]);
-    set_text("entry_firstN", name[1]);
-    set_text("entry_addN", name[2]);
-    set_text("entry_prefix", name[3]);
-    set_text("entry_suffix", name[4]);
+  if (data.name.size() >= 5) {
+    set_text("entry_familyN", data.name[0]);
+    set_text("entry_firstN", data.name[1]);
+    set_text("entry_addN", data.name[2]);
+    set_text("entry_prefix", data.name[3]);
+    set_text("entry_suffix", data.name[4]);
   } else {
-    cerr << "Invalid N field : " << data.name << endl;
+    cerr << "Invalid N field : " << data.name << " of size " << data.name.size() << endl;
   }
   set_text("entry_nickname", data.nickname);
   set_text("entry_uid", data.uid);
@@ -78,6 +77,30 @@ void EditWindow::update_display()
   set_text("entry_bday", data.birthday);
   // Page 2
   set_text("entry_url", data.url);
+}
+
+Glib::ustring EditWindow::get_text(Glib::ustring name)
+{
+  Gtk::Entry *widget;
+  uidef->get_widget(name, widget);
+  return widget->get_text();
+}
+
+void EditWindow::update_data()
+{
+  // Page 1
+  data.fullname = get_text("entry_fullname");
+  data.name[0] = get_text("entry_familyN");
+  data.name[1] = get_text("entry_firstN");
+  data.name[2] = get_text("entry_addN");
+  data.name[3] = get_text("entry_prefix");
+  data.name[4] = get_text("entry_suffix");
+  data.nickname = get_text("entry_nickname");
+  data.uid = get_text("entry_uid");
+  data.categories = get_text("entry_cats");
+  data.birthday = get_text("entry_bday");
+  // Page 2
+  data.url = get_text("entry_url");
 }
 
 /** Open the specified file

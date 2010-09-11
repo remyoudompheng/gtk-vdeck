@@ -28,27 +28,21 @@ void StructuredText::read_str(Glib::ustring s)
   erase(begin(), end());
   Glib::ustring buf, tmp(s);
 
-  while(tmp.length() > 0) {
-    // Find first comma
-    size_t n = tmp.find_first_of(delimiter);
-    
-    // No comma ?
-    if(n == Glib::ustring::npos) {
-      push_back(buf + tmp);
-      return;
-    }
-    // Escaped comma
+  size_t n = tmp.find_first_of(delimiter);
+  while(n != Glib::ustring::npos) {
     if ((n != 0) && (tmp[n-1] == '\\')) {
+      // Escaped delimiter
       buf += tmp.substr(0,n-1);
-      buf += delimiter;
-      tmp = tmp.substr(n+1);
-      continue;
+      buf += delimiter;  
+    } else {
+      // Normal delimiter
+      push_back(buf + tmp.substr(0,n));
+      buf.clear();
     }
-    // Normal comma
-    push_back(buf + tmp.substr(0,n));
-    buf.clear();
     tmp = tmp.substr(n+1);
+    n = tmp.find_first_of(delimiter);
   }
+  push_back(buf + tmp);
 }
 
 std::string StructuredText::join() const

@@ -36,11 +36,13 @@ public:
 protected:
   /// The parent Gtk::Builder object
   Glib::RefPtr<Gtk::Builder> uidef;
+
   /// Path to the vCard file
   std::string dir_path;
+
   /// Data structure holding the vCard
   VCard data;
-  
+
   /** Update text in a TextEntry widget.
    * @name Identifier of a widget in Gtk::Builder uidef
    * @text Text to display
@@ -49,6 +51,14 @@ protected:
 
   /// Displays the current VCard
   void update_display();
+
+  /** Get text from a TextEntry widget.
+   * @name Identifier of a widget in Gtk::Builder uidef
+    */
+  Glib::ustring get_text(Glib::ustring name);
+
+  /// Update the VCard structure with input text
+  void update_data();
 
   // Callbacks
   /// The type of void(void) callbacks

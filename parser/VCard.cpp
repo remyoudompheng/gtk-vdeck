@@ -28,10 +28,9 @@
 using namespace std;
 
 VCard::VCard()
-  : name(";;;;"),
-    version("3.0")
+  : version("3.0")
 {
-  return;
+  name.resize(5);
 }
 
 void VCard::read_field(const string line)
@@ -66,11 +65,11 @@ void VCard::read_field(const string line)
   // sec 3.1: identification types
   // FN, N, NICKNAME, PHOTO, BDAY
   if (field == "FN") { fullname = content; return; }
-  if (field == "N") { name = content; return; }
+  if (field == "N") { name.read_str(content); return; }
   if (field == "NICKNAME") { nickname = content; return; }
   if (field == "PHOTO") { photo = content; return; }
   if (field == "BDAY") { birthday = content; return; }
-   
+
   // sec 3.2: delivery addr. types (TODO);
   // ADR, LABEL
   // sec 3.3: telecom addr. types;
@@ -184,4 +183,3 @@ bool VCard::operator<(const VCard & b) const
 
   return false;
 }
-

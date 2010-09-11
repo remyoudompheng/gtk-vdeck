@@ -25,6 +25,7 @@
 #include <string>
 #include <map>
 #include <glibmm.h>
+#include <StructuredText.hpp>
 
 /** VCard: a class which represents fields for a vCard
  * It should represent faithfully the fields described in RFC2426
@@ -58,7 +59,7 @@ public:
    * - honorific prefixes
    * - honorific suffixes
    */
-  Glib::ustring name;
+  SemicolonStruct name;
   /// Nickname
   Glib::ustring nickname;
   /// A base64 encoded photo
