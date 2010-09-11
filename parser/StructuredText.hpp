@@ -36,9 +36,6 @@ public:
    */
   StructuredText(Glib::ustring s) { read_str(s); }
   friend std::ostream& operator<<(std::ostream& out, StructuredText const & that);
-private:
-  /// A buffer
-  Glib::ustring buf;
 protected:
   /// The delimiter character
   std::string delimiter;

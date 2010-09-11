@@ -25,28 +25,30 @@ using namespace std;
 
 void StructuredText::read_str(Glib::ustring s)
 {
-  clear();
+  erase(begin(), end());
+  Glib::ustring buf, tmp(s);
 
-  // Find first comma
-  size_t n = s.find_first_of(delimiter);
-  // No comma ?
-  if(n == Glib::ustring::npos) {
-    push_back(buf + s);
+  while(tmp.length() > 0) {
+    // Find first comma
+    size_t n = tmp.find_first_of(delimiter);
+    
+    // No comma ?
+    if(n == Glib::ustring::npos) {
+      push_back(buf + tmp);
+      return;
+    }
+    // Escaped comma
+    if ((n != 0) && (tmp[n-1] == '\\')) {
+      buf += tmp.substr(0,n-1);
+      buf += delimiter;
+      tmp = tmp.substr(n+1);
+      continue;
+    }
+    // Normal comma
+    push_back(buf + tmp.substr(0,n));
     buf.clear();
-    return;
+    tmp = tmp.substr(n+1);
   }
-  // Escaped comma
-  if ((n != 0) && (s[n-1] == '\\')) {
-    buf += s.substr(0,n-1);
-    buf += delimiter;
-    read_str(s.substr(n+1));
-    return;
-  }
-  // Normal comma
-  push_back(buf + s.substr(0,n));
-  buf.clear();
-  read_str(s.substr(n+1));
-  return;
 }
 
 std::string StructuredText::join() const

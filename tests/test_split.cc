@@ -4,9 +4,14 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+  CommaStruct l;
+  cout << "Empty: " << l << endl;
+  l.resize(5);
+  cout << "Empty: " << l << endl;
+
   string s="one\\,two,three,four\\,five";
   cout << "Splitting " << s << endl;
-  CommaStruct l(s);
+  l.read_str(s);
   for(CommaStruct::iterator i = l.begin(); i != l.end(); i++)
     cout << *i << endl;
   cout << "Rejoin: " << l << endl << endl;
