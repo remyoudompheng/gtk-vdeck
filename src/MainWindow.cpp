@@ -27,6 +27,7 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
     uidef(refBuilder)
 {
   // Actions
+  connect_action("act_add", &MainWindow::_on_add_activate);
   connect_action("act_quit", &MainWindow::_on_quit_activate);
 
   // List view
@@ -44,6 +45,22 @@ void MainWindow::set_path(string path)
 {
   dir_path = path;
   directory.import_dir(dir_path);
+  list_view->fill_data(directory);
+}
+
+/// Creates a new vCard file and adds it to the current VDeck
+void MainWindow::_on_add_activate()
+{
+  Gtk::FileChooserDialog dialog("Choose a library folder",
+                                Gtk::FILE_CHOOSER_ACTION_OPEN);
+  dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+  dialog.add_button(Gtk::Stock::NEW, Gtk::RESPONSE_OK);
+
+  int result = dialog.run();
+  if (result != Gtk::RESPONSE_OK) return;
+  
+  Glib::ustring path = dialog.get_filename();
+  directory.create_new(path);
   list_view->fill_data(directory);
 }
 

@@ -53,11 +53,16 @@ protected:
   {
   public:
     Columns() {
-      add(fullname); add(email); add(vcard);
+      add(fullname); add(email); add(path); add(vcard);
     }
 
+    /// Full name of the entry
     Gtk::TreeModelColumn<Glib::ustring> fullname; // 0
+    /// E-mail address
     Gtk::TreeModelColumn<Glib::ustring> email;  // 1
+    /// File path
+    Gtk::TreeModelColumn<Glib::ustring> path; // 2
+    /// Full VCard structure
     Gtk::TreeModelColumn<VCard> vcard;
   };
   Columns *cols;

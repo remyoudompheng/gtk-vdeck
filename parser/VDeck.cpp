@@ -53,6 +53,14 @@ void VDeck::import_dir(string path)
   ftw(path.c_str(), read_path_callback, FD_MAX_USE);
 }
 
+void VDeck::create_new(std::string path)
+{
+  VCard v;
+  v.filepath = path;
+  v.write_back();
+  insert(v);
+}
+
 /** Print a sequence of vCards from the given structure.
  * @param that The VDeck to print.
  */

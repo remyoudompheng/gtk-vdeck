@@ -52,6 +52,7 @@ void ListView::fill_data(VDeck deck)
       iter = list_widget->append();
       (*iter)[cols->fullname] = i->fullname;
       (*iter)[cols->email] = i->email;
+      (*iter)[cols->path] = i->filepath;
       (*iter)[cols->vcard] = *i;
   }
 }

@@ -57,6 +57,7 @@ protected:
     a->signal_activate().connect(sigc::mem_fun(*this, f));
   }
 
+  void _on_add_activate();
   void _on_quit_activate();
 };
 

@@ -27,6 +27,13 @@
 
 using namespace std;
 
+VCard::VCard()
+  : name(";;;;"),
+    version("3.0")
+{
+  return;
+}
+
 void VCard::read_field(const string line)
 {
   size_t t = line.find_first_of(":");
@@ -101,6 +108,14 @@ void VCard::open(const char* filename)
 }
 
 VCard::~VCard() {}
+
+/// Writes the VCard back to a file
+void VCard::write_back()
+{
+  ofstream out;
+  out.open(filepath.c_str(), ofstream::out);
+  out << *this;
+}
 
 /** Formats data from a vCard structure to a vCard file
  * @param out Output stream

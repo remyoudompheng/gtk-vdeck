@@ -33,7 +33,7 @@
 class VCard
 {
 public:
-  VCard() {}
+  VCard();
   /** Reads a vCard file into memory
    * @param filename The path of the file to be read
    */
@@ -44,6 +44,7 @@ public:
    * @param filename The path of the file to be read
    */
   void open(const char* filename);
+  void write_back();
   
   // Fields from RFC2426 sec. 3.1
   /// Full name of the object
