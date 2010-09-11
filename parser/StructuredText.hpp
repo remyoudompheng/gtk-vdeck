@@ -23,6 +23,7 @@
 #define STRUCTURED_TEXT_H
 
 #include <glibmm.h>
+#include <ostream>
 
 /** Class for handling strings with comma or semicolon separated values
  */
@@ -34,6 +35,7 @@ public:
    * @param s The string to be parsed
    */
   StructuredText(Glib::ustring s) { read_str(s); }
+  friend std::ostream& operator<<(std::ostream& out, StructuredText const & that);
 private:
   /// A buffer
   Glib::ustring buf;
@@ -44,6 +46,7 @@ protected:
    * @param s The string to be parsed
    */
   void read_str(Glib::ustring s);
+  std::string join() const;
 };
 
 /** Parser for comma separated values

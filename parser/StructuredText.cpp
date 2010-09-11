@@ -21,8 +21,12 @@
 
 #include "StructuredText.hpp"
 
+using namespace std;
+
 void StructuredText::read_str(Glib::ustring s)
 {
+  clear();
+
   // Find first comma
   size_t n = s.find_first_of(delimiter);
   // No comma ?
@@ -43,4 +47,29 @@ void StructuredText::read_str(Glib::ustring s)
   buf.clear();
   read_str(s.substr(n+1));
   return;
+}
+
+std::string StructuredText::join() const
+{
+  std::string r;
+  for(StructuredText::const_iterator i = begin();
+      i != end(); i++)
+    {
+      if(i != begin()) r += delimiter;
+      string s(*i);
+      size_t n = s.find_first_of(delimiter);
+      while(n != string::npos) {
+	r += s.substr(0,n) + "\\" + delimiter;
+	s = s.substr(n+1);
+	n = s.find_first_of(delimiter);
+      }
+      r += s;
+    }
+  return r;
+}
+
+ostream& operator<<(ostream& out, StructuredText const & that)
+{
+  out << that.join();
+  return out;
 }
