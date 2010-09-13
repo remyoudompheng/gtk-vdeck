@@ -11,3 +11,6 @@ add_executable(vdeck
   ListView.cpp ListView.hpp)
 target_link_libraries(vdeck vdeck_editor vcards ${GTKMM_LIBRARIES})
 
+install(TARGETS vdeck
+    RUNTIME DESTINATION bin)
+

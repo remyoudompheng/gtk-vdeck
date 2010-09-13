@@ -71,7 +71,9 @@ void VCard::read_field(const string line)
   if (field == "BDAY") { birthday = content; return; }
   // sec 3.2: delivery addr. types (TODO);
   // ADR, LABEL
-  if (field.compare(0, 3, "ADR") == 0) { adr = content; return; }
+  if (field.compare(0, 3, "ADR") == 0) {
+    SemicolonStruct s(content);
+    adr.push_back(s); return; }
   if (field.compare(0, 5, "LABEL") == 0) { label = content; return; }
   // sec 3.3: telecom addr. types;
   // TEL, EMAIL, MAILER
@@ -159,7 +161,10 @@ string VCard::print_me() const {
   if(photo.length()) out << "PHOTO:" << photo << endl;
   if(birthday.length()) out << "BDAY:" << birthday << endl;
   // section 3.2
-  if(adr.length()) out << "ADR:" << adr << endl;
+  if(adr.size())
+    for (adr_t::const_iterator i = adr.begin();
+	 i != adr.end(); i++)
+      out << "ADR:" << i->rejoin() << endl;
   if(label.length()) out << "LABEL:" << label << endl;
   // section 3.3
   if(tel.length()) out << "TEL:" << tel << endl;

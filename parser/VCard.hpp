@@ -49,6 +49,8 @@ public:
 
   /// Type of e-mail field
   typedef std::vector<Glib::ustring> email_t;
+  /// Type of ADR field
+  typedef std::vector<SemicolonStruct> adr_t;
 
   // Identification fields (RFC2426 3.1)
   /// Full name of the object
@@ -71,8 +73,18 @@ public:
   Glib::ustring birthday;
 
   // Delivery addressing fields (RFC2426 3.2)
-  /// Structured address
-  Glib::ustring adr;
+  /** @brief Structured mailing address
+   *
+   * A semicolon separated structured text:
+   * - post office box
+   * - extended address
+   * - street address
+   * - locality
+   * - region
+   * - postal code
+   * - country name
+   */
+  adr_t adr;
   /// Formatted address
   Glib::ustring label;
   // Telecommunications fields (RFC2426 3.3)
