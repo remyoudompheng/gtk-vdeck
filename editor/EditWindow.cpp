@@ -48,12 +48,17 @@ EditWindow::EditWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
   cols_email = new EmailColumns;
   store_email = Gtk::ListStore::create(*cols_email);
   tree_email->set_model(store_email);
-  uidef->get_object("treecell_addr")->set_property("editable", true);
   
   // Actions
   connect_action("act_email_add", &EditWindow::_on_email_add_activate);
   connect_action("act_save", &EditWindow::_on_save_activate);
   connect_action("act_close", &EditWindow::_on_close_activate);
+  // Editable cells
+  Glib::RefPtr<Gtk::CellRendererText> cell_addr;
+  cell_addr = Glib::RefPtr<Gtk::CellRendererText>::cast_static
+    (uidef->get_object("treecell_addr"));
+  cell_addr->set_property("editable", true);
+  cell_addr->signal_edited().connect(sigc::mem_fun(*this, &EditWindow::_on_edited_email_addr));
 }
 
 EditWindow::~EditWindow()
@@ -117,6 +122,11 @@ void EditWindow::update_data()
   data.categories = get_text("entry_cats");
   data.birthday = get_text("entry_bday");
   // Page 2
+  data.email.clear();
+  for(Gtk::TreeIter i = store_email->children().begin();
+      i != store_email->children().end(); i++) {
+    data.email.push_back((*i)[cols_email->adr]);
+  }
   data.url = get_text("entry_url");
 }
 
@@ -134,6 +144,12 @@ void EditWindow::set_path(string path)
 void EditWindow::_on_email_add_activate()
 {
   store_email->append();
+}
+
+void EditWindow::_on_edited_email_addr(const Glib::ustring& path, const Glib::ustring& new_text)
+{
+  Gtk::TreeIter i = store_email->get_iter(path);
+  (*i)[cols_email->adr] = new_text;
 }
 
 void EditWindow::_on_save_activate()

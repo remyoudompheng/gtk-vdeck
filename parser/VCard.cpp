@@ -164,7 +164,7 @@ string VCard::print_me() const {
   if(adr.size())
     for (adr_t::const_iterator i = adr.begin();
 	 i != adr.end(); i++)
-      out << "ADR:" << i->rejoin() << endl;
+      out << "ADR:" << *i << endl;
   if(label.length()) out << "LABEL:" << label << endl;
   // section 3.3
   if(tel.length()) out << "TEL:" << tel << endl;

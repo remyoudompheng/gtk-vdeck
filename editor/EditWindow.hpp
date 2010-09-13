@@ -81,6 +81,8 @@ protected:
   
   /// Add an empty e-mail address
   void _on_email_add_activate();
+  /// Called upon editing of an e-mail address
+  void _on_edited_email_addr(const Glib::ustring& path, const Glib::ustring& new_text);
   /** Saves the vCard to a file.
    * @see VCard::write_back()
    */
