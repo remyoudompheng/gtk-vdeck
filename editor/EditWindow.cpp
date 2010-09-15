@@ -43,22 +43,36 @@ EditWindow::EditWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
   : Gtk::Window(cobject),
     uidef(refBuilder)
 {
+  // Address TreeView
+  uidef->get_widget("tree_adr", tree_adr);
+  cols_adr = new AdrColumns;
+  store_adr = Gtk::ListStore::create(*cols_adr);
+  tree_adr->set_model(store_adr);
+
+  // Editable cells
+  Glib::RefPtr<Gtk::CellRendererText> cell_addr;
+  cell_addr = Glib::RefPtr<Gtk::CellRendererText>::cast_static
+    (uidef->get_object("treecell_a_text"));
+  cell_addr->set_property("editable", true);
+  cell_addr->signal_edited().connect(sigc::mem_fun(*this, &EditWindow::_on_edited_adr));
+
   // Email TreeView
   uidef->get_widget("tree_email", tree_email);
   cols_email = new EmailColumns;
   store_email = Gtk::ListStore::create(*cols_email);
   tree_email->set_model(store_email);
-  
+
+  // Editable cells
+  Glib::RefPtr<Gtk::CellRendererText> cell_email;
+  cell_email = Glib::RefPtr<Gtk::CellRendererText>::cast_static
+    (uidef->get_object("treecell_email"));
+  cell_email->set_property("editable", true);
+  cell_email->signal_edited().connect(sigc::mem_fun(*this, &EditWindow::_on_edited_email_addr));
+
   // Actions
   connect_action("act_email_add", &EditWindow::_on_email_add_activate);
   connect_action("act_save", &EditWindow::_on_save_activate);
   connect_action("act_close", &EditWindow::_on_close_activate);
-  // Editable cells
-  Glib::RefPtr<Gtk::CellRendererText> cell_addr;
-  cell_addr = Glib::RefPtr<Gtk::CellRendererText>::cast_static
-    (uidef->get_object("treecell_addr"));
-  cell_addr->set_property("editable", true);
-  cell_addr->signal_edited().connect(sigc::mem_fun(*this, &EditWindow::_on_edited_email_addr));
 }
 
 EditWindow::~EditWindow()
@@ -90,6 +104,13 @@ void EditWindow::update_display()
   set_text("entry_cats", data.categories);
   set_text("entry_bday", data.birthday);
   // Page 2
+  store_adr->clear();
+  for(VCard::adr_t::iterator i = data.adr.begin();
+      i != data.adr.end(); i++) {
+      Gtk::TreeIter iter = store_adr->append();
+      (*iter)[cols_adr->type] = "";
+      (*iter)[cols_adr->text] = i->join();
+  }
   store_email->clear();
   for(VCard::email_t::iterator i = data.email.begin();
       i != data.email.end(); i++) {
@@ -146,10 +167,22 @@ void EditWindow::_on_email_add_activate()
   store_email->append();
 }
 
+void EditWindow::_on_adr_add_activate()
+{
+  Gtk::TreeIter i = store_adr->append();
+  (*i)[cols_adr->text] = ";;;;;;";
+}
+
 void EditWindow::_on_edited_email_addr(const Glib::ustring& path, const Glib::ustring& new_text)
 {
   Gtk::TreeIter i = store_email->get_iter(path);
   (*i)[cols_email->adr] = new_text;
+}
+
+void EditWindow::_on_edited_adr(const Glib::ustring& path, const Glib::ustring& new_text)
+{
+  Gtk::TreeIter i = store_adr->get_iter(path);
+  (*i)[cols_adr->text] = new_text;
 }
 
 void EditWindow::_on_save_activate()

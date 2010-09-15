@@ -43,6 +43,12 @@ protected:
   class EmailColumns;
   EmailColumns *cols_email;
 
+  /// TreeView widget displaying addresses
+  Gtk::TreeView *tree_adr;
+  Glib::RefPtr<Gtk::ListStore> store_adr;
+  class AdrColumns;
+  AdrColumns *cols_adr;
+
   /// Path to the vCard file
   std::string dir_path;
 
@@ -78,11 +84,14 @@ protected:
     a->signal_activate().connect(sigc::mem_fun(*this, f));
   }
 
-  
+  /// Add an empty address
+  void _on_adr_add_activate();
   /// Add an empty e-mail address
   void _on_email_add_activate();
   /// Called upon editing of an e-mail address
   void _on_edited_email_addr(const Glib::ustring& path, const Glib::ustring& new_text);
+  /// Called upon editing of an address
+  void _on_edited_adr(const Glib::ustring& path, const Glib::ustring& new_text);
   /** Saves the vCard to a file.
    * @see VCard::write_back()
    */
@@ -104,6 +113,19 @@ public:
   Gtk::TreeModelColumn<Glib::ustring> type; // 0
   /// E-mail address
   Gtk::TreeModelColumn<Glib::ustring> adr;  // 1
+};
+
+/// Column template for addresses
+class EditWindow::AdrColumns : public Gtk::TreeModelColumnRecord
+{
+public:
+  AdrColumns() {
+    add(type); add(text);
+  }
+  /// Entry type
+  Gtk::TreeModelColumn<Glib::ustring> type; // 0
+  /// Structured address
+  Gtk::TreeModelColumn<Glib::ustring> text;  // 1
 };
 
 #endif //!EDIT_WINDOW_H
