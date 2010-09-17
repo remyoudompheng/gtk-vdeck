@@ -93,7 +93,7 @@ void VCard::read_field(const string line)
   if (field == "ORG" ) { org = content; return; }
   // sec 3.6: explanatory types
   // CATEGORIES, NOTE, PRODID, REV, SORT-STRING, SOUND, UID, URL, VERSION
-  if (field == "CATEGORIES" ) { categories = content; return; }
+  if (field == "CATEGORIES" ) { categories.read_str(content); return; }
   if (field == "NOTE" ) { note = content; return; }
   if (field == "PRODID" ) { prodid = content; return; }
   if (field == "REV" ) { rev = content; return; }
@@ -183,7 +183,7 @@ string VCard::print_me() const {
   if(agent.length()) out << "AGENT:" << agent << endl;
   if(org.length()) out << "ORG:" << org << endl;
   // section 3.6
-  if(categories.length()) out << "CATEGORIES:" << categories << endl;
+  if(categories.size()) out << "CATEGORIES:" << categories << endl;
   if(note.length()) out << "NOTE:" << note << endl;
   if(prodid.length()) out << "PRODID:" << prodid << endl;
   if(rev.length()) out << "REV:" << rev << endl;

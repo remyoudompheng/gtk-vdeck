@@ -20,6 +20,9 @@
  */
 
 #include "MainWindow.hpp"
+
+#include <iostream>
+
 using namespace std;
 
 MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refBuilder)
@@ -32,6 +35,16 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 
   // List view
   refBuilder->get_widget_derived("tree_main", list_view);
+
+  // Category list
+  cat_cols = new CatColumns();
+  cat_store = Gtk::ListStore::create(*cat_cols);
+  refBuilder->get_widget("tree_cats", cat_view);
+  cat_view->set_model(cat_store);
+
+  Glib::RefPtr<Gtk::TreeViewColumn> treecol_cats;
+  treecol_cats = Glib::RefPtr<Gtk::TreeViewColumn>::cast_static(refBuilder->get_object("treecol_cats"));
+  treecol_cats->set_sort_column(cat_cols->name);
 }
 
 MainWindow::~MainWindow()
@@ -46,6 +59,27 @@ void MainWindow::set_path(string path)
   dir_path = path;
   directory.import_dir(dir_path);
   list_view->fill_data(directory);
+  update_cats();
+}
+
+void MainWindow::update_cats()
+{
+  // Fill category list
+  set<Glib::ustring> categories;
+  for(VDeck::iterator i = directory.begin();
+      i != directory.end(); i++) {
+    for(CommaStruct::const_iterator c = i->categories.begin();
+	c != i->categories.end(); c++) {
+      categories.insert(*c);
+    }
+  }
+  // Fill ListStore
+  cat_store->clear();
+  for(set<Glib::ustring>::iterator c = categories.begin();
+      c != categories.end(); c++) {
+    Gtk::TreeIter i = cat_store->append();
+    (*i)[cat_cols->name] = *c;
+  }
 }
 
 /// Creates a new vCard file and adds it to the current VDeck
@@ -59,9 +93,11 @@ void MainWindow::_on_add_activate()
   int result = dialog.run();
   if (result != Gtk::RESPONSE_OK) return;
   
+  // Fill vCard view
   Glib::ustring path = dialog.get_filename();
   directory.create_new(path);
   list_view->fill_data(directory);
+  update_cats();
 }
 
 /// Quits the program

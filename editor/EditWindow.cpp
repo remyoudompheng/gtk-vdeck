@@ -101,7 +101,7 @@ void EditWindow::update_display()
   }
   set_text("entry_nickname", data.nickname);
   set_text("entry_uid", data.uid);
-  set_text("entry_cats", data.categories);
+  set_text("entry_cats", data.categories.join());
   set_text("entry_bday", data.birthday);
   // Page 2
   store_adr->clear();
@@ -140,7 +140,7 @@ void EditWindow::update_data()
   data.name[4] = get_text("entry_suffix");
   data.nickname = get_text("entry_nickname");
   data.uid = get_text("entry_uid");
-  data.categories = get_text("entry_cats");
+  data.categories.read_str(get_text("entry_cats"));
   data.birthday = get_text("entry_bday");
   // Page 2
   data.email.clear();

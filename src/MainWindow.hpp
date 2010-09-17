@@ -38,6 +38,11 @@ public:
 protected:
   /// The parent Gtk::Builder object
   Glib::RefPtr<Gtk::Builder> uidef;
+  /// The TreeView for categories
+  Gtk::TreeView *cat_view;
+  Glib::RefPtr<Gtk::ListStore> cat_store;
+  class CatColumns;
+  CatColumns *cat_cols;
   /// The child ListView widget
   ListView *list_view;
   /// Path to the library of .vcf files
@@ -57,8 +62,17 @@ protected:
     a->signal_activate().connect(sigc::mem_fun(*this, f));
   }
 
+  void update_cats();
+
   void _on_add_activate();
   void _on_quit_activate();
+};
+
+class MainWindow::CatColumns : public Gtk::TreeModel::ColumnRecord
+{
+public:
+  CatColumns() { add(name); }
+  Gtk::TreeModelColumn<Glib::ustring> name;
 };
 
 #endif //!MAIN_WINDOW_H

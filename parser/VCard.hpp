@@ -108,7 +108,7 @@ public:
   Glib::ustring geo;
   // Explanatory fields (RFC2426 3.6)
   /// Comma-separated list of categories
-  Glib::ustring categories;
+  CommaStruct categories;
   /// Supplemental information
   std::string note;
   /// Identification of the product which created the vCard
