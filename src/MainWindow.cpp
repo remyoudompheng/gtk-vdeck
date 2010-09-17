@@ -45,6 +45,12 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
   Glib::RefPtr<Gtk::TreeViewColumn> treecol_cats;
   treecol_cats = Glib::RefPtr<Gtk::TreeViewColumn>::cast_static(refBuilder->get_object("treecol_cats"));
   treecol_cats->set_sort_column(cat_cols->name);
+
+  // Handle filtering
+  cat_view->get_selection()->set_mode(Gtk::SELECTION_MULTIPLE);
+  cat_view->get_selection()->select_all();
+  cat_view->get_selection()->signal_changed().
+    connect( sigc::mem_fun(*this, &MainWindow::_on_catselection_changed) );
 }
 
 MainWindow::~MainWindow()
@@ -75,11 +81,29 @@ void MainWindow::update_cats()
   }
   // Fill ListStore
   cat_store->clear();
+  Gtk::TreeIter i = cat_store->append();
+  (*i)[cat_cols->name] = "[none]";
   for(set<Glib::ustring>::iterator c = categories.begin();
       c != categories.end(); c++) {
     Gtk::TreeIter i = cat_store->append();
     (*i)[cat_cols->name] = *c;
   }
+}
+
+/// Updates filter for the ListView widget
+void MainWindow::_on_catselection_changed()
+{
+  typedef Gtk::TreeView::Selection::ListHandle_Path pathlist;
+  pathlist sel = cat_view->get_selection()->get_selected_rows();
+  list_view->filter.clear();
+  for(pathlist::const_iterator i = sel.begin();
+      i != sel.end(); i++)
+    {
+      Gtk::TreeIter it = cat_store->get_iter(*i);
+      list_view->filter.insert((*it)[cat_cols->name]);
+    }
+
+  list_view->update_filter();
 }
 
 /// Creates a new vCard file and adds it to the current VDeck

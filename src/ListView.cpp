@@ -22,6 +22,8 @@
 #include "ListView.hpp"
 #include <EditWindow.hpp>
 
+using namespace std;
+
 ListView::ListView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refBuilder)
   : Gtk::TreeView(cobject),
     uidef(refBuilder)
@@ -35,7 +37,11 @@ ListView::ListView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& re
 
   treecol_name->set_sort_column(cols->fullname);
   treecol_email->set_sort_column(cols->email);
-  set_model(list_widget);
+
+  // Filters for the bibliography list
+  list_filtered = Gtk::TreeModelFilter::create(list_widget);
+  list_filtered->set_visible_func( sigc::mem_fun(*this, &ListView::_filtered_visibility) );
+  set_model(Gtk::TreeModelSort::create(list_filtered));
 }
 
 ListView::~ListView()
@@ -56,6 +62,24 @@ void ListView::fill_data(VDeck deck)
       (*iter)[cols->path] = i->filepath;
       (*iter)[cols->vcard] = *i;
   }
+}
+
+void ListView::update_filter()
+{
+  list_filtered->refilter();
+}
+
+bool ListView::_filtered_visibility(Gtk::TreeModel::const_iterator iter)
+{
+  VCard item = (*iter)[cols->vcard];
+  CommaStruct cats = item.categories;
+  if(cats.empty()) { return filter.find("[none]") != filter.end(); }
+  for(CommaStruct::const_iterator i = cats.begin();
+      i != cats.end(); i++)
+    {
+      if(filter.find(*i) != filter.end()) return true;
+    }
+  return false;
 }
 
 void ListView::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column)

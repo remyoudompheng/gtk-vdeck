@@ -44,6 +44,9 @@ public:
    */
   void fill_data(VDeck deck);
 
+  std::set<Glib::ustring> filter;
+  void update_filter();
+
 protected:
   /** The Gtk::Builder which created the widget
    */
@@ -55,12 +58,15 @@ protected:
   /** The TreeModel containing data.
    */
   Glib::RefPtr<Gtk::ListStore> list_widget;
+  Glib::RefPtr<Gtk::TreeModelFilter> list_filtered;
 
   /** Called when a row is activated
    * @param path Activated row, given by a path
    * @param column Activated column
    */
   void on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
+
+  bool _filtered_visibility(Gtk::TreeModel::const_iterator iter);
 };
 
 class ListView::Columns : public Gtk::TreeModel::ColumnRecord

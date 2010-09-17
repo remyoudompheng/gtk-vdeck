@@ -64,6 +64,7 @@ protected:
 
   void update_cats();
 
+  void _on_catselection_changed();
   void _on_add_activate();
   void _on_quit_activate();
 };
