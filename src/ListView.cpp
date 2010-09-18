@@ -29,12 +29,13 @@ ListView::ListView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& re
     uidef(refBuilder)
 {
   cols = new Columns();
-  list_widget = Gtk::ListStore::create(*cols);
+  list_store = Gtk::ListStore::create(*cols);
+  list_filtered = Gtk::TreeModelFilter::create(list_store);
+  list_sorted = Gtk::TreeModelSort::create(list_filtered);
 
   // Filters for the bibliography list
-  list_filtered = Gtk::TreeModelFilter::create(list_widget);
   list_filtered->set_visible_func( sigc::mem_fun(*this, &ListView::_filtered_visibility) );
-  set_model(Gtk::TreeModelSort::create(list_filtered));
+  set_model(list_sorted);
 }
 
 ListView::~ListView()
@@ -43,12 +44,12 @@ ListView::~ListView()
 
 void ListView::fill_data(VDeck deck)
 {
-  list_widget->clear();
+  list_store->clear();
   VDeck::iterator i;
   for(i = deck.begin(); i != deck.end(); i++)
   {
       Gtk::TreeIter iter;
-      iter = list_widget->append();
+      iter = list_store->append();
       (*iter)[cols->fullname] = i->fullname;
       (*iter)[cols->familyN] = i->name[0];
       (*iter)[cols->firstN] = i->name[1];
@@ -81,7 +82,7 @@ bool ListView::_filtered_visibility(Gtk::TreeModel::const_iterator iter)
 
 void ListView::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column)
 {
-  Gtk::TreeIter i = list_filtered->get_iter(path);
+  Gtk::TreeIter i = list_sorted->get_iter(path);
   VCard v = (*i)[cols->vcard];
 
   EditWindow *win = get_with_builder();

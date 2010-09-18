@@ -57,8 +57,9 @@ protected:
 
   /** The TreeModel containing data.
    */
-  Glib::RefPtr<Gtk::ListStore> list_widget;
+  Glib::RefPtr<Gtk::ListStore> list_store;
   Glib::RefPtr<Gtk::TreeModelFilter> list_filtered;
+  Glib::RefPtr<Gtk::TreeModelSort> list_sorted;
 
   /** Called when a row is activated
    * @param path Activated row, given by a path

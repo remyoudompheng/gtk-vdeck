@@ -48,7 +48,6 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 
   // Handle filtering
   cat_view->get_selection()->set_mode(Gtk::SELECTION_MULTIPLE);
-  cat_view->get_selection()->select_all();
   cat_view->get_selection()->signal_changed().
     connect( sigc::mem_fun(*this, &MainWindow::_on_catselection_changed) );
 }
@@ -88,6 +87,8 @@ void MainWindow::update_cats()
     Gtk::TreeIter i = cat_store->append();
     (*i)[cat_cols->name] = *c;
   }
+  // Select all categories by default
+  cat_view->get_selection()->select_all();
 }
 
 /// Updates filter for the ListView widget

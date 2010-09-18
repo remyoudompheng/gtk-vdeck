@@ -5,6 +5,7 @@
   <object class="GtkWindow" id="main_win">
     <property name="default_width">800</property>
     <property name="default_height">600</property>
+    <property name="icon_name">accessories-dictionary</property>
     <child>
       <object class="GtkVBox" id="vbox_big">
         <property name="visible">True</property>
@@ -81,8 +82,8 @@
             <child>
               <object class="GtkToolButton" id="tool_add">
                 <property name="visible">True</property>
-                <property name="use_action_appearance">True</property>
                 <property name="related_action">act_add</property>
+                <property name="use_action_appearance">True</property>
                 <property name="label" translatable="yes">Add</property>
                 <property name="use_underline">True</property>
               </object>
@@ -94,8 +95,8 @@
             <child>
               <object class="GtkToolButton" id="tool_remove">
                 <property name="visible">True</property>
-                <property name="use_action_appearance">True</property>
                 <property name="related_action">act_remove</property>
+                <property name="use_action_appearance">True</property>
                 <property name="label" translatable="yes">Remove</property>
                 <property name="use_underline">True</property>
               </object>
@@ -107,8 +108,8 @@
             <child>
               <object class="GtkToolButton" id="tool_quit">
                 <property name="visible">True</property>
-                <property name="use_action_appearance">True</property>
                 <property name="related_action">act_quit</property>
+                <property name="use_action_appearance">True</property>
                 <property name="label" translatable="yes">Quit</property>
                 <property name="use_underline">True</property>
                 <accelerator key="q" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
