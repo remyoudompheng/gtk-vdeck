@@ -27,6 +27,8 @@
 
 using namespace std;
 
+typedef Glib::RefPtr<Gtk::CellRendererText> CellPtr;
+
 EditWindow* get_with_builder()
 {
   Glib::ustring uidef(editor_xml, editor_xml_len);
@@ -50,11 +52,22 @@ EditWindow::EditWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
   tree_adr->set_model(store_adr);
 
   // Editable cells
-  Glib::RefPtr<Gtk::CellRendererText> cell_addr;
-  cell_addr = Glib::RefPtr<Gtk::CellRendererText>::cast_static
-    (uidef->get_object("treecell_a_text"));
-  cell_addr->set_property("editable", true);
+  CellPtr cell_a_type = CellPtr::cast_static(uidef->get_object("treecell_a_type"));
+  cell_a_type->signal_edited().connect(sigc::mem_fun(*this, &EditWindow::_on_edited_adr_type));
+  CellPtr cell_addr = CellPtr::cast_static(uidef->get_object("treecell_a_text"));
   cell_addr->signal_edited().connect(sigc::mem_fun(*this, &EditWindow::_on_edited_adr));
+
+  // Telephone TreeView
+  uidef->get_widget("tree_phone", tree_phone);
+  cols_phone = new PhoneColumns;
+  store_phone = Gtk::ListStore::create(*cols_phone);
+  tree_phone->set_model(store_phone);
+
+  // Editable cells
+  CellPtr cell_p_type = CellPtr::cast_static(uidef->get_object("treecell_p_type"));
+  cell_p_type->signal_edited().connect(sigc::mem_fun(*this, &EditWindow::_on_edited_p_type));
+  CellPtr cell_p_no = CellPtr::cast_static(uidef->get_object("treecell_p_no"));
+  cell_p_no->signal_edited().connect(sigc::mem_fun(*this, &EditWindow::_on_edited_p_no));
 
   // Email TreeView
   uidef->get_widget("tree_email", tree_email);
@@ -63,14 +76,15 @@ EditWindow::EditWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
   tree_email->set_model(store_email);
 
   // Editable cells
-  Glib::RefPtr<Gtk::CellRendererText> cell_email;
-  cell_email = Glib::RefPtr<Gtk::CellRendererText>::cast_static
-    (uidef->get_object("treecell_email"));
-  cell_email->set_property("editable", true);
+  CellPtr cell_e_type = CellPtr::cast_static(uidef->get_object("treecell_e_type"));
+  cell_e_type->signal_edited().connect(sigc::mem_fun(*this, &EditWindow::_on_edited_e_type));
+  CellPtr cell_email = CellPtr::cast_static(uidef->get_object("treecell_email"));
   cell_email->signal_edited().connect(sigc::mem_fun(*this, &EditWindow::_on_edited_email_addr));
 
   // Actions
   connect_action("act_email_add", &EditWindow::_on_email_add_activate);
+  connect_action("act_adr_add", &EditWindow::_on_adr_add_activate);
+  connect_action("act_phone_add", &EditWindow::_on_phone_add_activate);
   connect_action("act_save", &EditWindow::_on_save_activate);
   connect_action("act_close", &EditWindow::_on_close_activate);
 }
@@ -171,15 +185,46 @@ void EditWindow::set_path(string path)
   update_display();
 }
 
+
+void EditWindow::_on_save_activate()
+{
+  update_data();
+  data.write_back();
+}
+
+void EditWindow::_on_close_activate()
+{
+  hide_all();
+}
+
+/*
+ *  Callbacks for add/remove buttons
+ */
+
 void EditWindow::_on_email_add_activate()
 {
   store_email->append();
+}
+
+void EditWindow::_on_phone_add_activate()
+{
+  store_phone->append();
 }
 
 void EditWindow::_on_adr_add_activate()
 {
   Gtk::TreeIter i = store_adr->append();
   (*i)[cols_adr->text] = ";;;;;;";
+}
+
+/*
+ * Call backs for editable cells
+ */
+
+void EditWindow::_on_edited_e_type(const Glib::ustring& path, const Glib::ustring& new_text)
+{
+  Gtk::TreeIter i = store_email->get_iter(path);
+  (*i)[cols_email->type] = new_text;
 }
 
 void EditWindow::_on_edited_email_addr(const Glib::ustring& path, const Glib::ustring& new_text)
@@ -194,13 +239,20 @@ void EditWindow::_on_edited_adr(const Glib::ustring& path, const Glib::ustring& 
   (*i)[cols_adr->text] = new_text;
 }
 
-void EditWindow::_on_save_activate()
+void EditWindow::_on_edited_adr_type(const Glib::ustring& path, const Glib::ustring& new_text)
 {
-  update_data();
-  data.write_back();
+  Gtk::TreeIter i = store_adr->get_iter(path);
+  (*i)[cols_adr->type] = new_text;
 }
 
-void EditWindow::_on_close_activate()
+void EditWindow::_on_edited_p_type(const Glib::ustring& path, const Glib::ustring& new_text)
 {
-  hide_all();
+  Gtk::TreeIter i = store_phone->get_iter(path);
+  (*i)[cols_phone->type] = new_text;
+}
+
+void EditWindow::_on_edited_p_no(const Glib::ustring& path, const Glib::ustring& new_text)
+{
+  Gtk::TreeIter i = store_phone->get_iter(path);
+  (*i)[cols_phone->number] = new_text;
 }

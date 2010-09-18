@@ -14,8 +14,8 @@
             <child>
               <object class="GtkToolButton" id="tool_save">
                 <property name="visible">True</property>
-                <property name="use_action_appearance">True</property>
                 <property name="related_action">act_save</property>
+                <property name="use_action_appearance">True</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
                 <accelerator key="s" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
@@ -28,8 +28,8 @@
             <child>
               <object class="GtkToolButton" id="tool_quit">
                 <property name="visible">True</property>
-                <property name="use_action_appearance">True</property>
                 <property name="related_action">act_close</property>
+                <property name="use_action_appearance">True</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
                 <accelerator key="q" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
@@ -362,8 +362,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_adr_add">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_addr_add</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -375,8 +375,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_adr_remove">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_addr_remove</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -407,7 +407,9 @@
                       <object class="GtkTreeViewColumn" id="treecol_adr">
                         <property name="title">Type</property>
                         <child>
-                          <object class="GtkCellRendererText" id="treecell_a_type"/>
+                          <object class="GtkCellRendererText" id="treecell_a_type">
+                            <property name="editable">True</property>
+                          </object>
                           <attributes>
                             <attribute name="text">0</attribute>
                           </attributes>
@@ -418,7 +420,9 @@
                       <object class="GtkTreeViewColumn" id="treecol_adr_text">
                         <property name="title">Address</property>
                         <child>
-                          <object class="GtkCellRendererText" id="treecell_a_text"/>
+                          <object class="GtkCellRendererText" id="treecell_a_text">
+                            <property name="editable">True</property>
+                          </object>
                           <attributes>
                             <attribute name="text">1</attribute>
                           </attributes>
@@ -478,8 +482,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_phone_add">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_phone_add</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -491,8 +495,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_phone_remove">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_phone_remove</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -523,7 +527,9 @@
                       <object class="GtkTreeViewColumn" id="treecol_p_type">
                         <property name="title">Type</property>
                         <child>
-                          <object class="GtkCellRendererText" id="treecell_p_type"/>
+                          <object class="GtkCellRendererText" id="treecell_p_type">
+                            <property name="editable">True</property>
+                          </object>
                           <attributes>
                             <attribute name="text">0</attribute>
                           </attributes>
@@ -534,7 +540,9 @@
                       <object class="GtkTreeViewColumn" id="treecol_p_no">
                         <property name="title">Address</property>
                         <child>
-                          <object class="GtkCellRendererText" id="treecell_p_no"/>
+                          <object class="GtkCellRendererText" id="treecell_p_no">
+                            <property name="editable">True</property>
+                          </object>
                           <attributes>
                             <attribute name="text">1</attribute>
                           </attributes>
@@ -566,8 +574,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_email_add">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_email_add</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-add</property>
@@ -580,8 +588,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_email_remove">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_email_remove</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>
@@ -613,7 +621,9 @@
                       <object class="GtkTreeViewColumn" id="treecol_type">
                         <property name="title">Type</property>
                         <child>
-                          <object class="GtkCellRendererText" id="treecell_e_type"/>
+                          <object class="GtkCellRendererText" id="treecell_e_type">
+                            <property name="editable">True</property>
+                          </object>
                           <attributes>
                             <attribute name="text">0</attribute>
                           </attributes>
@@ -624,7 +634,9 @@
                       <object class="GtkTreeViewColumn" id="treecol_addr">
                         <property name="title">Address</property>
                         <child>
-                          <object class="GtkCellRendererText" id="treecell_email"/>
+                          <object class="GtkCellRendererText" id="treecell_email">
+                            <property name="editable">True</property>
+                          </object>
                           <attributes>
                             <attribute name="text">1</attribute>
                           </attributes>

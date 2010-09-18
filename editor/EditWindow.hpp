@@ -49,6 +49,12 @@ protected:
   class AdrColumns;
   AdrColumns *cols_adr;
 
+  /// TreeView widget displaying phone numbers
+  Gtk::TreeView *tree_phone;
+  Glib::RefPtr<Gtk::ListStore> store_phone;
+  class PhoneColumns;
+  PhoneColumns *cols_phone;
+
   /// Path to the vCard file
   std::string dir_path;
 
@@ -80,7 +86,7 @@ protected:
    * @param f The callback
    */
   void connect_action(Glib::ustring name, callback f) {
-    Glib::RefPtr<Gtk::Action> a = Glib::RefPtr<Gtk::Action>::cast_dynamic(uidef->get_object(name));
+    Glib::RefPtr<Gtk::Action> a = Glib::RefPtr<Gtk::Action>::cast_static(uidef->get_object(name));
     a->signal_activate().connect(sigc::mem_fun(*this, f));
   }
 
@@ -88,10 +94,17 @@ protected:
   void _on_adr_add_activate();
   /// Add an empty e-mail address
   void _on_email_add_activate();
+  /// Add an empty phone number
+  void _on_phone_add_activate();
+
   /// Called upon editing of an e-mail address
   void _on_edited_email_addr(const Glib::ustring& path, const Glib::ustring& new_text);
+  void _on_edited_e_type(const Glib::ustring& path, const Glib::ustring& new_text);
   /// Called upon editing of an address
   void _on_edited_adr(const Glib::ustring& path, const Glib::ustring& new_text);
+  void _on_edited_adr_type(const Glib::ustring& path, const Glib::ustring& new_text);
+  void _on_edited_p_type(const Glib::ustring& path, const Glib::ustring& new_text);
+  void _on_edited_p_no(const Glib::ustring& path, const Glib::ustring& new_text);
   /** Saves the vCard to a file.
    * @see VCard::write_back()
    */
@@ -126,6 +139,19 @@ public:
   Gtk::TreeModelColumn<Glib::ustring> type; // 0
   /// Structured address
   Gtk::TreeModelColumn<Glib::ustring> text;  // 1
+};
+
+/// Column template for phone numbers
+class EditWindow::PhoneColumns : public Gtk::TreeModelColumnRecord
+{
+public:
+  PhoneColumns() {
+    add(type); add(number);
+  }
+  /// Entry type
+  Gtk::TreeModelColumn<Glib::ustring> type; // 0
+  /// Plain number
+  Gtk::TreeModelColumn<Glib::ustring> number;  // 1
 };
 
 #endif //!EDIT_WINDOW_H
