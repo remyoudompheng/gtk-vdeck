@@ -36,14 +36,15 @@ public:
    */
   StructuredText(Glib::ustring s) { read_str(s); }
   friend std::ostream& operator<<(std::ostream& out, StructuredText const & that);
-protected:
-  /// The delimiter character
-  std::string delimiter;
+
   /** The main parsing function
    * @param s The string to be parsed
    */
   void read_str(Glib::ustring s);
   std::string join() const;
+protected:
+  /// The delimiter character
+  std::string delimiter;
 };
 
 /** Parser for comma separated values
