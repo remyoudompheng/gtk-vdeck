@@ -30,6 +30,8 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
     uidef(refBuilder)
 {
   // Actions
+  connect_action("act_openlib", &MainWindow::_on_openlib_activate);
+  connect_action("act_refresh", &MainWindow::_on_refresh_activate);
   connect_action("act_add", &MainWindow::_on_add_activate);
   connect_action("act_quit", &MainWindow::_on_quit_activate);
 
@@ -62,6 +64,11 @@ MainWindow::~MainWindow()
 void MainWindow::set_path(string path)
 {
   dir_path = path;
+  update_library();
+}
+
+void MainWindow::update_library()
+{
   directory.import_dir(dir_path);
   list_view->fill_data(directory);
   update_cats();
@@ -110,7 +117,7 @@ void MainWindow::_on_catselection_changed()
 /// Creates a new vCard file and adds it to the current VDeck
 void MainWindow::_on_add_activate()
 {
-  Gtk::FileChooserDialog dialog("Choose a library folder",
+  Gtk::FileChooserDialog dialog("Choose a filename to create",
                                 Gtk::FILE_CHOOSER_ACTION_OPEN);
   dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
   dialog.add_button(Gtk::Stock::NEW, Gtk::RESPONSE_OK);
@@ -123,6 +130,26 @@ void MainWindow::_on_add_activate()
   directory.create_new(path);
   list_view->fill_data(directory);
   update_cats();
+}
+
+/// Open a folder
+void MainWindow::_on_openlib_activate()
+{
+  Gtk::FileChooserDialog dialog("Choose the path of the library ",
+                                Gtk::FILE_CHOOSER_ACTION_SELECT_FOLDER);
+  dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+  dialog.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
+
+  int result = dialog.run();
+  if (result != Gtk::RESPONSE_OK) return;
+  
+  set_path(dialog.get_filename());
+}
+
+/// Refresh the library
+void MainWindow::_on_refresh_activate()
+{
+  update_library();
 }
 
 /// Quits the program

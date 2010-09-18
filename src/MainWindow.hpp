@@ -34,6 +34,7 @@ public:
   MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refBuilder);
   virtual ~MainWindow();
   void set_path(std::string path);
+  void update_library();
 
 protected:
   /// The parent Gtk::Builder object
@@ -67,6 +68,8 @@ protected:
   void _on_catselection_changed();
   void _on_add_activate();
   void _on_quit_activate();
+  void _on_openlib_activate();
+  void _on_refresh_activate();
 };
 
 class MainWindow::CatColumns : public Gtk::TreeModel::ColumnRecord
