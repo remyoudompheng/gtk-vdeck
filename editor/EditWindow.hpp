@@ -96,6 +96,10 @@ protected:
   void _on_email_add_activate();
   /// Add an empty phone number
   void _on_phone_add_activate();
+  /// Remove the selected address
+  void _on_adr_remove_activate();
+  void _on_email_remove_activate();
+  void _on_phone_remove_activate();
 
   /// Called upon editing of an e-mail address
   void _on_edited_email_addr(const Glib::ustring& path, const Glib::ustring& new_text);

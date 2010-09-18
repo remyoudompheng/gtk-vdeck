@@ -85,6 +85,9 @@ EditWindow::EditWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
   connect_action("act_email_add", &EditWindow::_on_email_add_activate);
   connect_action("act_addr_add", &EditWindow::_on_adr_add_activate);
   connect_action("act_phone_add", &EditWindow::_on_phone_add_activate);
+  connect_action("act_email_remove", &EditWindow::_on_email_remove_activate);
+  connect_action("act_addr_remove", &EditWindow::_on_adr_remove_activate);
+  connect_action("act_phone_remove", &EditWindow::_on_phone_remove_activate);
   connect_action("act_save", &EditWindow::_on_save_activate);
   connect_action("act_close", &EditWindow::_on_close_activate);
 }
@@ -171,6 +174,12 @@ void EditWindow::update_data()
     data.adr.append( CommaStruct((*i)[cols_adr->type]),
 		     SemicolonStruct((*i)[cols_adr->text]));
   }
+  data.tel.clear();
+  for(Gtk::TreeIter i = store_phone->children().begin();
+      i != store_phone->children().end(); i++) {
+    data.tel.append( CommaStruct((*i)[cols_phone->type]),
+		     (*i)[cols_phone->number]);
+  }
   // Page 3
   data.email.clear();
   for(Gtk::TreeIter i = store_email->children().begin();
@@ -208,20 +217,33 @@ void EditWindow::_on_close_activate()
  *  Callbacks for add/remove buttons
  */
 
-void EditWindow::_on_email_add_activate()
-{
-  store_email->append();
-}
-
-void EditWindow::_on_phone_add_activate()
-{
-  store_phone->append();
-}
-
+void EditWindow::_on_email_add_activate() { store_email->append(); }
+void EditWindow::_on_phone_add_activate() { store_phone->append(); }
 void EditWindow::_on_adr_add_activate()
 {
   Gtk::TreeIter i = store_adr->append();
   (*i)[cols_adr->text] = ";;;;;;";
+}
+
+void EditWindow::_on_email_remove_activate()
+{
+  Gtk::TreeView *t;
+  uidef->get_widget("tree_email", t);
+  store_email->erase(t->get_selection()->get_selected());
+}
+
+void EditWindow::_on_phone_remove_activate()
+{
+  Gtk::TreeView *t;
+  uidef->get_widget("tree_phone", t);
+  store_phone->erase(t->get_selection()->get_selected());
+}
+
+void EditWindow::_on_adr_remove_activate()
+{
+  Gtk::TreeView *t;
+  uidef->get_widget("tree_adr", t);
+  store_adr->erase(t->get_selection()->get_selected());
 }
 
 /*
