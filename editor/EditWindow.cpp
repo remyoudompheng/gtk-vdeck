@@ -83,7 +83,7 @@ EditWindow::EditWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 
   // Actions
   connect_action("act_email_add", &EditWindow::_on_email_add_activate);
-  connect_action("act_adr_add", &EditWindow::_on_adr_add_activate);
+  connect_action("act_addr_add", &EditWindow::_on_adr_add_activate);
   connect_action("act_phone_add", &EditWindow::_on_phone_add_activate);
   connect_action("act_save", &EditWindow::_on_save_activate);
   connect_action("act_close", &EditWindow::_on_close_activate);

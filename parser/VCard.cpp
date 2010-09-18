@@ -155,8 +155,11 @@ template<class T>
 ostream& operator<< (ostream &out, VCard::FieldList<T> const & item)
 {
   typename VCard::FieldList<T>::const_iterator i;
-  for(i = item.begin(); i != item.end(); i++)
-    out << item.field << ";" << "TYPE=" << i->first << ":" << i->second << endl;
+  for(i = item.begin(); i != item.end(); i++) {
+    out << item.field;
+    if(i->first.size()) out << ";TYPE=" << i->first;
+    out << ":" << i->second << endl;
+  }
   return out;
 }
 

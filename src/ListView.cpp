@@ -84,7 +84,7 @@ bool ListView::_filtered_visibility(Gtk::TreeModel::const_iterator iter)
 
 void ListView::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column)
 {
-  Gtk::TreeIter i = list_widget->get_iter(path);
+  Gtk::TreeIter i = list_filtered->get_iter(path);
   VCard v = (*i)[cols->vcard];
 
   EditWindow *win = get_with_builder();
