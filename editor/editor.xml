@@ -14,8 +14,8 @@
             <child>
               <object class="GtkToolButton" id="tool_save">
                 <property name="visible">True</property>
-                <property name="related_action">act_save</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">act_save</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
                 <accelerator key="s" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
@@ -28,8 +28,8 @@
             <child>
               <object class="GtkToolButton" id="tool_quit">
                 <property name="visible">True</property>
-                <property name="related_action">act_close</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">act_close</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
                 <accelerator key="q" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
@@ -340,7 +340,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="vbox_page2">
+              <object class="GtkVBox" id="vbox_mailgeo">
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <child>
@@ -362,8 +362,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_adr_add">
                             <property name="visible">True</property>
-                            <property name="related_action">act_addr_add</property>
                             <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_addr_add</property>
                             <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -375,8 +375,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_adr_remove">
                             <property name="visible">True</property>
-                            <property name="related_action">act_addr_remove</property>
                             <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_addr_remove</property>
                             <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -432,6 +432,122 @@
                   </packing>
                 </child>
                 <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label_page2">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Mail and geography</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkVBox" id="vbox_telecom">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkHBox" id="hbox_phone">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkLabel" id="label_phone">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Telephone numbers</property>
+                      </object>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkToolbar" id="tool_phone">
+                        <property name="visible">True</property>
+                        <property name="toolbar_style">icons</property>
+                        <child>
+                          <object class="GtkToolButton" id="tool_phone_add">
+                            <property name="visible">True</property>
+                            <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_phone_add</property>
+                            <property name="label" translatable="yes">Add</property>
+                            <property name="use_underline">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="homogeneous">True</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkToolButton" id="tool_phone_remove">
+                            <property name="visible">True</property>
+                            <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_phone_remove</property>
+                            <property name="label" translatable="yes">Remove</property>
+                            <property name="use_underline">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="homogeneous">True</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="padding">2</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkTreeView" id="tree_phone">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="headers_clickable">False</property>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treecol_p_type">
+                        <property name="title">Type</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="treecell_p_type"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treecol_p_no">
+                        <property name="title">Address</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="treecell_p_no"/>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="padding">2</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkHBox" id="hbox_emailtitle">
                     <property name="visible">True</property>
                     <child>
@@ -450,10 +566,11 @@
                         <child>
                           <object class="GtkToolButton" id="tool_email_add">
                             <property name="visible">True</property>
-                            <property name="related_action">act_email_add</property>
                             <property name="use_action_appearance">True</property>
-                            <property name="label" translatable="yes">toolbutton1</property>
+                            <property name="related_action">act_email_add</property>
+                            <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
+                            <property name="stock_id">gtk-add</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -463,10 +580,11 @@
                         <child>
                           <object class="GtkToolButton" id="tool_email_remove">
                             <property name="visible">True</property>
-                            <property name="related_action">act_email_remove</property>
                             <property name="use_action_appearance">True</property>
-                            <property name="label" translatable="yes">toolbutton</property>
+                            <property name="related_action">act_email_remove</property>
+                            <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
+                            <property name="stock_id">gtk-remove</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -490,6 +608,7 @@
                   <object class="GtkTreeView" id="tree_email">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="headers_clickable">False</property>
                     <child>
                       <object class="GtkTreeViewColumn" id="treecol_type">
                         <property name="title">Type</property>
@@ -553,26 +672,13 @@
                 </child>
               </object>
               <packing>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel" id="label_page2">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Mail and e-mail</property>
-              </object>
-              <packing>
-                <property name="position">1</property>
-                <property name="tab_fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <placeholder/>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="label_page3">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Details</property>
+                <property name="label" translatable="yes">Electronic contact</property>
               </object>
               <packing>
                 <property name="position">2</property>
@@ -615,6 +721,18 @@
   <object class="GtkAction" id="act_addr_remove">
     <property name="label">Remove an address</property>
     <property name="short_label">Remove</property>
+    <property name="stock_id">gtk-remove</property>
+  </object>
+  <object class="GtkAction" id="act_phone_add">
+    <property name="label">Add a phone number</property>
+    <property name="short_label">Add</property>
+    <property name="tooltip">Add a phone number</property>
+    <property name="stock_id">gtk-add</property>
+  </object>
+  <object class="GtkAction" id="act_phone_remove">
+    <property name="label">Remove a phone number</property>
+    <property name="short_label">Remove</property>
+    <property name="tooltip">Remove a phone number</property>
     <property name="stock_id">gtk-remove</property>
   </object>
 </interface>
