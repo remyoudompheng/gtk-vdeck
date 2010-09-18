@@ -28,6 +28,7 @@ find_program(XXD xxd)
 find_program(SED sed)
 
 SET(CMAKE_CXX_FLAGS "-Wall")
+SET(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -Wextra -DDEBUG")
 
 include_directories(${GLIBMM_INCLUDE_DIRS}
   ${CMAKE_SOURCE_DIR}/parser

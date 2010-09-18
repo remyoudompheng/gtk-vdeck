@@ -31,6 +31,9 @@ VCard::VCard()
   : version("3.0")
 {
   name.resize(5);
+  tel.field = "TEL";
+  adr.field = "ADR";
+  email.field = "EMAIL";
 }
 
 void VCard::read_field(const string line)
@@ -54,6 +57,19 @@ void VCard::read_field(const string line)
     return;
   }
 
+  // Parse %field:%type
+  t = field.find_first_of(";");
+  CommaStruct type;
+  if (t != string::npos) {
+    if ( ( field.substr(t+1).compare(0,5, "TYPE=") == 0 )
+	 || ( field.substr(t+1).compare(0,5, "type=") == 0 ) )
+      type.read_str(field.substr(t+6));
+    field = field.substr(0,t);
+#ifdef DEBUG
+    cerr << "Parsed type = " << type << " for field " << field;
+#endif
+  }
+
   // TODO: fully implement RFC2426 (VCard 3.0)
   field = field.uppercase();
   // exceptional fields
@@ -71,14 +87,12 @@ void VCard::read_field(const string line)
   if (field == "BDAY") { birthday = content; return; }
   // sec 3.2: delivery addr. types (TODO);
   // ADR, LABEL
-  if (field.compare(0, 3, "ADR") == 0) {
-    SemicolonStruct s(content);
-    adr.push_back(s); return; }
+  if (field == "ADR") { adr.append(type, SemicolonStruct(content)); return; }
   if (field.compare(0, 5, "LABEL") == 0) { label = content; return; }
   // sec 3.3: telecom addr. types;
   // TEL, EMAIL, MAILER
-  if(field.compare(0, 3, "TEL") == 0) { tel = content; return; }
-  if(field.compare(0, 5, "EMAIL") == 0) { email.push_back(content); return; }
+  if(field == "TEL") { tel.append(type, content); return; }
+  if(field == "EMAIL") { email.append(type,content); return; }
   if (field == "MAILER" ) { mailer = content; return; }
   // sec 3.4: geographical types
   // TZ, GEO
@@ -137,6 +151,15 @@ void VCard::write_back()
   out << *this;
 }
 
+template<class T>
+ostream& operator<< (ostream &out, VCard::FieldList<T> const & item)
+{
+  typename VCard::FieldList<T>::const_iterator i;
+  for(i = item.begin(); i != item.end(); i++)
+    out << item.field << ";" << "TYPE=" << i->first << ":" << i->second << endl;
+  return out;
+}
+
 /** Formats data from a vCard structure to a vCard file
  * @param out Output stream
  * @param that The structure to print
@@ -161,17 +184,11 @@ string VCard::print_me() const {
   if(photo.length()) out << "PHOTO:" << photo << endl;
   if(birthday.length()) out << "BDAY:" << birthday << endl;
   // section 3.2
-  if(adr.size())
-    for (adr_t::const_iterator i = adr.begin();
-	 i != adr.end(); i++)
-      out << "ADR:" << *i << endl;
+  out << adr;
   if(label.length()) out << "LABEL:" << label << endl;
   // section 3.3
-  if(tel.length()) out << "TEL:" << tel << endl;
-  if(email.size())
-    for (email_t::const_iterator i = email.begin();
-	 i != email.end(); i++)
-      out << "EMAIL:" << *i << endl;
+  out << tel;
+  out << email;
   if(mailer.length()) out << "MAILER:" << mailer << endl;
   // section 3.4
   if(tz.length()) out << "TZ:" << tz << endl;

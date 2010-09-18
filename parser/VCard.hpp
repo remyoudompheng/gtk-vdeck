@@ -41,16 +41,42 @@ public:
   VCard(const char *filename);
   virtual ~VCard();
 
+  /** A template for storage of multiple fields with a TYPE value.
+   */
+  template<typename T> class FieldList : public std::vector< std::pair<CommaStruct, T> >
+  {
+  public:
+    FieldList() {}
+    ~FieldList() {}
+
+    typedef std::pair<CommaStruct, T> item_t;
+
+    /// Field name
+    std::string field;
+
+    /** Appends a value to the list
+     * @param type  A strucutred comma-separated list of types
+     * @param value The associated value
+     */
+    void append(CommaStruct type, T value) {
+      std::vector<item_t>::push_back(item_t(type, value));
+    }
+
+    // friend std::ostream& operator<< (std::ostream &out, VCard::FieldList<T> const & item);
+  };
+
   /** Reads a vCard file into memory
    * @param filename The path of the file to be read
    */
   void open(const char* filename);
   void write_back();
 
+  /// Type of TEL field
+  typedef FieldList<Glib::ustring> tel_t;
   /// Type of e-mail field
-  typedef std::vector<Glib::ustring> email_t;
+  typedef FieldList<Glib::ustring> email_t;
   /// Type of ADR field
-  typedef std::vector<SemicolonStruct> adr_t;
+  typedef FieldList<SemicolonStruct> adr_t;
 
   // Identification fields (RFC2426 3.1)
   /// Full name of the object
@@ -88,8 +114,8 @@ public:
   /// Formatted address
   Glib::ustring label;
   // Telecommunications fields (RFC2426 3.3)
-  /// Telephone number
-  Glib::ustring tel;
+  /// Telephone numbers
+  tel_t tel;
   /// E-mail address
   email_t email;
   /// Mailer software used by the contact
@@ -149,5 +175,6 @@ private:
   // Print a VCard from the stored fields
   std::string print_me() const;
 };
+
 
 #endif //!VCARD_H

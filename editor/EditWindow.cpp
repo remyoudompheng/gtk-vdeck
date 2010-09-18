@@ -108,15 +108,16 @@ void EditWindow::update_display()
   for(VCard::adr_t::iterator i = data.adr.begin();
       i != data.adr.end(); i++) {
       Gtk::TreeIter iter = store_adr->append();
-      (*iter)[cols_adr->type] = "";
-      (*iter)[cols_adr->text] = i->join();
+      (*iter)[cols_adr->type] = i->first.join();
+      (*iter)[cols_adr->text] = i->second.join();
   }
+  // Page 3
   store_email->clear();
   for(VCard::email_t::iterator i = data.email.begin();
       i != data.email.end(); i++) {
       Gtk::TreeIter iter = store_email->append();
-      (*iter)[cols_email->type] = "";
-      (*iter)[cols_email->adr] = *i;
+      (*iter)[cols_email->type] = i->first.join();
+      (*iter)[cols_email->adr] = i->second;
   }
   set_text("entry_url", data.url);
 }
@@ -143,10 +144,18 @@ void EditWindow::update_data()
   data.categories.read_str(get_text("entry_cats"));
   data.birthday = get_text("entry_bday");
   // Page 2
+  data.adr.clear();
+  for(Gtk::TreeIter i = store_adr->children().begin();
+      i != store_adr->children().end(); i++) {
+    data.adr.append( CommaStruct((*i)[cols_adr->type]),
+		     SemicolonStruct((*i)[cols_adr->text]));
+  }
+  // Page 3
   data.email.clear();
   for(Gtk::TreeIter i = store_email->children().begin();
       i != store_email->children().end(); i++) {
-    data.email.push_back((*i)[cols_email->adr]);
+    data.email.append( CommaStruct((*i)[cols_email->type]),
+		       (*i)[cols_email->adr]);
   }
   data.url = get_text("entry_url");
 }
