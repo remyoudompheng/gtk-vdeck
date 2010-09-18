@@ -73,15 +73,22 @@ class ListView::Columns : public Gtk::TreeModel::ColumnRecord
 {
 public:
   Columns() {
-    add(fullname); add(email); add(path); add(vcard);
+    add(fullname); add(familyN); add(firstN);
+    add(phone); add(email); add(path); add(vcard);
   }
 
   /// Full name of the entry
-  Gtk::TreeModelColumn<Glib::ustring> fullname; // 0
+  Gtk::TreeModelColumn<Glib::ustring> fullname;
+  /// Name
+  Gtk::TreeModelColumn<Glib::ustring> familyN;
+  /// 1st name
+  Gtk::TreeModelColumn<Glib::ustring> firstN;
+  /// Phone number
+  Gtk::TreeModelColumn<Glib::ustring> phone;
   /// E-mail address
-  Gtk::TreeModelColumn<Glib::ustring> email;  // 1
+  Gtk::TreeModelColumn<Glib::ustring> email;
   /// File path
-  Gtk::TreeModelColumn<Glib::ustring> path; // 2
+  Gtk::TreeModelColumn<Glib::ustring> path;
   /// Full VCard structure
   Gtk::TreeModelColumn<VCard> vcard;
 };

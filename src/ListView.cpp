@@ -31,13 +31,6 @@ ListView::ListView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& re
   cols = new Columns();
   list_widget = Gtk::ListStore::create(*cols);
 
-  Glib::RefPtr<Gtk::TreeViewColumn> treecol_name, treecol_email;
-  treecol_name = Glib::RefPtr<Gtk::TreeViewColumn>::cast_static(refBuilder->get_object("treecol_name"));
-  treecol_email = Glib::RefPtr<Gtk::TreeViewColumn>::cast_static(refBuilder->get_object("treecol_email"));
-
-  treecol_name->set_sort_column(cols->fullname);
-  treecol_email->set_sort_column(cols->email);
-
   // Filters for the bibliography list
   list_filtered = Gtk::TreeModelFilter::create(list_widget);
   list_filtered->set_visible_func( sigc::mem_fun(*this, &ListView::_filtered_visibility) );
@@ -57,6 +50,10 @@ void ListView::fill_data(VDeck deck)
       Gtk::TreeIter iter;
       iter = list_widget->append();
       (*iter)[cols->fullname] = i->fullname;
+      (*iter)[cols->familyN] = i->name[0];
+      (*iter)[cols->firstN] = i->name[1];
+      if(i->tel.size())
+	(*iter)[cols->phone] = i->tel[0].second;
       if(i->email.size())
 	(*iter)[cols->email] = i->email[0].second;
       (*iter)[cols->path] = i->filepath;
