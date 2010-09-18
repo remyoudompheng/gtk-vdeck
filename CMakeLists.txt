@@ -6,6 +6,7 @@ PROJECT(gtk-vdeck)
 # Information to update before to release this package.
 
 # package version
+SET(CPACK_GENERATOR "ZIP" "TGZ")
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A viewer/editor for managing vCards")
 SET(CPACK_PACKAGE_VENDOR "Rémy Oudompheng")
 SET(CPACK_PACKAGE_VERSION_MAJOR "0")
@@ -13,11 +14,7 @@ SET(CPACK_PACKAGE_VERSION_MINOR "0")
 SET(CPACK_PACKAGE_VERSION_PATCH "1")
 SET(CPACK_PACKAGE_INSTALL_DIRECTORY "CMake ${CMake_VERSION_MAJOR}.${CMake_VERSION_MINOR}")
 
-IF(WIN32 AND NOT UNIX)
-   SET(CPACK_GENERATOR "NSIS")
-   SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/test.bmp")
-ENDIF(WIN32 AND NOT UNIX)
-
+Include(InstallRequiredSystemLibraries)
 INCLUDE(CPack)
 
 Include(FindPkgConfig)

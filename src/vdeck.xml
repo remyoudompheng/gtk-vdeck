@@ -128,6 +128,8 @@
           <object class="GtkHPaned" id="hpaned1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="position">200</property>
+            <property name="position_set">True</property>
             <child>
               <object class="GtkVPaned" id="vpaned1">
                 <property name="visible">True</property>
@@ -255,16 +257,19 @@
   <object class="GtkActionGroup" id="act_group"/>
   <object class="GtkAction" id="act_quit">
     <property name="label">Quit</property>
+    <property name="tooltip">Quit</property>
     <property name="stock_id">gtk-quit</property>
   </object>
   <object class="GtkAction" id="act_add">
     <property name="label">Add contact</property>
     <property name="short_label">Add</property>
+    <property name="tooltip">Create a new vCard</property>
     <property name="stock_id">gtk-add</property>
   </object>
   <object class="GtkAction" id="act_remove">
     <property name="label">Remove contact</property>
     <property name="short_label">Remove</property>
+    <property name="tooltip">Delete a vCard</property>
     <property name="stock_id">gtk-remove</property>
   </object>
 </interface>

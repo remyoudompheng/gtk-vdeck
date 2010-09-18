@@ -125,6 +125,13 @@ void EditWindow::update_display()
       (*iter)[cols_adr->type] = i->first.join();
       (*iter)[cols_adr->text] = i->second.join();
   }
+  store_phone->clear();
+  for(VCard::tel_t::iterator i = data.tel.begin();
+      i != data.tel.end(); i++) {
+      Gtk::TreeIter iter = store_phone->append();
+      (*iter)[cols_phone->type] = i->first.join();
+      (*iter)[cols_phone->number] = i->second;
+  }
   // Page 3
   store_email->clear();
   for(VCard::email_t::iterator i = data.email.begin();

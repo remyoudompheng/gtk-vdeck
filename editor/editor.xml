@@ -716,34 +716,32 @@
     <property name="stock_id">gtk-close</property>
   </object>
   <object class="GtkAction" id="act_email_add">
-    <property name="label">Add an e-mail address</property>
-    <property name="short_label">Add</property>
+    <property name="label">Add</property>
+    <property name="tooltip">Add an e-mail address</property>
     <property name="stock_id">gtk-add</property>
   </object>
   <object class="GtkAction" id="act_email_remove">
-    <property name="label">Remove an e-mail address</property>
-    <property name="short_label">Remove</property>
+    <property name="label">Remove</property>
+    <property name="tooltip">Remove an e-mail address</property>
     <property name="stock_id">gtk-remove</property>
   </object>
   <object class="GtkAction" id="act_addr_add">
-    <property name="label">Add an address</property>
-    <property name="short_label">Add</property>
+    <property name="label">Add</property>
+    <property name="tooltip">Add an address</property>
     <property name="stock_id">gtk-add</property>
   </object>
   <object class="GtkAction" id="act_addr_remove">
-    <property name="label">Remove an address</property>
-    <property name="short_label">Remove</property>
+    <property name="label">Remove</property>
+    <property name="tooltip">Remove an address</property>
     <property name="stock_id">gtk-remove</property>
   </object>
   <object class="GtkAction" id="act_phone_add">
-    <property name="label">Add a phone number</property>
-    <property name="short_label">Add</property>
+    <property name="label">Add</property>
     <property name="tooltip">Add a phone number</property>
     <property name="stock_id">gtk-add</property>
   </object>
   <object class="GtkAction" id="act_phone_remove">
-    <property name="label">Remove a phone number</property>
-    <property name="short_label">Remove</property>
+    <property name="label">Remove</property>
     <property name="tooltip">Remove a phone number</property>
     <property name="stock_id">gtk-remove</property>
   </object>
