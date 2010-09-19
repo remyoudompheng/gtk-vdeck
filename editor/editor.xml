@@ -14,8 +14,8 @@
             <child>
               <object class="GtkToolButton" id="tool_save">
                 <property name="visible">True</property>
-                <property name="related_action">act_save</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">act_save</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
                 <accelerator key="s" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
@@ -28,8 +28,8 @@
             <child>
               <object class="GtkToolButton" id="tool_quit">
                 <property name="visible">True</property>
-                <property name="related_action">act_close</property>
                 <property name="use_action_appearance">True</property>
+                <property name="related_action">act_close</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
                 <accelerator key="q" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
@@ -265,7 +265,7 @@
                     <child>
                       <object class="GtkLabel" id="label_bday">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Birthdate</property>
+                        <property name="label" translatable="yes">Birthdate (YYYY-MM-DD)</property>
                       </object>
                       <packing>
                         <property name="top_attach">3</property>
@@ -362,8 +362,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_adr_add">
                             <property name="visible">True</property>
-                            <property name="related_action">act_addr_add</property>
                             <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_addr_add</property>
                             <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -375,8 +375,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_adr_remove">
                             <property name="visible">True</property>
-                            <property name="related_action">act_addr_remove</property>
                             <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_addr_remove</property>
                             <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -399,10 +399,26 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkLabel" id="label1">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Possible types are: dom, intl, postal, parcel, home, work, pref.
+Fields in the address are, in order: the PO box, the extended address, the street address; the locality (e.g., city); the region (e.g., state or province); the postal code; the country name.</property>
+                    <property name="justify">fill</property>
+                    <property name="wrap">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="padding">2</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkTreeView" id="tree_adr">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="headers_clickable">False</property>
+                    <property name="reorderable">True</property>
+                    <property name="rules_hint">True</property>
                     <child>
                       <object class="GtkTreeViewColumn" id="treecol_adr">
                         <property name="title">Type</property>
@@ -432,11 +448,8 @@
                   </object>
                   <packing>
                     <property name="padding">2</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
-                </child>
-                <child>
-                  <placeholder/>
                 </child>
                 <child>
                   <placeholder/>
@@ -482,8 +495,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_phone_add">
                             <property name="visible">True</property>
-                            <property name="related_action">act_phone_add</property>
                             <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_phone_add</property>
                             <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -495,8 +508,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_phone_remove">
                             <property name="visible">True</property>
-                            <property name="related_action">act_phone_remove</property>
                             <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_phone_remove</property>
                             <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -519,10 +532,26 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkLabel" id="label3">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">TYPE can have values: home, msg, work, pref, voice, fax, cell, pager, bbs, modem, car, isdn, video, pcs.</property>
+                    <property name="justify">fill</property>
+                    <property name="wrap">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkTreeView" id="tree_phone">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="headers_clickable">False</property>
+                    <property name="reorderable">True</property>
+                    <property name="rules_hint">True</property>
+                    <property name="enable_grid_lines">horizontal</property>
                     <child>
                       <object class="GtkTreeViewColumn" id="treecol_p_type">
                         <property name="title">Type</property>
@@ -552,7 +581,7 @@
                   </object>
                   <packing>
                     <property name="padding">2</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -574,8 +603,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_email_add">
                             <property name="visible">True</property>
-                            <property name="related_action">act_email_add</property>
                             <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_email_add</property>
                             <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-add</property>
@@ -588,8 +617,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_email_remove">
                             <property name="visible">True</property>
-                            <property name="related_action">act_email_remove</property>
                             <property name="use_action_appearance">True</property>
+                            <property name="related_action">act_email_remove</property>
                             <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>
@@ -609,7 +638,20 @@
                     <property name="expand">False</property>
                     <property name="fill">False</property>
                     <property name="padding">2</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label2">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Type can have values: internet, x400, pref.</property>
+                    <property name="justify">fill</property>
+                    <property name="wrap">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -617,6 +659,9 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="headers_clickable">False</property>
+                    <property name="reorderable">True</property>
+                    <property name="rules_hint">True</property>
+                    <property name="enable_grid_lines">horizontal</property>
                     <child>
                       <object class="GtkTreeViewColumn" id="treecol_type">
                         <property name="title">Type</property>
@@ -646,7 +691,7 @@
                   </object>
                   <packing>
                     <property name="padding">2</property>
-                    <property name="position">3</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
@@ -679,7 +724,7 @@
                     <property name="expand">False</property>
                     <property name="fill">False</property>
                     <property name="padding">2</property>
-                    <property name="position">4</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
               </object>
