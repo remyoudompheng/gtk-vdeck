@@ -20,17 +20,12 @@
  */
 
 #include <gtkmm.h>
-#include <getopt.h>
-
 #include <iostream>
 #include <string>
 #include <cassert>
 #include <config.h>
 
 #include "MainWindow.hpp"
-
-/* XML definition file */
-// #include <vdeck_xml.h>
 
 using namespace std;
 
@@ -44,24 +39,35 @@ int
 main (int argc, char *argv[])
 {
   // Options
-  static option longopts[] = {
-    { "library", 1, 0, 'd' },
-    { "version", no_argument, 0, 'V' },
-    {0, 0, 0, 0}
+  GError *error = NULL;
+  GOptionContext *optcontext;
+  gchar *library_dir = NULL;
+  gboolean show_version = false;
+  static GOptionEntry options[] =
+  {
+    { "library", 'd', G_OPTION_FLAG_FILENAME, G_OPTION_ARG_FILENAME, &library_dir, "Library path", "lib" },
+    { "version", 'V', 0, G_OPTION_ARG_NONE, &show_version, "Show version information", NULL },
+    { NULL }
   };
-  char c;
-  string library_dir = "";
-  c = getopt_long(argc, argv, "d:V", longopts, &optind);
 
-  switch(c) {
-  case 'd':
-    library_dir = optarg;
-    cout << "Library folder is " << library_dir << endl;
-    break;
-  case 'V': // Output copyright notice
+  optcontext = g_option_context_new ("- view vCard library");
+  g_option_context_add_main_entries (optcontext, options, NULL);
+  g_option_context_add_group (optcontext, gtk_get_option_group (TRUE));
+  if (!g_option_context_parse (optcontext, &argc, &argv, &error))
+    {
+      g_print ("Wrong arguments: %s\n", error->message);
+      cout << g_option_context_get_help(optcontext, FALSE, NULL);
+      exit (1);
+    }
+
+  if (show_version) {
     cout << notice;
     return 0;
-    break;
+  }
+
+  if (!library_dir) {
+    cout << g_option_context_get_help(optcontext, FALSE, NULL);
+    return 0;
   }
 
   Gtk::Main kit(argc, argv);
