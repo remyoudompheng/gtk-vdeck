@@ -1,0 +1,29 @@
+VDeck
+A viewer and editor for collections of vCards.
+
+This program is used to manage a collection of vCards.
+
+Library viewer
+--------------
+Usage: vdeck -d [dir]
+
+Opens the given directory and displays all found vCard files.
+Double-clicking on an entry opens an editor, selecting categories
+allows to filter the view by only displaying contacts in these
+categories.
+
+The only supported format is vCard 3.0, as specified in RFC2426
+(http://www.ietf.org/rfc/rfc2426.txt).
+
+Editor
+------
+
+Usage: vcard_gtk [file]
+
+Dependencies:
+
+ * CMake 2.6 or later
+
+ * Gtkmm 2.16 or later
+
+ * A C++ compiler
