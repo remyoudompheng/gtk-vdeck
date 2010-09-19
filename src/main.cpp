@@ -34,8 +34,8 @@
 
 using namespace std;
 
-string notice = "gtk-vdeck 0.0.1\n"
-  "Copyright (C) 2010 Rémy Oudompheng\n"
+string notice = PACKAGE_STRING "\n"
+  PACKAGE_COPYRIGHT "\n"
   "This program comes with ABSOLUTELY NO WARRANTY.\n"
   "This is free software, and you are welcome to redistribute it\n"
   "under certain conditions. See COPYING file for details.\n";
