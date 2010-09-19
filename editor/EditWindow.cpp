@@ -197,7 +197,9 @@ void EditWindow::set_path(string path)
 {
   dir_path = path;
   data.open(path.c_str());
+#ifdef DEBUG
   cerr << "Read data:" << endl << data;
+#endif
   update_display();
 }
 

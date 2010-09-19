@@ -69,6 +69,7 @@ void MainWindow::set_path(string path)
 
 void MainWindow::update_library()
 {
+  directory.clear();
   directory.import_dir(dir_path);
   list_view->fill_data(directory);
   update_cats();
@@ -137,6 +138,7 @@ void MainWindow::_on_openlib_activate()
 {
   Gtk::FileChooserDialog dialog("Choose the path of the library ",
                                 Gtk::FILE_CHOOSER_ACTION_SELECT_FOLDER);
+  dialog.set_current_folder(dir_path);
   dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
   dialog.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
 

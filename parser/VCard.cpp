@@ -66,7 +66,7 @@ void VCard::read_field(const string line)
       type.read_str(field.substr(t+6));
     field = field.substr(0,t);
 #ifdef DEBUG
-    cerr << "Parsed type = " << type << " for field " << field;
+    cerr << "Parsed type = " << type << " for field " << field << endl;
 #endif
   }
 
@@ -149,6 +149,9 @@ void VCard::write_back()
   ofstream out;
   out.open(filepath.c_str(), ofstream::out);
   out << *this;
+#if DEBUG
+  cerr << "Written data:" << endl << *this;
+#endif
 }
 
 template<class T>
