@@ -1,4 +1,7 @@
 include_directories(${GTKMM_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR})
+link_directories(
+${CMAKE_BINARY_DIR}/editor
+${GTKMM_LIBRARY_DIRS})
 
 add_executable(vdeck
   main.cpp

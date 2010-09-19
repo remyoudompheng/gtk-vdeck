@@ -24,13 +24,20 @@ Include(FindPkgConfig)
 pkg_check_modules(GLIBMM REQUIRED glibmm-2.4)
 pkg_check_modules(GTKMM REQUIRED gtkmm-2.4>=2.16)
 
+# Use VS2008 compatible gtkmm libraries
+if(WIN32)
+set(GLIBMM_LIBRARIES "glibmm-vc90-2_4;sigc-vc90-2_0;glib-2.0")
+set(GTKMM_LIBRARIES "gtkmm-vc90-2_4;gtk-win32-2.0;atkmm-vc90-1_6;glibmm-vc90-2_4;sigc-vc90-2_0")
+endif(WIN32)
+
+link_directories(${CMAKE_BINARY_DIR}/parser ${GLIBMM_LIBRARY_DIRS})
+
 SET(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 
 include_directories(${GLIBMM_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_SOURCE_DIR}/parser
   ${CMAKE_SOURCE_DIR}/editor)
-link_directories(${CMAKE_BINARY_DIR}/parser)
 
 configure_file(config.h.cmake config.h)
 add_subdirectory(parser)

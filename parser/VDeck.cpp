@@ -70,7 +70,7 @@ void VDeck::create_new(const std::string path)
  */
 ostream& operator<< (ostream &out, VDeck const & that)
 {
-  VDeck::iterator iter;
+  VDeck::const_iterator iter;
   for (iter = that.begin();
        iter != that.end();
        iter++)
