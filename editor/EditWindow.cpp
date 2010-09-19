@@ -20,10 +20,11 @@
  */
 
 #include "EditWindow.hpp"
-#include <editor_xml.h>
 #include <StructuredText.hpp>
 #include <iostream>
 #include <cassert>
+
+#include <config.h>
 
 using namespace std;
 
@@ -31,9 +32,7 @@ typedef Glib::RefPtr<Gtk::CellRendererText> CellPtr;
 
 EditWindow* get_with_builder()
 {
-  Glib::ustring uidef(editor_xml, editor_xml_len);
-  Glib::RefPtr<Gtk::Builder> refGlade = Gtk::Builder::create();
-  refGlade->add_from_string(uidef);
+  Glib::RefPtr<Gtk::Builder> refGlade = Gtk::Builder::create_from_file(RESOURCE_DIR "/editor.xml");
 
   EditWindow *main_win = 0;
   refGlade->get_widget_derived("editor_win", main_win);

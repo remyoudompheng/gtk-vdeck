@@ -25,11 +25,12 @@
 #include <iostream>
 #include <string>
 #include <cassert>
+#include <config.h>
 
 #include "MainWindow.hpp"
 
 /* XML definition file */
-#include <vdeck_xml.h>
+// #include <vdeck_xml.h>
 
 using namespace std;
 
@@ -64,10 +65,15 @@ main (int argc, char *argv[])
   }
 
   Gtk::Main kit(argc, argv);
-  Glib::ustring uidef(vdeck_xml, vdeck_xml_len);
-  Glib::RefPtr<Gtk::Builder> refGlade = Gtk::Builder::create();
-  bool ok = refGlade->add_from_string(uidef);
-  assert(ok);
+  Glib::RefPtr<Gtk::Builder> refGlade;
+  try {
+    refGlade = Gtk::Builder::create_from_file(RESOURCE_DIR "/vdeck.xml");
+  }
+  catch (Glib::FileError& ex)
+    {
+      cerr << "GtkBuilder creation failed: " << ex.what() << endl;
+      return 1;
+    }
 
   MainWindow *main_win = 0;
   refGlade->get_widget_derived("main_win", main_win);
