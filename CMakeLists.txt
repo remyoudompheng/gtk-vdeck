@@ -24,11 +24,7 @@ Include(FindPkgConfig)
 pkg_check_modules(GLIBMM REQUIRED glibmm-2.4)
 pkg_check_modules(GTKMM REQUIRED gtkmm-2.4>=2.16)
 
-find_program(XXD xxd)
-find_program(SED sed)
-
-SET(CMAKE_CXX_FLAGS "-Wall")
-SET(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -Wextra -DDEBUG")
+SET(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 
 include_directories(${GLIBMM_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}

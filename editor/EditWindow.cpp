@@ -32,7 +32,15 @@ typedef Glib::RefPtr<Gtk::CellRendererText> CellPtr;
 
 EditWindow* get_with_builder()
 {
-  Glib::RefPtr<Gtk::Builder> refGlade = Gtk::Builder::create_from_file(RESOURCE_DIR "/editor.xml");
+  Glib::RefPtr<Gtk::Builder> refGlade;
+  try {
+    refGlade = Gtk::Builder::create_from_file(RESOURCE_DIR "/editor.xml");
+  }
+  catch (Glib::FileError& ex)
+    {
+      cerr << "GtkBuilder creation failed: " << ex.what() << endl;
+      return NULL;
+    }
 
   EditWindow *main_win = 0;
   refGlade->get_widget_derived("editor_win", main_win);

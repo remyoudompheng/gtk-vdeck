@@ -20,18 +20,16 @@
  */
 
 #include <gtkmm.h>
-#include <getopt.h>
-
 #include <iostream>
 #include <string>
 
-/* XML definition file */
 #include "EditWindow.hpp"
+#include <config.h>
 
 using namespace std;
 
-string notice = "gtk-vdeck 0.0.1\n"
-  "Copyright (C) 2010 Rémy Oudompheng\n"
+string notice = PACKAGE_STRING "\n"
+  PACKAGE_COPYRIGHT "\n"
   "This program comes with ABSOLUTELY NO WARRANTY.\n"
   "This is free software, and you are welcome to redistribute it\n"
   "under certain conditions. See COPYING file for details.\n";
@@ -40,29 +38,36 @@ int
 main (int argc, char *argv[])
 {
   // Options
-  static option longopts[] = {
-    { "version", no_argument, 0, 'V' },
-    {0, 0, 0, 0}
+  GError *error = NULL;
+  GOptionContext *optcontext;
+  gboolean show_version = false;
+  static GOptionEntry options[] =
+  {
+    { "version", 'V', 0, G_OPTION_ARG_NONE, &show_version, "Show version information", NULL },
+    { NULL }
   };
 
-  char c;
-  c = getopt_long(argc, argv, "d:V", longopts, &optind);
+  optcontext = g_option_context_new ("- edits a vCard");
+  g_option_context_add_main_entries (optcontext, options, NULL);
+  g_option_context_add_group (optcontext, gtk_get_option_group (TRUE));
+  if (!g_option_context_parse (optcontext, &argc, &argv, &error))
+    {
+      g_print ("Wrong arguments: %s\n", error->message);
+      cout << g_option_context_get_help(optcontext, FALSE, NULL);
+      exit (1);
+    }
 
-  switch(c) {
-  case 'V': // Output copyright notice
+  if (show_version) {
     cout << notice;
     return 0;
-    break;
   }
 
   std::string filename;
-  if(optind < argc)
-    filename = argv[optind];
+  if(argc > 0)
+    filename = argv[1];
   else {
-    cout << "Usage: " << argv[0] << "[-V] filename" << endl;
-    cout << "  -V: print version information" << endl;
-    cout << "  filename: name of the vCard file to edit" << endl;
-    return 0;
+    cout << g_option_context_get_help(optcontext, FALSE, NULL);
+    exit (1);
   }
 
   // Build up GUI
