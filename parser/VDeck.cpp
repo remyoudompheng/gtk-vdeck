@@ -24,31 +24,43 @@
 
 using namespace std;
 
+VDeck::VDeck(const char* path)
+{
+  import_dir(path);
+}
+
 /** Find .vcf files in the directory specified by path
  * @param path The path to the directory to be searched.
  */
 void VDeck::import_dir(const string path)
 {
+  dirpath = path;
+  walk_in_dirs(path);
+}
 
-  // Recursively adds file from a directory. This doesn't check for
-  // infinite loops due to symlinks.
+/** Recursively adds file from a directory. This doesn't check for
+ * infinite loops due to symlinks.
+ * @param path Directory being searched
+ */
+void VDeck::walk_in_dirs(const string path)
+{
   try {
     Glib::Dir directory(path);
     for(Glib::DirIterator it = directory.begin();
         it != directory.end(); it++)
       {
         if (Glib::file_test(path + G_DIR_SEPARATOR + *it, Glib::FILE_TEST_IS_DIR))
-          {
-            import_dir(path + G_DIR_SEPARATOR + *it);
-          }
+	  walk_in_dirs(path + G_DIR_SEPARATOR + *it);
         else
-	  if ((*it).compare((*it).size() - 4, 4, ".vcf") == 0)
-	    {
+	  if ((*it).compare((*it).size() - 4, 4, ".vcf") == 0) {
+	    std::string filename = path + G_DIR_SEPARATOR + *it;
+	    VCard v(filename.c_str());
+	    v.relpath = filename.substr(dirpath.length() + 1);
 #ifdef DEBUG
-	      cout << path << G_DIR_SEPARATOR << *it << endl;
+	    cout << v.relpath << " in " << dirpath << endl;
 #endif
-	      insert(VCard((path + G_DIR_SEPARATOR + *it).c_str()));
-	    }
+	    insert(v);
+	  }
       }
   }
   catch(const Glib::FileError& ex) {
@@ -61,6 +73,7 @@ void VDeck::create_new(const std::string path)
 {
   VCard v;
   v.filepath = path;
+  v.relpath = path.substr(dirpath.length() + 1);
   v.write_back();
   insert(v);
 }

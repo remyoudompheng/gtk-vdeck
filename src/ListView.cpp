@@ -57,7 +57,7 @@ void ListView::fill_data(VDeck deck)
 	(*iter)[cols->phone] = i->tel[0].second;
       if(i->email.size())
 	(*iter)[cols->email] = i->email[0].second;
-      (*iter)[cols->path] = i->filepath;
+      (*iter)[cols->path] = i->relpath;
       (*iter)[cols->vcard] = *i;
   }
 }

@@ -120,6 +120,7 @@ void MainWindow::_on_add_activate()
 {
   Gtk::FileChooserDialog dialog("Choose a filename to create",
                                 Gtk::FILE_CHOOSER_ACTION_OPEN);
+  dialog.set_current_folder(dir_path);
   dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
   dialog.add_button(Gtk::Stock::NEW, Gtk::RESPONSE_OK);
 
@@ -138,7 +139,6 @@ void MainWindow::_on_openlib_activate()
 {
   Gtk::FileChooserDialog dialog("Choose the path of the library ",
                                 Gtk::FILE_CHOOSER_ACTION_SELECT_FOLDER);
-  dialog.set_current_folder(dir_path);
   dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
   dialog.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
 

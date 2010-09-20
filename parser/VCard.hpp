@@ -163,6 +163,8 @@ public:
    * @see write_back()
    */
   std::string filepath;
+  /// Relative path to the vCard
+  std::string relpath;
 
   bool operator< (const VCard & b) const;
   friend std::ostream& operator<< (std::ostream &out, VCard const & that);
