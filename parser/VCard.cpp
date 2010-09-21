@@ -65,7 +65,7 @@ void VCard::read_field(const string line)
 	 || ( field.substr(t+1).compare(0,5, "type=") == 0 ) )
       type.read_str(field.substr(t+6));
     field = field.substr(0,t);
-#ifdef DEBUG
+#ifdef TRACE
     cerr << "Parsed type = " << type << " for field " << field << endl;
 #endif
   }
@@ -243,4 +243,26 @@ bool VCard::operator<(const VCard & b) const
   }
 
   return false;
+}
+
+/** Tests whether full name or email contains a given expression
+ * @param expr Expression to look for
+ */
+bool VCard::matches(Glib::ustring expr) const {
+  size_t p = fullname.find(expr);
+  if (p != Glib::ustring::npos) return true;
+  for (email_t::const_iterator i = email.begin();
+       i != email.end(); i++)
+    if(i->second.find(expr) != Glib::ustring::npos) return true;
+  return false;
+}
+
+/// Formats emails for mutt_query like response
+std::string VCard::mutt_format() const
+{
+  ostringstream s;
+  for (email_t::const_iterator i = email.begin();
+       i != email.end(); i++)
+    s << i->second.raw() << "\t" << fullname.raw() << "\t" << nickname.raw() << endl;
+  return s.str();
 }

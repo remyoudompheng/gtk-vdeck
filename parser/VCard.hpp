@@ -169,6 +169,9 @@ public:
   bool operator< (const VCard & b) const;
   friend std::ostream& operator<< (std::ostream &out, VCard const & that);
 
+  bool matches(Glib::ustring expr) const;
+  std::string mutt_format() const;
+
 private:
   /** Reads a line of the form field:value
    * @param line The string to be parsed

@@ -22,7 +22,7 @@ INCLUDE(CPack)
 
 Include(FindPkgConfig)
 pkg_check_modules(GLIBMM REQUIRED glibmm-2.4)
-pkg_check_modules(GTKMM REQUIRED gtkmm-2.4>=2.16)
+pkg_check_modules(GTKMM gtkmm-2.4>=2.16)
 
 # Use VS2008 compatible gtkmm libraries
 if(WIN32)
@@ -41,8 +41,10 @@ include_directories(${GLIBMM_INCLUDE_DIRS}
 
 configure_file(config.h.cmake config.h)
 add_subdirectory(parser)
+if(GTKMM_FOUND)
 add_subdirectory(src)
 add_subdirectory(editor)
+endif(GTKMM_FOUND)
 add_subdirectory(tests)
 add_subdirectory(share)
 

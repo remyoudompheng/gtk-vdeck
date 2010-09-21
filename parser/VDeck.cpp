@@ -46,6 +46,9 @@ void VDeck::walk_in_dirs(const string path)
 {
   try {
     Glib::Dir directory(path);
+#ifdef DEBUG
+    cerr << "Entering " << path << endl;
+#endif
     for(Glib::DirIterator it = directory.begin();
         it != directory.end(); it++)
       {
@@ -53,23 +56,23 @@ void VDeck::walk_in_dirs(const string path)
 	  walk_in_dirs(path + G_DIR_SEPARATOR + *it);
         else
 	  if ((*it).compare((*it).size() - 4, 4, ".vcf") == 0) {
-	    std::string filename = path + G_DIR_SEPARATOR + *it;
+	    string filename = path + G_DIR_SEPARATOR + *it;
 	    VCard v(filename.c_str());
 	    v.relpath = filename.substr(dirpath.length() + 1);
 #ifdef DEBUG
-	    cout << v.relpath << " in " << dirpath << endl;
+	    cerr << "Found " << v.relpath << endl;
 #endif
 	    insert(v);
 	  }
       }
   }
   catch(const Glib::FileError& ex) {
-    std::cerr << "FileError: " << ex.what() << std::endl;
+    cerr << "FileError: " << ex.what() << endl;
     return;
   }
 }
 
-void VDeck::create_new(const std::string path)
+void VDeck::create_new(const string path)
 {
   VCard v;
   v.filepath = path;
