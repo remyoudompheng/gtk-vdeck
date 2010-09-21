@@ -83,6 +83,7 @@ main (int argc, char *argv[])
   // let's start
   VDeck v;
   v.import_dir(library_dir);
+  cout << "Searching for '" << search_str << "' in " << library_dir << endl;
   bool found = false;
   for(VDeck::iterator c = v.begin();
       c != v.end(); c++) {
