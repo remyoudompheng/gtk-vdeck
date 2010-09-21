@@ -1,4 +1,6 @@
 version 0.1.1:
+ + support for building on Windows
+ + use GTK3 when available
 
 version 0.1:
  + support for exploring a hierarchy of .vcf files

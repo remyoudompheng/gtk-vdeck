@@ -17,13 +17,17 @@ The only supported format is vCard 3.0, as specified in RFC2426
 
 Editor
 ------
-
 Usage: vcard_gtk [file]
 
-Dependencies:
+Open the given file for editing
+
+Dependencies
+------------
+
+VDeck is tested on Linux, Windows and works with either GTK2 and GTK3.
 
  * CMake 2.6 or later
 
- * Gtkmm 2.16 or later
+ * Gtkmm 2.16 or later (Gtkmm 3 works)
 
  * A C++ compiler

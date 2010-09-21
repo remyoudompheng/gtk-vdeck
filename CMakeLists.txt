@@ -22,7 +22,10 @@ INCLUDE(CPack)
 
 Include(FindPkgConfig)
 pkg_check_modules(GLIBMM REQUIRED glibmm-2.4)
-pkg_check_modules(GTKMM gtkmm-2.4>=2.16)
+pkg_check_modules(GTKMM gtkmm-3.0)
+if(NOT GTKMM_FOUND)
+ pkg_check_modules(GTKMM gtkmm-2.4>=2.16)
+endif()
 
 # Use VS2008 compatible gtkmm libraries
 if(WIN32)
