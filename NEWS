@@ -1,9 +1,11 @@
 version 0.1.1:
  + support for building on Windows
  + use GTK3 when available
+ + filter by folder
+ + use standalone XML definitions for GUI
 
 version 0.1:
- + support for exploring a hierarchy of .vcf files
+ + explores a hierarchy of .vcf files
  + filter by category
  + standalone or embedded editor
  + read/write vCard files
