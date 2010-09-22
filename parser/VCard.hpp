@@ -165,6 +165,7 @@ public:
   std::string filepath;
   /// Relative path to the vCard
   std::string relpath;
+  std::string reldir;
 
   bool operator< (const VCard & b) const;
   friend std::ostream& operator<< (std::ostream &out, VCard const & that);

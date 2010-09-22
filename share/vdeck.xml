@@ -136,9 +136,20 @@
                     <property name="hscrollbar_policy">automatic</property>
                     <property name="vscrollbar_policy">automatic</property>
                     <child>
-                      <object class="GtkTreeView" id="treeview1">
+                      <object class="GtkTreeView" id="tree_dirs">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="treecol_dirs">
+                            <property name="title">Folders</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="treecell_dirs"/>
+                              <attributes>
+                                <attribute name="text">0</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>

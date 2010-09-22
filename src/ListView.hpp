@@ -45,6 +45,7 @@ public:
   void fill_data(VDeck deck);
 
   std::set<Glib::ustring> filter;
+  std::set<Glib::ustring> filter_dir;
   void update_filter();
 
 protected:

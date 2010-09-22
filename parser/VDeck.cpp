@@ -59,8 +59,10 @@ void VDeck::walk_in_dirs(const string path)
 	    string filename = path + G_DIR_SEPARATOR + *it;
 	    VCard v(filename.c_str());
 	    v.relpath = filename.substr(dirpath.length() + 1);
+	    size_t sep = v.relpath.find_last_of(G_DIR_SEPARATOR);
+	    v.reldir = v.relpath.substr(0, sep == Glib::ustring::npos ? 0 : sep);
 #ifdef DEBUG
-	    cerr << "Found " << v.relpath << endl;
+	    cerr << "Found " << v.relpath << " in " << v.reldir << endl;
 #endif
 	    insert(v);
 	  }

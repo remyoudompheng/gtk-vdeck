@@ -21,6 +21,7 @@
 
 #include "ListView.hpp"
 #include <EditWindow.hpp>
+#include <iostream>
 
 using namespace std;
 
@@ -69,15 +70,18 @@ void ListView::update_filter()
 
 bool ListView::_filtered_visibility(Gtk::TreeModel::const_iterator iter)
 {
+  bool ok = false;
   VCard item = (*iter)[cols->vcard];
+  // Check for categories
   CommaStruct cats = item.categories;
-  if(cats.empty()) { return filter.find("[none]") != filter.end(); }
+  if(cats.empty()) ok = filter.find("[none]") != filter.end();
   for(CommaStruct::const_iterator i = cats.begin();
       i != cats.end(); i++)
     {
-      if(filter.find(*i) != filter.end()) return true;
+      if(filter.find(*i) != filter.end()) ok = true;
     }
-  return false;
+  // Check for dir
+  return ok &&  filter_dir.find(item.reldir) != filter_dir.end();
 }
 
 void ListView::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column)

@@ -44,6 +44,9 @@ protected:
   Glib::RefPtr<Gtk::ListStore> cat_store;
   class CatColumns;
   CatColumns *cat_cols;
+  /// The TreeView for directories
+  Gtk::TreeView *dir_view;
+  Glib::RefPtr<Gtk::ListStore> dir_store;
   /// The child ListView widget
   ListView *list_view;
   /// Path to the library of .vcf files
@@ -63,9 +66,13 @@ protected:
     a->signal_activate().connect(sigc::mem_fun(*this, f));
   }
 
+  /// Update the category list
   void update_cats();
+  /// Update the subdirectory list
+  void update_dirs();
 
   void _on_catselection_changed();
+  void _on_dirselection_changed();
   void _on_add_activate();
   void _on_quit_activate();
   void _on_openlib_activate();

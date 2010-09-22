@@ -25,6 +25,8 @@
 
 using namespace std;
 
+typedef Glib::RefPtr<Gtk::TreeViewColumn> ColPtr;
+
 MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& refBuilder)
   : Gtk::Window(cobject),
     uidef(refBuilder)
@@ -44,14 +46,24 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
   refBuilder->get_widget("tree_cats", cat_view);
   cat_view->set_model(cat_store);
 
-  Glib::RefPtr<Gtk::TreeViewColumn> treecol_cats;
-  treecol_cats = Glib::RefPtr<Gtk::TreeViewColumn>::cast_static(refBuilder->get_object("treecol_cats"));
+  ColPtr treecol_cats = ColPtr::cast_static(refBuilder->get_object("treecol_cats"));
   treecol_cats->set_sort_column(cat_cols->name);
+
+  // Directory list
+  dir_store = Gtk::ListStore::create(*cat_cols);
+  refBuilder->get_widget("tree_dirs", dir_view);
+  dir_view->set_model(dir_store);
+
+  ColPtr treecol_dirs = ColPtr::cast_static(refBuilder->get_object("treecol_dirs"));
+  treecol_dirs->set_sort_column(cat_cols->name);
 
   // Handle filtering
   cat_view->get_selection()->set_mode(Gtk::SELECTION_MULTIPLE);
   cat_view->get_selection()->signal_changed().
     connect( sigc::mem_fun(*this, &MainWindow::_on_catselection_changed) );
+  dir_view->get_selection()->set_mode(Gtk::SELECTION_MULTIPLE);
+  dir_view->get_selection()->signal_changed().
+    connect( sigc::mem_fun(*this, &MainWindow::_on_dirselection_changed) );
 }
 
 MainWindow::~MainWindow()
@@ -73,6 +85,7 @@ void MainWindow::update_library()
   directory.import_dir(dir_path);
   list_view->fill_data(directory);
   update_cats();
+  update_dirs();
 }
 
 void MainWindow::update_cats()
@@ -99,6 +112,24 @@ void MainWindow::update_cats()
   cat_view->get_selection()->select_all();
 }
 
+void MainWindow::update_dirs()
+{
+  // Fill folder list
+  set<Glib::ustring> dirs;
+  for(VDeck::iterator i = directory.begin();
+      i != directory.end(); i++)
+    dirs.insert(i->reldir);
+  // Fill ListStore
+  dir_store->clear();
+  for(set<Glib::ustring>::iterator d = dirs.begin();
+      d != dirs.end(); d++) {
+    Gtk::TreeIter i = dir_store->append();
+    (*i)[cat_cols->name] = *d;
+  }
+  // Use all folders by default
+  dir_view->get_selection()->select_all();
+}
+
 /// Updates filter for the ListView widget
 void MainWindow::_on_catselection_changed()
 {
@@ -115,6 +146,21 @@ void MainWindow::_on_catselection_changed()
   list_view->update_filter();
 }
 
+void MainWindow::_on_dirselection_changed()
+{
+  typedef Gtk::TreeView::Selection::ListHandle_Path pathlist;
+  pathlist sel = dir_view->get_selection()->get_selected_rows();
+  list_view->filter_dir.clear();
+  for(pathlist::const_iterator i = sel.begin();
+      i != sel.end(); i++)
+    {
+      Gtk::TreeIter it = dir_store->get_iter(*i);
+      list_view->filter_dir.insert((*it)[cat_cols->name]);
+    }
+
+  list_view->update_filter();
+}
+
 /// Creates a new vCard file and adds it to the current VDeck
 void MainWindow::_on_add_activate()
 {
@@ -126,7 +172,7 @@ void MainWindow::_on_add_activate()
 
   int result = dialog.run();
   if (result != Gtk::RESPONSE_OK) return;
-  
+
   // Fill vCard view
   Glib::ustring path = dialog.get_filename();
   directory.create_new(path);
@@ -144,7 +190,7 @@ void MainWindow::_on_openlib_activate()
 
   int result = dialog.run();
   if (result != Gtk::RESPONSE_OK) return;
-  
+
   set_path(dialog.get_filename());
 }
 

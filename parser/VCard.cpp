@@ -239,7 +239,7 @@ bool VCard::operator<(const VCard & b) const
       }
   }
   catch(const out_of_range & ex) {
-    cout << "Out of range exception: " << ex.what() << endl;
+    cerr << "Out of range exception: " << ex.what() << endl;
   }
 
   return false;
