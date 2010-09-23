@@ -3,6 +3,7 @@ version 0.1.1:
  + use GTK3 when available
  + filter by folder
  + use standalone XML definitions for GUI
+ + editor window is now modal
 
 version 0.1:
  + explores a hierarchy of .vcf files
