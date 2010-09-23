@@ -22,6 +22,7 @@
 #include "ListView.hpp"
 #include <EditWindow.hpp>
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
@@ -90,6 +91,9 @@ void ListView::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewC
   VCard v = (*i)[cols->vcard];
 
   EditWindow *win = get_with_builder();
+  Gtk::Window *main = NULL;
+  uidef->get_widget("main_win", main);
+  win->set_transient_for(*main);
   win->set_path(v.filepath);
   win->show_all();
 }

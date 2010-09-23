@@ -7,6 +7,6 @@
 #define PACKAGE_AUTHORS "Rémy Oudompheng"
 #define PACKAGE_COPYRIGHT "Copyright (C) 2010 Rémy Oudompheng"
 
-#define RESOURCE_DIR "${CMAKE_INSTALL_PREFIX}/share"
+#define RESOURCE_DIR "${CMAKE_INSTALL_PREFIX}/share/vdeck"
 
 #endif //! CONFIG_H

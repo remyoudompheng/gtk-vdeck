@@ -52,20 +52,23 @@ void VDeck::walk_in_dirs(const string path)
     for(Glib::DirIterator it = directory.begin();
         it != directory.end(); it++)
       {
-        if (Glib::file_test(path + G_DIR_SEPARATOR + *it, Glib::FILE_TEST_IS_DIR))
-	  walk_in_dirs(path + G_DIR_SEPARATOR + *it);
-        else
-	  if ((*it).compare((*it).size() - 4, 4, ".vcf") == 0) {
+	// Files before subdirs
+        if (! Glib::file_test(path + G_DIR_SEPARATOR + *it, Glib::FILE_TEST_IS_DIR))
+	  {
+	    if ((*it).compare((*it).size() - 4, 4, ".vcf") != 0) continue;
 	    string filename = path + G_DIR_SEPARATOR + *it;
 	    VCard v(filename.c_str());
 	    v.relpath = filename.substr(dirpath.length() + 1);
 	    size_t sep = v.relpath.find_last_of(G_DIR_SEPARATOR);
-	    v.reldir = v.relpath.substr(0, sep == Glib::ustring::npos ? 0 : sep);
+	    v.reldir= (sep == Glib::ustring::npos) ?
+	      "[root]" : v.relpath.substr(0, sep);
 #ifdef DEBUG
 	    cerr << "Found " << v.relpath << " in " << v.reldir << endl;
 #endif
 	    insert(v);
 	  }
+	else
+	  walk_in_dirs(path + G_DIR_SEPARATOR + *it);
       }
   }
   catch(const Glib::FileError& ex) {
@@ -79,6 +82,8 @@ void VDeck::create_new(const string path)
   VCard v;
   v.filepath = path;
   v.relpath = path.substr(dirpath.length() + 1);
+  size_t sep = v.relpath.find_last_of(G_DIR_SEPARATOR);
+  v.reldir = v.relpath.substr(0, sep == Glib::ustring::npos ? 0 : sep);
   v.write_back();
   insert(v);
 }
