@@ -35,6 +35,9 @@ ListView::ListView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& re
   list_filtered = Gtk::TreeModelFilter::create(list_store);
   list_sorted = Gtk::TreeModelSort::create(list_filtered);
 
+  // Sort by last name by default
+  list_sorted->set_sort_column(cols->familyN, Gtk::SORT_ASCENDING);
+
   // Filters for the bibliography list
   list_filtered->set_visible_func( sigc::mem_fun(*this, &ListView::_filtered_visibility) );
   set_model(list_sorted);
