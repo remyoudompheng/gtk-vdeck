@@ -142,6 +142,8 @@ void EditWindow::update_display()
       (*iter)[cols_phone->type] = i->first.join();
       (*iter)[cols_phone->number] = i->second;
   }
+  set_text("entry_tz", data.tz);
+  set_text("entry_geo", data.geo.join());
   // Page 3
   store_email->clear();
   for(VCard::email_t::iterator i = data.email.begin();
@@ -187,6 +189,8 @@ void EditWindow::update_data()
     data.tel.append( CommaStruct((*i)[cols_phone->type]),
 		     (*i)[cols_phone->number]);
   }
+  data.tz = get_text("entry_tz");
+  data.geo = SemicolonStruct(get_text("entry_geo"));
   // Page 3
   data.email.clear();
   for(Gtk::TreeIter i = store_email->children().begin();

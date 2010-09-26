@@ -97,7 +97,7 @@ void VCard::read_field(const string line)
   // sec 3.4: geographical types
   // TZ, GEO
   if (field == "TZ" ) { tz = content; return; }
-  if (field == "GEO" ) { geo = content; return; }
+  if (field == "GEO" ) { geo.read_str(content); return; }
   // sec 3.5: organizational types
   // TITLE, ROLE, LOGO, AGENT, ORG
   if (field == "TITLE" ) { title = content; return; }
@@ -198,7 +198,7 @@ string VCard::print_me() const {
   if(mailer.length()) out << "MAILER:" << mailer << endl;
   // section 3.4
   if(tz.length()) out << "TZ:" << tz << endl;
-  if(geo.length()) out << "GEO:" << geo << endl;
+  if(geo.size() == 2) out << "GEO:" << geo << endl;
   // section 3.5
   if(title.length()) out << "TITLE:" << title << endl;
   if(role.length()) out << "ROLE:" << role << endl;

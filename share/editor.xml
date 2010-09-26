@@ -15,8 +15,8 @@
             <child>
               <object class="GtkToolButton" id="tool_save">
                 <property name="visible">True</property>
-                <property name="use_action_appearance">True</property>
                 <property name="related_action">act_save</property>
+                <property name="use_action_appearance">True</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
                 <accelerator key="s" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
@@ -29,8 +29,8 @@
             <child>
               <object class="GtkToolButton" id="tool_quit">
                 <property name="visible">True</property>
-                <property name="use_action_appearance">True</property>
                 <property name="related_action">act_close</property>
+                <property name="use_action_appearance">True</property>
                 <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
                 <accelerator key="q" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
@@ -363,8 +363,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_adr_add">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_addr_add</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -376,8 +376,8 @@
                         <child>
                           <object class="GtkToolButton" id="tool_adr_remove">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_addr_remove</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -453,10 +453,66 @@ Fields in the address are, in order: the PO box, the extended address, the stree
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
+                  <object class="GtkTable" id="table_geo">
+                    <property name="visible">True</property>
+                    <property name="n_rows">2</property>
+                    <property name="n_columns">2</property>
+                    <child>
+                      <object class="GtkLabel" id="label_tz">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Timezone (&#xB1;HH:MM)</property>
+                      </object>
+                      <packing>
+                        <property name="x_padding">2</property>
+                        <property name="y_padding">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_geo">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Position (decimal lat;lon)</property>
+                      </object>
+                      <packing>
+                        <property name="top_attach">1</property>
+                        <property name="bottom_attach">2</property>
+                        <property name="x_padding">2</property>
+                        <property name="y_padding">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entry_tz">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="invisible_char">&#x25CF;</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="right_attach">2</property>
+                        <property name="x_padding">2</property>
+                        <property name="y_padding">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entry_geo">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="invisible_char">&#x25CF;</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="right_attach">2</property>
+                        <property name="top_attach">1</property>
+                        <property name="bottom_attach">2</property>
+                        <property name="x_padding">2</property>
+                        <property name="y_padding">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="padding">2</property>
+                    <property name="position">3</property>
+                  </packing>
                 </child>
               </object>
               <packing>
@@ -496,8 +552,8 @@ Fields in the address are, in order: the PO box, the extended address, the stree
                         <child>
                           <object class="GtkToolButton" id="tool_phone_add">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_phone_add</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -509,8 +565,8 @@ Fields in the address are, in order: the PO box, the extended address, the stree
                         <child>
                           <object class="GtkToolButton" id="tool_phone_remove">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_phone_remove</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
                           </object>
@@ -604,8 +660,8 @@ Fields in the address are, in order: the PO box, the extended address, the stree
                         <child>
                           <object class="GtkToolButton" id="tool_email_add">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_email_add</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Add</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-add</property>
@@ -618,8 +674,8 @@ Fields in the address are, in order: the PO box, the extended address, the stree
                         <child>
                           <object class="GtkToolButton" id="tool_email_remove">
                             <property name="visible">True</property>
-                            <property name="use_action_appearance">True</property>
                             <property name="related_action">act_email_remove</property>
+                            <property name="use_action_appearance">True</property>
                             <property name="label" translatable="yes">Remove</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>

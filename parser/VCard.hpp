@@ -113,6 +113,7 @@ public:
   adr_t adr;
   /// Formatted address
   Glib::ustring label;
+
   // Telecommunications fields (RFC2426 3.3)
   /// Telephone numbers
   tel_t tel;
@@ -124,14 +125,16 @@ public:
   // Geographical fields (RFC2426 3.4)
   /// Time zone
   Glib::ustring tz;
-  /// Longitude/latitude of the contact
-  Glib::ustring geo;
+  /// Decimal latitude, longitude of the contact
+  SemicolonStruct geo;
+
   // Organizational fields (RFC2426 3.5)
   Glib::ustring title;
   Glib::ustring role;
   Glib::ustring logo;
   Glib::ustring agent;
   Glib::ustring org;
+
   // Explanatory fields (RFC2426 3.6)
   /// Comma-separated list of categories
   CommaStruct categories;
