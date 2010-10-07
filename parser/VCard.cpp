@@ -233,7 +233,7 @@ string VCard::print_me() const {
 bool VCard::operator<(const VCard & b) const
 {
   try {
-    if (uid < b.uid)
+    if (filepath < b.filepath)
       {
 	return true;
       }
