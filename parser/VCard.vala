@@ -51,10 +51,40 @@ namespace Cardinal {
 
     public void write(FileStream fd) {
       fd.puts("BEGIN:VCARD\n");
+      /* mandatory fields */
+      fd.puts("VERSION:3.0\n");
+      fd.puts(uid.to_string());
       fd.puts(fullname.to_string());
       fd.puts(name.to_string());
-      foreach(var a in adr.items)
-	fd.puts(a.to_string());
+      // section 3.1
+      fd.puts(nickname.to_string());
+      fd.puts(photo.to_string());
+      fd.puts(birthday.to_string());
+      // section 3.2
+      foreach(var a in adr.items) fd.puts(a.to_string());
+      fd.puts(label.to_string());
+      // section 3.3
+      foreach(var a in tel.items) fd.puts(a.to_string());
+      foreach(var a in email.items) fd.puts(a.to_string());
+      fd.puts(mailer.to_string());
+      // section 3.4
+      fd.puts(tz.to_string());
+      fd.puts(geo.to_string());
+      // section 3.5
+      fd.puts(title.to_string());
+      fd.puts(role.to_string());
+      fd.puts(logo.to_string());
+      fd.puts(agent.to_string());
+      fd.puts(org.to_string());
+      // section 3.6
+      fd.puts(categories.to_string());
+      fd.puts(note.to_string());
+      fd.puts(prodid.to_string());
+      fd.puts(rev.to_string());
+      fd.puts(sort_string.to_string());
+      fd.puts(sound.to_string());
+      fd.puts(uid.to_string());
+      fd.puts(url.to_string());
       fd.puts("END:VCARD\n");
     }
     // sec 3.1: identification types
@@ -68,6 +98,33 @@ namespace Cardinal {
     // ADR, LABEL
     public CompoundFieldList adr { get; set; default = new CompoundFieldList();}
     public string label { get; set; default = ""; }
+    // sec 3.3
+    // TEL, EMAIL, MAILER
+    public SimpleFieldList tel { get; set; default = new SimpleFieldList();}
+    public SimpleFieldList email { get; set; default = new SimpleFieldList();}
+    public SimpleField mailer { get; set; default = new SimpleField();}
+    // sec 3.4
+    // TZ, GEO
+    public SimpleField tz { get; set; default = new SimpleField();}
+    public CompoundField geo { get; set; default = new CompoundField();}
+    // sec 3.5
+    // TITLE, ROLE, LOGO, AGENT, ORG
+    public SimpleField title { get; set; default = new SimpleField();}
+    public SimpleField role { get; set; default = new SimpleField();}
+    public SimpleField logo { get; set; default = new SimpleField();}
+    public SimpleField agent { get; set; default = new SimpleField();}
+    public SimpleField org { get; set; default = new SimpleField();}
+    // sec 3.6
+    // CATEGORIES, NOTE, PRODID, REV, SORT_STRING, SOUND, UID, URL, VERSION
+    public ListField categories { get; set; default = new ListField();}
+    public SimpleField note { get; set; default = new SimpleField();}
+    public SimpleField prodid { get; set; default = new SimpleField();}
+    public SimpleField rev { get; set; default = new SimpleField();}
+    public SimpleField sort_string { get; set; default = new SimpleField();}
+    public SimpleField sound { get; set; default = new SimpleField();}
+    public SimpleField uid { get; set; default = new SimpleField();}
+    public SimpleField url { get; set; default = new SimpleField();}
+    public SimpleField version { get; set; default = new SimpleField();}
   }
 
 }

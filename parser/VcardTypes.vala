@@ -24,7 +24,7 @@ namespace Cardinal {
       string[] name = chunks[0].split(";");
       title = name[0];
       if (name.length == 1) {
-        types = null;
+	types = null;
 	is_set = true;
       } else {
 	types = Cardinal.split(name[1].substring(5), ",");
@@ -36,10 +36,16 @@ namespace Cardinal {
     public List<string>? types;
 
     public abstract string str { owned get; set; }
+
+    /**
+     * Convert the field to a formatted string
+     * inverse of from_string(string)
+     */
     public string to_string() {
+      if(! is_set) return "";
       string t = title;
       if(types != null)
-        t += ";TYPE=" + Cardinal.join(",", types);
+	t += ";TYPE=" + Cardinal.join(",", types);
       return t + ":" + str + "\n";
     }
   }
@@ -55,6 +61,15 @@ namespace Cardinal {
     public override string str {
       set { _content = value.split(";"); }
       owned get { return string.joinv(";", _content); }
+    }
+  }
+
+  public class ListField : Field {
+    public ListField.from_string(string s) { Field.from_string(s); }
+    public string[] _content;
+    public override string str {
+      set { _content = value.split(","); }
+      owned get { return string.joinv(",", _content); }
     }
   }
 
