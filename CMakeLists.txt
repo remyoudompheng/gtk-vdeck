@@ -16,11 +16,19 @@ SET(CPACK_PACKAGE_INSTALL_DIRECTORY "CMake ${CMake_VERSION_MAJOR}.${CMake_VERSIO
 
 SET(PACKAGE_VERSION "0.1.1")
 
-
 Include(InstallRequiredSystemLibraries)
 INCLUDE(CPack)
 
+SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeFiles)
+
 Include(FindPkgConfig)
+pkg_check_modules(GLIB REQUIRED glib-2.0)
+pkg_check_modules(GTK REQUIRED gtk+-2.0>=2.16)
+
+Include(FindVala)
+Include(UseVala)
+
+# C++ parts
 pkg_check_modules(GLIBMM REQUIRED glibmm-2.4)
 pkg_check_modules(GTKMM gtkmm-3.0)
 if(NOT GTKMM_FOUND)
