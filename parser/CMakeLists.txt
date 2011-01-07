@@ -1,3 +1,8 @@
+vala_add_library(cardinal SHARED
+                 VCard.vala VcardTypes.vala
+                 GENERATE_VAPI cardinal.vapi
+                 GENERATE_HEADER cardinal.h)
+
 add_library(vcards STATIC
             VCard.cpp VCard.hpp
             VDeck.cpp VDeck.hpp
