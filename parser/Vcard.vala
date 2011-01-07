@@ -20,10 +20,13 @@
  */
 
 namespace Cardinal {
-  public class VCard : Object {
+  public class Vcard : Object {
     /* Constructors and destructors */
-    // public VCard()
-    // public ~VCard() {}
+    public Vcard.from_file(string path) {
+      open(path);
+    }
+
+    // public ~Vcard() {}
 
     /** @brief Full path of the associated vCard file.
      *
