@@ -45,6 +45,30 @@ namespace Cardinal {
       case "BDAY":     birthday = new SimpleField.from_string(line); break;
       // 3.2
       case "ADR": adr.add(line); break;
+      case "LABEL":       label = new SimpleField.from_string(line); break;
+      // 3.3
+      case "TEL": tel.add(line); break;
+      case "EMAIL": email.add(line); break;
+      case "MAILER":     mailer = new SimpleField.from_string(line); break;
+      // 3.4
+      case "TZ":  tz = new SimpleField.from_string(line); break;
+      case "GEO": geo = new CompoundField.from_string(line); break;
+      // 3.5
+      case "TITLE": title = new SimpleField.from_string(line); break;
+      case "ROLE":  role = new SimpleField.from_string(line); break;
+      case "LOGO":  logo = new SimpleField.from_string(line); break;
+      case "AGENT": agent = new SimpleField.from_string(line); break;
+      case "ORG":   org = new SimpleField.from_string(line); break;
+      // 3.6
+      case "CATEGORIES": categories = new ListField.from_string(line); break;
+      case "NOTE":   note = new SimpleField.from_string(line); break;
+      case "PRODID": prodid = new SimpleField.from_string(line); break;
+      case "REV":    rev = new SimpleField.from_string(line); break;
+      case "SORT-STRING": sort_string = new SimpleField.from_string(line); break;
+      case "SOUND":  sound = new SimpleField.from_string(line); break;
+      case "UID":    uid = new SimpleField.from_string(line); break;
+      case "URL":    url = new SimpleField.from_string(line); break;
+      case "VERSION": version = new SimpleField.from_string(line); break;
       default: break;
       }
     }
@@ -83,10 +107,15 @@ namespace Cardinal {
       fd.puts(rev.to_string());
       fd.puts(sort_string.to_string());
       fd.puts(sound.to_string());
-      fd.puts(uid.to_string());
+      // fd.puts(uid.to_string());
       fd.puts(url.to_string());
       fd.puts("END:VCARD\n");
     }
+
+    /**
+     * List of fields
+     */
+
     // sec 3.1: identification types
     // FN, N, NICKNAME, PHOTO, BDAY
     public SimpleField fullname { get; set; default = new SimpleField();}
@@ -97,7 +126,7 @@ namespace Cardinal {
     // sec 3.2: delivery addr. types
     // ADR, LABEL
     public CompoundFieldList adr { get; set; default = new CompoundFieldList();}
-    public string label { get; set; default = ""; }
+    public SimpleField label { get; set; default = new SimpleField(); }
     // sec 3.3
     // TEL, EMAIL, MAILER
     public SimpleFieldList tel { get; set; default = new SimpleFieldList();}
