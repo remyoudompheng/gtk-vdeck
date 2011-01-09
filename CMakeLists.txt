@@ -30,10 +30,7 @@ Include(UseVala)
 
 # C++ parts
 pkg_check_modules(GLIBMM REQUIRED glibmm-2.4)
-pkg_check_modules(GTKMM gtkmm-3.0)
-if(NOT GTKMM_FOUND)
- pkg_check_modules(GTKMM gtkmm-2.4>=2.16)
-endif()
+pkg_check_modules(GTKMM gtkmm-2.4>=2.16)
 
 # Use VS2008 compatible gtkmm libraries
 if(WIN32)
@@ -51,6 +48,9 @@ include_directories(${GLIBMM_INCLUDE_DIRS}
   ${CMAKE_SOURCE_DIR}/editor)
 
 configure_file(config.h.cmake config.h)
+configure_file(config.vala.cmake ${CMAKE_SOURCE_DIR}/editor/config.vala)
+configure_file(config.vala.cmake ${CMAKE_SOURCE_DIR}/src/config.vala)
+
 add_subdirectory(parser)
 if(GTKMM_FOUND)
 add_subdirectory(src)
