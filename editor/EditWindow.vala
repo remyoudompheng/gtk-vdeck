@@ -95,6 +95,30 @@ namespace Vdeck {
 
       /* actions */
       Action act;
+      act = builder.get_object("act_email_add") as Action;
+      act.activate.connect( () => { TreeIter i; store_email.append(out i); });
+      act = builder.get_object("act_email_remove") as Action;
+      act.activate.connect( () => { TreeIter i;
+        tree_email.get_selection().get_selected(null, out i);
+        store_email.remove(i);
+      });
+      act = builder.get_object("act_addr_add") as Action;
+      act.activate.connect( () => { TreeIter i;
+        store_adr.append(out i);
+        store_adr.set_value(i, 1, ";;;;;;");
+      });
+      act = builder.get_object("act_addr_remove") as Action;
+      act.activate.connect( () => { TreeIter i;
+        tree_adr.get_selection().get_selected(null, out i);
+        store_adr.remove(i);
+      });
+      act = builder.get_object("act_phone_add") as Action;
+      act.activate.connect( () => { TreeIter i; store_phone.append(out i); });
+      act = builder.get_object("act_phone_remove") as Action;
+      act.activate.connect( () => { TreeIter i;
+        tree_phone.get_selection().get_selected(null, out i);
+        store_phone.remove(i);
+      });
       act = builder.get_object("act_close") as Action;
       act.activate.connect( () => { win.destroy(); } );
     }
