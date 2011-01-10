@@ -20,7 +20,7 @@
  */
 
 #include "ListView.hpp"
-#include <EditWindow.hpp>
+#include <vdeck_editor.h>
 #include <iostream>
 #include <cassert>
 
@@ -93,10 +93,11 @@ void ListView::on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewC
   Gtk::TreeIter i = list_sorted->get_iter(path);
   VCard v = (*i)[cols->vcard];
 
-  EditWindow *win = get_with_builder();
+  VdeckEditWindow *editor = vdeck_edit_window_new_with_builder();
   Gtk::Window *main = NULL;
+  Gtk::Window *editor_win = Glib::wrap(editor->win);
   uidef->get_widget("main_win", main);
-  win->set_transient_for(*main);
-  win->set_path(v.filepath);
-  win->show_all();
+  editor_win->set_transient_for(*main);
+  vdeck_edit_window_open_path(editor, v.filepath.c_str());
+  editor_win->show_all();
 }
