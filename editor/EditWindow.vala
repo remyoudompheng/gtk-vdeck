@@ -191,6 +191,55 @@ namespace Vdeck {
     }
 
     /**
+     * Fills the Vcard with information entered in widgets
+     */
+    private void update_data() {
+      /* page 1 */
+      data.fullname.str = get_text("entry_fullname");
+      data.name._content = {
+        get_text("entry_familyN"),
+        get_text("entry_firstN"),
+        get_text("entry_addN"),
+        get_text("entry_prefix"),
+        get_text("entry_suffix")
+      };
+      data.nickname.str = get_text("entry_nickname");
+      data.uid.str = get_text("entry_uid");
+      data.categories.str = get_text("entry_cats");
+      data.birthday.str = get_text("entry_bday");
+      /* page 2 */
+      data.adr.items = new List<CompoundField>();
+      store_adr.foreach( (model, path, iter) => {
+        string type; string val;
+        model.get(iter, 0, out type, 1, out val);
+        data.adr.add("ADR;TYPE=" + type + ":" + val);
+        return false; // don't stop here
+      });
+
+      data.tel.items = new List<SimpleField>();
+      store_phone.foreach( (model, path, iter) => {
+        string type; string val;
+        model.get(iter, 0, out type, 1, out val);
+        data.tel.add("TEL;TYPE=" + type + ":" + val);
+        return false; // don't stop here
+      });
+
+      data.tz.str = get_text("entry_tz");
+      data.geo.str = get_text("entry_geo");
+
+      /* page 3 */
+      data.email.items = new List<SimpleField>();
+      store_email.foreach( (model, path, iter) => {
+        string type; string val;
+        model.get(iter, 0, out type, 1, out val);
+        data.tel.add("EMAIL;TYPE=" + type + ":" + val);
+        return false; // don't stop here
+      });
+
+      data.url.str = get_text("entry_url");
+    }
+
+    /**
      * Sets the text of a Gtk.Entry in builder.
      * @param objname The name of the widget in the GtkBuilder
      * @param text    String of text
@@ -202,10 +251,10 @@ namespace Vdeck {
       }
     }
 
-    private string? get_text(string objname) {
+    private unowned string? get_text(string objname) {
       var obj = builder.get_object(objname) as Entry;
       if(obj != null) {
-	return obj.get_text();
+	return obj.text;
       } else {
 	return null;
       }
