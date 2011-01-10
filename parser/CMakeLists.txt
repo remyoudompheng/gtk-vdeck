@@ -1,4 +1,4 @@
-vala_add_library(cardinal SHARED
+vala_add_library(cardinal STATIC
                  Vcard.vala Vdeck.vala VcardTypes.vala
                  GENERATE_VAPI cardinal.vapi
                  GENERATE_HEADER cardinal.h)

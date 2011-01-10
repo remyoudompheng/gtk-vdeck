@@ -49,7 +49,6 @@ include_directories(${GLIBMM_INCLUDE_DIRS}
 
 configure_file(config.h.cmake config.h)
 configure_file(config.vala.cmake ${CMAKE_SOURCE_DIR}/editor/config.vala)
-configure_file(config.vala.cmake ${CMAKE_SOURCE_DIR}/src/config.vala)
 
 add_subdirectory(parser)
 if(GTKMM_FOUND)

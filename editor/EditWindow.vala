@@ -23,7 +23,7 @@ using Gtk;
 using Cardinal;
 
 namespace Vdeck {
-  public class EditWindow : Window {
+  public class EditWindow {
     public EditWindow.with_builder() {
       try {
 	builder = new Builder ();

@@ -49,6 +49,11 @@ static int main (string[] args) {
     return 1;
   }
 
+  if (show_version) {
+    stdout.puts(PACKAGE_NOTICE);
+    return 0;
+  }
+
   if (args.length == 1) {
     /* no argument given */
     stderr.puts(oc.get_help(false, null));
