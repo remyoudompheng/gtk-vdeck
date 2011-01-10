@@ -34,7 +34,7 @@ namespace Cardinal {
      * file which will be overwritten upon calling write_back.
      * @see write_back()
      */
-    string filepath;
+    public string filepath;
 
     /** Reads a vCard file into memory
      * @param filename The path of the file to be read

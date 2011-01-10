@@ -24,7 +24,7 @@ using Cardinal;
 
 namespace Vdeck {
   public class DeckView {
-    public TreeView widget;
+    public unowned TreeView widget;
 
     public DeckView.from_builder(Builder b) {
       try {

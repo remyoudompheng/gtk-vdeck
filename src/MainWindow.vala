@@ -24,7 +24,7 @@ using Cardinal;
 
 namespace Vdeck {
   public class MainWindow {
-    public Window win;
+    public unowned Window win;
     private Builder builder;
 
     public MainWindow.with_builder() {

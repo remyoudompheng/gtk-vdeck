@@ -135,7 +135,7 @@ namespace Vdeck {
 
     /* Widgets */
     private Builder builder;
-    public Window? win;
+    public unowned Window? win;
     private ListStore store_adr;
     private ListStore store_phone;
     private ListStore store_email;

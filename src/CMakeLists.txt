@@ -1,4 +1,5 @@
-include_directories(${GTKMM_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_BINARY_DIR}/editor)
+include_directories(${GTKMM_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR}
+                    ${CMAKE_BINARY_DIR}/parser ${CMAKE_BINARY_DIR}/editor)
 link_directories(
 ${CMAKE_BINARY_DIR}/editor
 ${GTKMM_LIBRARY_DIRS})
