@@ -23,8 +23,21 @@ using Gtk;
 using Cardinal;
 
 namespace Vdeck {
+  /** A Gtk:TreeView derived class to display a VDeck library of VCard structures
+   */
   public class DeckView {
     public unowned TreeView widget;
+
+    private ListStore list_store;
+    private enum Columns {
+      FULLNAME,
+      FAMILY,
+      FIRST,
+      PHONE,
+      EMAIL,
+      PATH,
+      VCARD
+    }
 
     public DeckView.from_builder(Builder b) {
       try {
@@ -33,6 +46,52 @@ namespace Vdeck {
         stderr.printf ("Could not load widget: %s\n", e.message);
         widget = null;
         return;
+      }
+
+      list_store = new ListStore(7, typeof(string), typeof(string),
+        typeof(string), typeof(string), typeof(string), typeof(string), typeof(Cardinal.Vcard));
+      var list_filtered = new TreeModelFilter(list_store, null);
+      var list_sorted = new TreeModelSort.with_model(list_filtered);
+
+      list_sorted.sort_column_id = Columns.FAMILY;
+      widget.set_model(list_sorted);
+
+      // activating rows
+      widget.row_activated.connect( (path, column) => {
+        TreeIter i; Vcard v;
+        list_sorted.get_iter(out i, path);
+        list_sorted.get(i, Columns.VCARD, out v);
+
+        var editor = new EditWindow.with_builder();
+        editor.win.set_transient_for(b.get_object("main_win") as Window);
+        editor.open_path(v.filepath);
+        editor.win.show_all();
+      });
+    }
+
+    /* TODO: implement filtering */
+
+    /** Fills the Gtk.ListStore with records
+     * @param deck A VDeck structure containing VCards
+     */
+    public void fill_data(Cardinal.Vdeck deck) {
+      foreach(Vcard v in deck.items) {
+        TreeIter iter;
+        string phone;
+        string email;
+        if(v.tel.items != null) phone = v.tel.items.data.str;
+          else phone = "";
+        if(v.email.items != null) email = v.email.items.data.str;
+          else email = "";
+        list_store.append(out iter);
+        list_store.set(iter,
+          0, v.fullname.str,
+          1, v.name.get(0),
+          2, v.name.get(1),
+          3, phone,
+          4, email,
+          5, v.filepath, /* TODO: should show relative path instead */
+          6, v);
       }
     }
   }
