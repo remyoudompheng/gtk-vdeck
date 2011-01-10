@@ -46,14 +46,12 @@ namespace Cardinal {
       title = name[0];
       if (name.length == 1) {
 	types = null;
-	is_set = true;
       } else {
 	types = Cardinal.split(name[1].substring(5), ",");
-	is_set = true;
       }
     }
     public string title { get; set; default = ""; }
-    public bool is_set { get; set; default = false; }
+    public abstract bool is_set { get; }
     public List<string>? types;
 
     public abstract string str { owned get; set; }
@@ -72,13 +70,16 @@ namespace Cardinal {
   }
 
   public class SimpleField : Field {
+    public SimpleField(string t) { title = t; }
     public SimpleField.from_string(string s) { Field.from_string(s); }
     public override string str { owned get; set; }
+    public override bool is_set { get { return (str != null) && (str.length > 0); } }
   }
 
   public class CompoundField : Field {
+    public CompoundField(string t, int size) { title = t; _content = new string[size]; }
     public CompoundField.from_string(string s) { Field.from_string(s); }
-    private string[] _content;
+    public string[] _content;
     public override string str {
       /* TODO : treat escaped semicolons */
       set { _content = value.split(";"); }
@@ -90,9 +91,16 @@ namespace Cardinal {
       get { return _content.length; }
       set { _content.resize(value); }
     }
+    public override bool is_set { get {
+      foreach(string i in _content) {
+        if (i.length > 0) return true;
+      }
+      return false;
+    }}
   }
 
   public class ListField : Field {
+    public ListField(string t) { title = t; }
     public ListField.from_string(string s) { Field.from_string(s); }
     private string[] _content;
     public override string str {
@@ -101,6 +109,7 @@ namespace Cardinal {
       owned get { return string.joinv(",", _content); }
     }
     public string field(int i) { return _content[i]; }
+    public override bool is_set { get { return (_content.length > 0); } }
   }
 
   public class SimpleFieldList {

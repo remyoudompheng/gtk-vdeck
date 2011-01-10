@@ -142,42 +142,42 @@ namespace Cardinal {
 
     // sec 3.1: identification types
     // FN, N, NICKNAME, PHOTO, BDAY
-    public SimpleField fullname { get; set; default = new SimpleField();}
-    public CompoundField name { get; set; default = new CompoundField();}
-    public SimpleField nickname { get; set; default = new SimpleField();}
-    public SimpleField photo { get; set; default = new SimpleField();}
-    public SimpleField birthday { get; set; default = new SimpleField();}
+    public SimpleField fullname { get; set; default = new SimpleField("FN");}
+    public CompoundField name { get; set; default = new CompoundField("N", 5);}
+    public SimpleField nickname { get; set; default = new SimpleField("NICKNAME");}
+    public SimpleField photo { get; set; default = new SimpleField("PHOTO");}
+    public SimpleField birthday { get; set; default = new SimpleField("BDAY");}
     // sec 3.2: delivery addr. types
     // ADR, LABEL
     public CompoundFieldList adr { get; set; default = new CompoundFieldList();}
-    public SimpleField label { get; set; default = new SimpleField(); }
+    public SimpleField label { get; set; default = new SimpleField("LABEL"); }
     // sec 3.3
     // TEL, EMAIL, MAILER
     public SimpleFieldList tel { get; set; default = new SimpleFieldList();}
     public SimpleFieldList email { get; set; default = new SimpleFieldList();}
-    public SimpleField mailer { get; set; default = new SimpleField();}
+    public SimpleField mailer { get; set; default = new SimpleField("MAILER");}
     // sec 3.4
     // TZ, GEO
-    public SimpleField tz { get; set; default = new SimpleField();}
-    public CompoundField geo { get; set; default = new CompoundField();}
+    public SimpleField tz { get; set; default = new SimpleField("TZ");}
+    public CompoundField geo { get; set; default = new CompoundField("GEO", 2);}
     // sec 3.5
     // TITLE, ROLE, LOGO, AGENT, ORG
-    public SimpleField title { get; set; default = new SimpleField();}
-    public SimpleField role { get; set; default = new SimpleField();}
-    public SimpleField logo { get; set; default = new SimpleField();}
-    public SimpleField agent { get; set; default = new SimpleField();}
-    public SimpleField org { get; set; default = new SimpleField();}
+    public SimpleField title { get; set; default = new SimpleField("TITLE");}
+    public SimpleField role { get; set; default = new SimpleField("ROLE");}
+    public SimpleField logo { get; set; default = new SimpleField("LOGO");}
+    public SimpleField agent { get; set; default = new SimpleField("AGENT");}
+    public SimpleField org { get; set; default = new SimpleField("ORG");}
     // sec 3.6
-    // CATEGORIES, NOTE, PRODID, REV, SORT_STRING, SOUND, UID, URL, VERSION
-    public ListField categories { get; set; default = new ListField();}
-    public SimpleField note { get; set; default = new SimpleField();}
-    public SimpleField prodid { get; set; default = new SimpleField();}
-    public SimpleField rev { get; set; default = new SimpleField();}
-    public SimpleField sort_string { get; set; default = new SimpleField();}
-    public SimpleField sound { get; set; default = new SimpleField();}
-    public SimpleField uid { get; set; default = new SimpleField();}
-    public SimpleField url { get; set; default = new SimpleField();}
-    public SimpleField version { get; set; default = new SimpleField();}
+    // CATEGORIES, NOTE, PRODID, REV, SORT-STRING, SOUND, UID, URL, VERSION
+    public ListField categories { get; set; default = new ListField("CATEGORIES");}
+    public SimpleField note { get; set; default = new SimpleField("NOTE");}
+    public SimpleField prodid { get; set; default = new SimpleField("PRODID");}
+    public SimpleField rev { get; set; default = new SimpleField("REV");}
+    public SimpleField sort_string { get; set; default = new SimpleField("SORT-STRING");}
+    public SimpleField sound { get; set; default = new SimpleField("SOUND");}
+    public SimpleField uid { get; set; default = new SimpleField("UID");}
+    public SimpleField url { get; set; default = new SimpleField("URL");}
+    public SimpleField version { get; set; default = new SimpleField("VERSION");}
   }
 
 }
