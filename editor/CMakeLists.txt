@@ -1,4 +1,4 @@
-include_directories(${GTKMM_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${GTKMM_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_BINARY_DIR}/parser)
 link_directories(${GTKMM_LIBRARY_DIRS})
 
 add_library(vdeck_editor EditWindow.cpp EditWindow.hpp)

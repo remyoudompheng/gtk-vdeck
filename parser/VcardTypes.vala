@@ -78,20 +78,26 @@ namespace Cardinal {
 
   public class CompoundField : Field {
     public CompoundField.from_string(string s) { Field.from_string(s); }
-    public string[] _content;
+    private string[] _content;
     public override string str {
+      /* TODO : treat escaped semicolons */
       set { _content = value.split(";"); }
       owned get { return string.joinv(";", _content); }
     }
+    public string get(int i) { return _content[i]; }
+    public void set(int i, string value) { _content[i] = value; }
+    public int length { get { return _content.length; } }
   }
 
   public class ListField : Field {
     public ListField.from_string(string s) { Field.from_string(s); }
-    public string[] _content;
+    private string[] _content;
     public override string str {
+      /* TODO : treat escaped colons */
       set { _content = value.split(","); }
       owned get { return string.joinv(",", _content); }
     }
+    public string field(int i) { return _content[i]; }
   }
 
   public class SimpleFieldList {

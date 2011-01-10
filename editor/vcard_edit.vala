@@ -60,6 +60,7 @@ static int main (string[] args) {
   Gtk.init (ref args);
   var editor = new EditWindow.with_builder();
   editor.open_path(filename);
+  editor.win.destroy.connect(Gtk.main_quit);
   editor.win.show_all ();
   Gtk.main ();
   return 0;
