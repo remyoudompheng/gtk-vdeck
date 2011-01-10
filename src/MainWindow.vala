@@ -26,6 +26,7 @@ namespace Vdeck {
   public class MainWindow {
     public unowned Window win;
     private Builder builder;
+    private DeckView view;
 
     public MainWindow.with_builder() {
       try {
@@ -39,10 +40,46 @@ namespace Vdeck {
         win = null;
         return;
       }
+
+      // Get the TreeView object
+      view = new DeckView.from_builder(builder);
+
+      // action signals
+      unowned Action act;
+      act = builder.get_object("act_openlib") as Action;
+      act.activate.connect( this.on_openlib_activate );
+      act = builder.get_object("act_refresh") as Action;
+      act.activate.connect(this.update_library);
+
+      /* TODO: add/remove buttons */
+
+      act = builder.get_object("act_quit") as Action;
+      act.activate.connect(Gtk.main_quit);
     }
+
+    private string dir_path;
+    private Cardinal.Vdeck deck;
 
     public void set_path(string libpath) {
+      dir_path = libpath;
+      update_library();
     }
 
+    private void update_library() {
+      deck = new Cardinal.Vdeck.from_directory(dir_path);
+      view.fill_data(deck);
+    }
+
+    private void on_openlib_activate() {
+      var dialog = new FileChooserDialog(
+        "Choose the path of the library",
+        null, FileChooserAction.SELECT_FOLDER);
+      dialog.add_button(STOCK_CANCEL, ResponseType.CANCEL);
+      dialog.add_button(STOCK_OPEN, ResponseType.OK);
+      dialog.set_default_response(ResponseType.OK);
+      if (dialog.run() == ResponseType.OK)
+        set_path(dialog.get_filename());
+      dialog.destroy();
+    }
   }
 }
