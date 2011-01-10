@@ -86,7 +86,10 @@ namespace Cardinal {
     }
     public string get(int i) { return _content[i]; }
     public void set(int i, string value) { _content[i] = value; }
-    public int length { get { return _content.length; } }
+    public int length {
+      get { return _content.length; }
+      set { _content.resize(value); }
+    }
   }
 
   public class ListField : Field {
