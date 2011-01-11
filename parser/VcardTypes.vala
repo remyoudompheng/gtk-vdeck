@@ -102,14 +102,14 @@ namespace Cardinal {
   public class ListField : Field {
     public ListField(string t) { title = t; }
     public ListField.from_string(string s) { Field.from_string(s); }
-    private string[] _content;
+    public string[] _content;
     public override string str {
       /* TODO : treat escaped colons */
       set { _content = value.split(","); }
       owned get { return string.joinv(",", _content); }
     }
     public string field(int i) { return _content[i]; }
-    public override bool is_set { get { return (_content.length > 0); } }
+    public override bool is_set { get { return (_content != null) && (_content.length > 0); } }
   }
 
   public class SimpleFieldList {

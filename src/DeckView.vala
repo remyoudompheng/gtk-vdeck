@@ -104,6 +104,7 @@ namespace Vdeck {
      * @param deck A VDeck structure containing VCards
      */
     public void fill_data(Cardinal.Vdeck deck) {
+      list_store.clear();
       foreach(Vcard v in deck.items) {
         TreeIter iter;
         string phone;

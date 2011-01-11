@@ -63,8 +63,6 @@ static int main (string[] args) {
     return 0;
   }
 
-  string filename = args[1];
-
   Gtk.init (ref args);
   var gui = new MainWindow.with_builder();
   gui.set_path(library_dir);

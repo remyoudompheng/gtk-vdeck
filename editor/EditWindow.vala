@@ -53,7 +53,7 @@ namespace Vdeck {
       tree_email.set_model(store_email);
 
       /* editable cells */
-      CellRendererText cell;
+      unowned CellRendererText cell;
       cell = builder.get_object("treecell_a_type") as CellRendererText;
       cell.edited.connect( (path, text) => {
 	TreeIter iter;
@@ -94,7 +94,7 @@ namespace Vdeck {
       });
 
       /* actions */
-      Action act;
+      unowned Action act;
       /* add/remove email */
       act = builder.get_object("act_email_add") as Action;
       act.activate.connect( () => { TreeIter i; store_email.append(out i); });
