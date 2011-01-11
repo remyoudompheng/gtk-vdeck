@@ -94,42 +94,42 @@ namespace Vdeck {
       });
 
       /* actions */
-      unowned Action act;
+      unowned Gtk.Action act;
       /* add/remove email */
-      act = builder.get_object("act_email_add") as Action;
+      act = builder.get_object("act_email_add") as Gtk.Action;
       act.activate.connect( () => { TreeIter i; store_email.append(out i); });
-      act = builder.get_object("act_email_remove") as Action;
+      act = builder.get_object("act_email_remove") as Gtk.Action;
       act.activate.connect( () => { TreeIter i;
         tree_email.get_selection().get_selected(null, out i);
         store_email.remove(i);
       });
       /* add/remove address */
-      act = builder.get_object("act_addr_add") as Action;
+      act = builder.get_object("act_addr_add") as Gtk.Action;
       act.activate.connect( () => { TreeIter i;
         store_adr.append(out i);
         store_adr.set_value(i, 1, ";;;;;;");
       });
-      act = builder.get_object("act_addr_remove") as Action;
+      act = builder.get_object("act_addr_remove") as Gtk.Action;
       act.activate.connect( () => { TreeIter i;
         tree_adr.get_selection().get_selected(null, out i);
         store_adr.remove(i);
       });
       /* add/remove phone number */
-      act = builder.get_object("act_phone_add") as Action;
+      act = builder.get_object("act_phone_add") as Gtk.Action;
       act.activate.connect( () => { TreeIter i; store_phone.append(out i); });
-      act = builder.get_object("act_phone_remove") as Action;
+      act = builder.get_object("act_phone_remove") as Gtk.Action;
       act.activate.connect( () => { TreeIter i;
         tree_phone.get_selection().get_selected(null, out i);
         store_phone.remove(i);
       });
       /* save, close */
-      act = builder.get_object("act_save") as Action;
+      act = builder.get_object("act_save") as Gtk.Action;
       act.activate.connect( () => {
         update_data();
         FileStream? f = FileStream.open(filepath, "w");
         assert (f != null); data.write(f);
         data.write(stdout); } );
-      act = builder.get_object("act_close") as Action;
+      act = builder.get_object("act_close") as Gtk.Action;
       act.activate.connect( () => { win.destroy(); } );
     }
 

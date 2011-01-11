@@ -74,16 +74,16 @@ namespace Vdeck {
       dir_selection.changed.connect(this.on_dir_selection_changed);
 
       // action signals
-      unowned Action act;
-      act = builder.get_object("act_openlib") as Action;
+      unowned Gtk.Action act;
+      act = builder.get_object("act_openlib") as Gtk.Action;
       act.activate.connect( this.on_openlib_activate );
-      act = builder.get_object("act_refresh") as Action;
+      act = builder.get_object("act_refresh") as Gtk.Action;
       act.activate.connect(this.update_library);
-      act = builder.get_object("act_add") as Action;
+      act = builder.get_object("act_add") as Gtk.Action;
       act.activate.connect(this.on_add_activate);
       /* TODO: remove button */
 
-      act = builder.get_object("act_quit") as Action;
+      act = builder.get_object("act_quit") as Gtk.Action;
       act.activate.connect(Gtk.main_quit);
     }
 
