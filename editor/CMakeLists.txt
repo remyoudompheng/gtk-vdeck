@@ -2,7 +2,7 @@ include_directories(${GTK_INCLUDE_DIRS} ${CMAKE_BINARY_DIR}/parser ${CMAKE_BINAR
 # add_library(vdeck_editor EditWindow.cpp EditWindow.hpp)
 
 vala_add_library(vdeck_editor STATIC
-                 EditWindow.vala config.vala
+                 EditWindow.vala
                  PACKAGES cardinal gtk+-2.0
                  GENERATE_VAPI vdeck_editor.vapi
                  GENERATE_HEADER vdeck_editor.h)

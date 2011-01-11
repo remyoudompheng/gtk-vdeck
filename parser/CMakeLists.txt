@@ -1,5 +1,5 @@
 vala_add_library(cardinal STATIC
-                 Vcard.vala Vdeck.vala VcardTypes.vala
+                 Vcard.vala Vdeck.vala VcardTypes.vala config.vala
                  GENERATE_VAPI cardinal.vapi
                  GENERATE_HEADER cardinal.h)
 

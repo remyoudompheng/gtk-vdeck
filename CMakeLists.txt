@@ -22,7 +22,7 @@ INCLUDE(CPack)
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeFiles)
 
 Include(FindPkgConfig)
-pkg_check_modules(GLIB REQUIRED glib-2.0)
+pkg_check_modules(GLIB REQUIRED gobject-2.0)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GTK REQUIRED gtk+-2.0>=2.16)
 
@@ -49,7 +49,7 @@ include_directories(${GLIBMM_INCLUDE_DIRS}
   ${CMAKE_SOURCE_DIR}/editor)
 
 configure_file(config.h.cmake config.h)
-configure_file(config.vala.cmake ${CMAKE_SOURCE_DIR}/editor/config.vala)
+configure_file(config.vala.cmake ${CMAKE_SOURCE_DIR}/parser/config.vala)
 
 add_subdirectory(parser)
 if(GTKMM_FOUND)

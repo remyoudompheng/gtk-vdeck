@@ -19,9 +19,6 @@
  *
  */
 
-using Gtk;
-using Vdeck;
-
 bool show_version;
 const OptionEntry[] options = {
     { "version", 'V', 0, OptionArg.NONE, out show_version, "Show version information", null },
@@ -50,7 +47,7 @@ static int main (string[] args) {
   }
 
   if (show_version) {
-    stdout.puts(PACKAGE_NOTICE);
+    stdout.puts(Vdeck.PACKAGE_NOTICE);
     return 0;
   }
 
@@ -63,7 +60,7 @@ static int main (string[] args) {
   string filename = args[1];
 
   Gtk.init (ref args);
-  var editor = new EditWindow.with_builder();
+  var editor = new Vdeck.EditWindow.with_builder();
   editor.open_path(filename);
   editor.win.destroy.connect(Gtk.main_quit);
   editor.win.show_all ();
