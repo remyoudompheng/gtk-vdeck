@@ -26,7 +26,11 @@ namespace Vdeck {
   public class MainWindow {
     public unowned Window win;
     private Builder builder;
+
+    /* widgets */
     private DeckView view;
+    private ListStore cat_store;
+    private unowned TreeSelection cat_selection;
 
     public MainWindow.with_builder() {
       try {
@@ -43,6 +47,18 @@ namespace Vdeck {
 
       // Get the TreeView object
       view = new DeckView.from_builder(builder);
+
+      // categories TreeView
+      cat_store = new ListStore(1, typeof(string));
+      var cat_view = builder.get_object("tree_cats") as TreeView;
+      cat_view.set_model(cat_store);
+      var cat_treecol = builder.get_object("treecol_cats") as TreeViewColumn;
+      cat_treecol.set_sort_column_id(0);
+
+      // filtering by category/directory
+      cat_selection = cat_view.get_selection();
+      cat_selection.set_mode(SelectionMode.MULTIPLE);
+      cat_selection.changed.connect(this.on_cat_selection_changed);
 
       // action signals
       unowned Action act;
@@ -65,9 +81,31 @@ namespace Vdeck {
       update_library();
     }
 
+    /* Loads the Vdeck from the given path */
     private void update_library() {
       deck = new Cardinal.Vdeck.from_directory(dir_path);
       view.fill_data(deck);
+      update_cats();
+    }
+
+    /* updates the list of categories */
+    private void update_cats() {
+      var categories = new Gee.HashSet<string>();
+      /* add the "[none]" category */
+      categories.add(DeckView.NONE);
+      foreach(Vcard v in deck.items) {
+        foreach(string cat in v.categories._content)
+          categories.add(cat);
+      }
+      // Fill the ListStore
+      cat_store.clear();
+      foreach(string cat in categories) {
+        TreeIter i;
+        cat_store.append(out i);
+        cat_store.set(i, 0, cat);
+      }
+
+      cat_selection.select_all();
     }
 
     private void on_openlib_activate() {
@@ -81,5 +119,22 @@ namespace Vdeck {
         set_path(dialog.get_filename());
       dialog.destroy();
     }
+
+    /* Category selection changed : update the category filter */
+    private void on_cat_selection_changed() {
+      view.cat_filter.clear();
+      TreeModel m;
+      foreach(TreePath i in cat_selection.get_selected_rows(out m)) {
+        TreeIter iter;
+        if(m.get_iter(out iter, i)) {
+          string cat;
+          m.get(iter, 0, out cat);
+          view.cat_filter.add(cat);
+        }
+      }
+      /* update display */
+      view.refilter();
+    }
+
   }
 }
