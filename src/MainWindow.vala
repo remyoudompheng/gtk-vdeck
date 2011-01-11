@@ -30,7 +30,9 @@ namespace Vdeck {
     /* widgets */
     private DeckView view;
     private ListStore cat_store;
+    private ListStore dir_store;
     private unowned TreeSelection cat_selection;
+    private unowned TreeSelection dir_selection;
 
     public MainWindow.with_builder() {
       try {
@@ -55,10 +57,21 @@ namespace Vdeck {
       var cat_treecol = builder.get_object("treecol_cats") as TreeViewColumn;
       cat_treecol.set_sort_column_id(0);
 
+      // directories TreeView
+      dir_store = new ListStore(1, typeof(string));
+      var dir_view = builder.get_object("tree_dirs") as TreeView;
+      dir_view.set_model(dir_store);
+      var dir_treecol = builder.get_object("treecol_dirs") as TreeViewColumn;
+      dir_treecol.set_sort_column_id(0);
+
       // filtering by category/directory
       cat_selection = cat_view.get_selection();
       cat_selection.set_mode(SelectionMode.MULTIPLE);
       cat_selection.changed.connect(this.on_cat_selection_changed);
+
+      dir_selection = dir_view.get_selection();
+      dir_selection.set_mode(SelectionMode.MULTIPLE);
+      dir_selection.changed.connect(this.on_dir_selection_changed);
 
       // action signals
       unowned Action act;
@@ -86,6 +99,7 @@ namespace Vdeck {
       deck = new Cardinal.Vdeck.from_directory(dir_path);
       view.fill_data(deck);
       update_cats();
+      update_dirs();
     }
 
     /* updates the list of categories */
@@ -108,6 +122,24 @@ namespace Vdeck {
       cat_selection.select_all();
     }
 
+    /* updates the list of directories */
+    private void update_dirs() {
+      var dirs = new Gee.HashSet<string>();
+      foreach(Vcard v in deck.items) {
+        dirs.add(Path.get_dirname(v.relpath));
+      }
+      // Fill the ListStore
+      dir_store.clear();
+      foreach(string d in dirs) {
+        TreeIter i;
+        dir_store.append(out i);
+        dir_store.set(i, 0, d);
+      }
+
+      dir_selection.select_all();
+    }
+
+    /* "Open library" action */
     private void on_openlib_activate() {
       var dialog = new FileChooserDialog(
         "Choose the path of the library",
@@ -134,6 +166,9 @@ namespace Vdeck {
       }
       /* update display */
       view.refilter();
+    }
+
+    private void on_dir_selection_changed() {
     }
 
   }

@@ -57,6 +57,8 @@ namespace Cardinal {
 	string fullpath = Path.build_filename(path, file);
 	if (file.has_suffix(".vcf") && !FileUtils.test(fullpath,FileTest.IS_DIR)) {
 	  Vcard v = new Vcard.from_file(fullpath);
+          /* extract relative path */
+          v.relpath = fullpath.substring(dirpath.length + 1);
 	  stderr.puts("Found Vcard " + file + "\n");
 	  items.append(v);
 	}

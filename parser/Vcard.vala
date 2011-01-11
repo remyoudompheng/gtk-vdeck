@@ -36,6 +36,9 @@ namespace Cardinal {
      */
     public string filepath;
 
+    /* relative path of the file */
+    public string relpath { get; set; default = ""; }
+
     /** Reads a vCard file into memory
      * @param filename The path of the file to be read
      */

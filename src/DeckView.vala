@@ -120,7 +120,7 @@ namespace Vdeck {
           2, v.name.get(1),
           3, phone,
           4, email,
-          5, v.filepath, /* TODO: should show relative path instead */
+          5, v.relpath,
           6, v);
       }
     }
