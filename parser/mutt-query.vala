@@ -65,21 +65,35 @@ static int main (string[] args) {
   string needle = args[1];
   var deck = new Cardinal.Vdeck.from_directory(library_dir);
   bool found = false;
-  stdout.printf("Searching for %s in %s", needle, library_dir);
+  stdout.printf("Searching for %s in %s\n", needle, library_dir);
   foreach(Vcard v in deck.items) {
     if (matches(v, needle)) {
       found = true;
+      // DEBUG: v.write(stdout);
       stdout.puts(mutt_format(v));
     }
   }
-  return 0;
+  return (found ? 0 : 1);
 }
 
 static bool matches(Vcard v, string needle) {
-  return true;
+  unowned string? found = v.fullname.str.str(needle);
+  if (found != null) return true;
+
+  foreach(SimpleField email in v.email.items) {
+    found = email.str.str(needle);
+    if (found != null) return true;
+  }
+  return false;
 }
 
 static string mutt_format(Vcard v)
 {
-  return "\n";
+  string s = "";
+  foreach(SimpleField email in v.email.items) {
+    s += email.str + "\t" + v.fullname.str + "\t";
+    if (v.nickname.is_set) s += v.nickname.str;
+    s += "\n";
+  }
+  return s;
 }
