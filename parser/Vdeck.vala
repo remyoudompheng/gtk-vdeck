@@ -68,5 +68,17 @@ namespace Cardinal {
 	}
       }                      
     }
+
+    /** Create a new vCard file
+     * @param path File path
+     */
+    public void create_new(string path) {
+      Vcard v = new Vcard();
+      v.filepath = path;
+      v.relpath = path.substring(dirpath.length + 1);
+      var f = FileStream.open(path, "w");
+      v.write(f);
+      items.append(v);
+    }
   }
 }

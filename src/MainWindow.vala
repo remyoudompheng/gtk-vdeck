@@ -79,8 +79,9 @@ namespace Vdeck {
       act.activate.connect( this.on_openlib_activate );
       act = builder.get_object("act_refresh") as Action;
       act.activate.connect(this.update_library);
-
-      /* TODO: add/remove buttons */
+      act = builder.get_object("act_add") as Action;
+      act.activate.connect(this.on_add_activate);
+      /* TODO: remove button */
 
       act = builder.get_object("act_quit") as Action;
       act.activate.connect(Gtk.main_quit);
@@ -149,6 +150,25 @@ namespace Vdeck {
       dialog.set_default_response(ResponseType.OK);
       if (dialog.run() == ResponseType.OK)
         set_path(dialog.get_filename());
+      dialog.destroy();
+    }
+
+    /* create a new Vcard */
+    private void on_add_activate() {
+      var dialog = new FileChooserDialog(
+        "Choose the name of the file to create",
+        null, FileChooserAction.OPEN);
+      dialog.set_current_folder(dir_path);
+      dialog.add_button(STOCK_CANCEL, ResponseType.CANCEL);
+      dialog.add_button(STOCK_NEW, ResponseType.OK);
+      dialog.set_default_response(ResponseType.OK);
+      if (dialog.run() == ResponseType.OK) {
+        string file = dialog.get_filename();
+        deck.create_new(file);
+        view.fill_data(deck);
+        update_cats();
+        update_dirs();
+      }
       dialog.destroy();
     }
 
