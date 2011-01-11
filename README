@@ -24,10 +24,10 @@ Open the given file for editing
 Dependencies
 ------------
 
-VDeck is tested on Linux, Windows and works with either GTK2 and GTK3.
+VDeck is tested on Linux and works with GTK2.
 
  * CMake 2.6 or later
 
- * Gtkmm 2.16 or later (Gtkmm 3 works)
+ * Gtk 2.16 or later
 
- * A C++ compiler
+ * the Vala compiler (tested with 0.10.2)
