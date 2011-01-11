@@ -23,6 +23,7 @@ SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeFiles)
 
 Include(FindPkgConfig)
 pkg_check_modules(GLIB REQUIRED glib-2.0)
+pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GTK REQUIRED gtk+-2.0>=2.16)
 
 Include(FindVala)

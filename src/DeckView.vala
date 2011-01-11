@@ -39,7 +39,12 @@ namespace Vdeck {
       VCARD
     }
 
+    public const string NONE = "[none]";
+
     public DeckView.from_builder(Builder b) {
+      cat_filter = new Gee.HashSet<string>();
+      dir_filter = new Gee.HashSet<string>();
+
       try {
         widget = b.get_object ("tree_main") as TreeView;
       } catch (Error e) {
@@ -50,9 +55,11 @@ namespace Vdeck {
 
       list_store = new ListStore(7, typeof(string), typeof(string),
         typeof(string), typeof(string), typeof(string), typeof(string), typeof(Cardinal.Vcard));
-      var list_filtered = new TreeModelFilter(list_store, null);
-      var list_sorted = new TreeModelSort.with_model(list_filtered);
 
+      list_filtered = new TreeModelFilter(list_store, null);
+      list_filtered.set_visible_func(this.is_shown_by_filter);
+
+      var list_sorted = new TreeModelSort.with_model(list_filtered);
       list_sorted.sort_column_id = Columns.FAMILY;
       widget.set_model(list_sorted);
 
@@ -69,7 +76,29 @@ namespace Vdeck {
       });
     }
 
-    /* TODO: implement filtering */
+    /* Filters (by category, by folder) */
+    public Gee.HashSet<string> cat_filter;
+    public Gee.HashSet<string> dir_filter;
+
+    private TreeModelFilter list_filtered;
+
+    public void refilter() {
+      list_filtered.refilter();
+    }
+
+    private bool is_shown_by_filter(TreeModel model, TreeIter iter) {
+      Vcard v;
+      model.get(iter, Columns.VCARD, out v);
+      if(v == null) return false;
+      if(v.categories.is_set) {
+        foreach(string cat in v.categories._content) {
+          if(cat in cat_filter) return true;
+        }
+        return false;
+      } else {
+        return (NONE in cat_filter);
+      }
+    }
 
     /** Fills the Gtk.ListStore with records
      * @param deck A VDeck structure containing VCards
