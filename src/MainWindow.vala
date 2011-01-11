@@ -169,6 +169,18 @@ namespace Vdeck {
     }
 
     private void on_dir_selection_changed() {
+      view.dir_filter.clear();
+      TreeModel m;
+      foreach(TreePath i in dir_selection.get_selected_rows(out m)) {
+        TreeIter iter;
+        if(m.get_iter(out iter, i)) {
+          string dir;
+          m.get(iter, 0, out dir);
+          view.dir_filter.add(dir);
+        }
+      }
+      /* update display */
+      view.refilter();
     }
 
   }

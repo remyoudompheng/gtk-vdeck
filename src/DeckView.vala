@@ -27,8 +27,8 @@ namespace Vdeck {
    */
   public class DeckView {
     public unowned TreeView widget;
-
     private ListStore list_store;
+
     private enum Columns {
       FULLNAME,
       FAMILY,
@@ -90,6 +90,11 @@ namespace Vdeck {
       Vcard v;
       model.get(iter, Columns.VCARD, out v);
       if(v == null) return false;
+
+      /* check folder */
+      string dir = Path.get_dirname(v.relpath);
+      if (!(dir in dir_filter)) return false;
+      /* check category */
       if(v.categories.is_set) {
         foreach(string cat in v.categories._content) {
           if(cat in cat_filter) return true;
