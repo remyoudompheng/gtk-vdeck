@@ -59,11 +59,11 @@ namespace Cardinal {
 	  Vcard v = new Vcard.from_file(fullpath);
           /* extract relative path */
           v.relpath = fullpath.substring(dirpath.length + 1);
-	  stderr.puts("Found Vcard " + file + "\n");
+	  // DEBUG: stderr.puts("Found Vcard " + file + "\n");
 	  items.append(v);
 	}
 	if(FileUtils.test(fullpath, FileTest.IS_DIR)) {
-	  stderr.puts("Found directory " + file + "\n");
+	  // DEBUG: stderr.puts("Found directory " + file + "\n");
 	  walk_in_dirs(fullpath);
 	}
       }                      
