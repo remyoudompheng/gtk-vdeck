@@ -30,6 +30,9 @@ Include(FindVala)
 Include(UseVala)
 
 SET(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
+#SET(VALA_COMPILE_FLAGS "--enable-experimental-non-null")
+SET(VALA_COMPILE_FLAGS "--enable-checking")
+SET(VALA_COMPILE_FLAGS_DEBUG "-X -ggdb3")
 
 include_directories(${GLIB_INCLUDE_DIRS} ${CMAKE_BINARY_DIR}/parser)
 link_directories(${CMAKE_BINARY_DIR}/parser ${GLIB_LIBRARY_DIRS})
