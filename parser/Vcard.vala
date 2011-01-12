@@ -110,43 +110,46 @@ namespace Cardinal {
       }
     }
 
-    public void write(FileStream fd) {
-      fd.puts("BEGIN:VCARD\n");
+    public string to_string() {
+      var output = new StringBuilder();
+      output.append("BEGIN:VCARD\n");
       /* mandatory fields */
-      fd.puts("VERSION:3.0\n");
-      fd.puts(uid.to_string());
-      fd.puts(fullname.to_string());
-      fd.puts(name.to_string());
+      output.append("VERSION:3.0\n");
+      output.append(uid.to_line());
+      output.append(fullname.to_line());
+      output.append(name.to_line());
       // section 3.1
-      fd.puts(nickname.to_string());
-      fd.puts(photo.to_string());
-      fd.puts(birthday.to_string());
+      output.append(nickname.to_line());
+      output.append(photo.to_line());
+      output.append(birthday.to_line());
       // section 3.2
-      foreach(var a in adr.items) fd.puts(a.to_string());
-      fd.puts(label.to_string());
+      foreach(var a in adr.items) output.append(a.to_line());
+      output.append(label.to_line());
       // section 3.3
-      foreach(var a in tel.items) fd.puts(a.to_string());
-      foreach(var a in email.items) fd.puts(a.to_string());
-      fd.puts(mailer.to_string());
+      foreach(var a in tel.items) output.append(a.to_line());
+      foreach(var a in email.items) output.append(a.to_line());
+      output.append(mailer.to_line());
       // section 3.4
-      fd.puts(tz.to_string());
-      fd.puts(geo.to_string());
+      output.append(tz.to_line());
+      output.append(geo.to_line());
       // section 3.5
-      fd.puts(title.to_string());
-      fd.puts(role.to_string());
-      fd.puts(logo.to_string());
-      fd.puts(agent.to_string());
-      fd.puts(org.to_string());
+      output.append(title.to_line());
+      output.append(role.to_line());
+      output.append(logo.to_line());
+      output.append(agent.to_line());
+      output.append(org.to_line());
       // section 3.6
-      fd.puts(categories.to_string());
-      fd.puts(note.to_string());
-      fd.puts(prodid.to_string());
-      fd.puts(rev.to_string());
-      fd.puts(sort_string.to_string());
-      fd.puts(sound.to_string());
-      // fd.puts(uid.to_string());
-      fd.puts(url.to_string());
-      fd.puts("END:VCARD\n");
+      output.append(categories.to_line());
+      output.append(note.to_line());
+      output.append(prodid.to_line());
+      output.append(rev.to_line());
+      output.append(sort_string.to_line());
+      output.append(sound.to_line());
+      // output.append(uid.to_line());
+      output.append(url.to_line());
+      output.append("END:VCARD\n");
+
+      return output.str;
     }
 
     /**

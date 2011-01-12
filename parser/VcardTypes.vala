@@ -65,7 +65,12 @@ namespace Cardinal {
       string t = title;
       if(types != null)
 	t += ";TYPE=" + Cardinal.join(",", (!)types);
-      return t + ":" + str + "\n";
+      return t + ":" + str;
+    }
+
+    public string to_line() {
+      if (!is_set) return "";
+      else return this.to_string() + "\n";
     }
   }
 
