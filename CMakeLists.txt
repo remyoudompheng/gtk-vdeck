@@ -39,9 +39,9 @@ link_directories(${CMAKE_BINARY_DIR}/parser ${GLIB_LIBRARY_DIRS})
 
 configure_file(config.vala.cmake ${CMAKE_SOURCE_DIR}/parser/config.vala)
 
-add_subdirectory(parser)
-add_subdirectory(src)
-add_subdirectory(editor)
-#add_subdirectory(tests)
 add_subdirectory(share)
+add_subdirectory(parser)
+add_subdirectory(editor)
+add_subdirectory(src)
+add_subdirectory(tests)
 
