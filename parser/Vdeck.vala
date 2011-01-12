@@ -46,7 +46,7 @@ namespace Cardinal {
 	directory = Dir.open(path);
       }
       catch(FileError e) {
-	stderr.puts("FileError: unable to open directory " + path + ".");
+	stderr.puts("FileError: unable to open directory " + path + ": " + e.message);
 	return;
       }
 
@@ -74,10 +74,11 @@ namespace Cardinal {
       Vcard v = new Vcard();
       v.filepath = path;
       v.relpath = path.substring(dirpath.length + 1);
-      var f = FileStream.open(path, "w");
-      assert(f != null);
-      v.write((!)f);
-      items.append(v);
+      try {
+        if ( FileUtils.set_contents(path, v.to_string()) ) items.append(v);
+      } catch (FileError e) {
+        stderr.printf("Unable to write to file %s: %s\n", path, e.message);
+      }
     }
   }
 }

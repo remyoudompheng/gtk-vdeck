@@ -23,9 +23,8 @@ namespace Cardinal {
   public class Vcard : Object {
     /* Constructors and destructors */
     public Vcard() {}
-    public Vcard.from_file(string path) {
-      open(path);
-    }
+    public Vcard.from_file(string path) { open(path); }
+    public Vcard.from_string(string s) { this.read_string(s); }
 
     // public ~Vcard() {}
 
@@ -45,19 +44,25 @@ namespace Cardinal {
      */
     public void open(string filename) {
       filepath = filename;
-      FileStream? source = FileStream.open(filename, "r");
-      assert (source != null);
-      unowned FileStream fd = (!)source;
-      while(! fd.eof())
-	{
-	  string? l = fd.read_line();
-	  read_field(l);
-	}
+      try {
+        string contents;
+        bool ok = FileUtils.get_contents(filename, out contents);
+        if (!ok) return;
+        this.read_string(contents);
+      }
+      catch (FileError e) {
+	stderr.puts("FileError: unable to open file " + filename + ": " + e.message);
+	return;
+      }
     }
 
-    public void read_field(string? l) {
-      if (l == null) return;
-      string line = (!)l;
+    public void read_string(string source) {
+      foreach(string line in source.split("\n")) {
+        read_field(line);
+      }
+    }
+
+    public void read_field(string line) {
       // Split %field:%content
       string[] chunks = line.split(":", 2);
       if(chunks.length < 2) return;

@@ -126,9 +126,14 @@ namespace Vdeck {
       act = builder.get_object("act_save") as Gtk.Action;
       act.activate.connect( () => {
         update_data();
-        FileStream? f = FileStream.open(filepath, "w");
-        assert (f != null); data.write(f);
-        data.write(stdout); } );
+        string s = data.to_string();
+        stdout.puts(s);
+        try {
+          FileUtils.set_contents(filepath, s);
+        } catch (FileError e) {
+          stderr.printf("Unable to write to file %s: %s\n", filepath, e.message);
+        }
+      } );
       act = builder.get_object("act_close") as Gtk.Action;
       act.activate.connect( () => { win.destroy(); } );
     }
