@@ -79,7 +79,7 @@ namespace Cardinal {
   public class CompoundField : Field {
     public CompoundField(string t, int size) { title = t; _content = new string[size]; }
     public CompoundField.from_string(string s) { Field.from_string(s); }
-    public string[] _content;
+    public string[]? _content;
     public override string str {
       /* TODO : treat escaped semicolons */
       set { _content = value.split(";"); }
@@ -92,8 +92,9 @@ namespace Cardinal {
       set { _content.resize(value); }
     }
     public override bool is_set { get {
+      if (_content == null) return false;
       foreach(string i in _content) {
-        if (i.length > 0) return true;
+        if ((i != null) && (i.length > 0)) return true;
       }
       return false;
     }}

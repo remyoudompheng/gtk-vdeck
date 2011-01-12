@@ -22,6 +22,7 @@
 namespace Cardinal {
   public class Vcard : Object {
     /* Constructors and destructors */
+    public Vcard() {}
     public Vcard.from_file(string path) {
       open(path);
     }
@@ -34,7 +35,7 @@ namespace Cardinal {
      * file which will be overwritten upon calling write_back.
      * @see write_back()
      */
-    public string filepath;
+    public string filepath { get; set; default = ""; }
 
     /* relative path of the file */
     public string relpath { get; set; default = ""; }
@@ -99,6 +100,7 @@ namespace Cardinal {
       case "UID":    uid = new SimpleField.from_string(line); break;
       case "URL":    url = new SimpleField.from_string(line); break;
       case "VERSION": version = new SimpleField.from_string(line); break;
+      /* TODO: add support for custom fields */
       default: break;
       }
     }
@@ -149,7 +151,7 @@ namespace Cardinal {
     // sec 3.1: identification types
     // FN, N, NICKNAME, PHOTO, BDAY
     public SimpleField fullname { get; set; default = new SimpleField("FN");}
-    public CompoundField name { get; set; default = new CompoundField("N", 5);}
+    public CompoundField name { get; set; default = new CompoundField.from_string("N:;;;;");}
     public SimpleField nickname { get; set; default = new SimpleField("NICKNAME");}
     public SimpleField photo { get; set; default = new SimpleField("PHOTO");}
     public SimpleField birthday { get; set; default = new SimpleField("BDAY");}

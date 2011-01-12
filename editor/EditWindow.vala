@@ -140,7 +140,7 @@ namespace Vdeck {
     private ListStore store_phone;
     private ListStore store_email;
 
-    private Vcard data;
+    private Vcard data { get; set; default = new Vcard(); }
     private string filepath;
 
     public void open_path(string filename) {
