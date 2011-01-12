@@ -28,6 +28,9 @@ namespace Vdeck {
   public class DeckView {
     public unowned TreeView widget;
     private ListStore list_store;
+    private TreeModelFilter list_filtered;
+    private TreeModelSort list_sorted;
+    private Builder builder;
 
     private enum Columns {
       FULLNAME,
@@ -42,6 +45,7 @@ namespace Vdeck {
     public const string NONE = "[none]";
 
     public DeckView.from_builder(Builder b) {
+      builder = b;
       cat_filter = new Gee.HashSet<string>();
       dir_filter = new Gee.HashSet<string>();
 
@@ -53,28 +57,30 @@ namespace Vdeck {
       list_filtered = new TreeModelFilter(list_store, null);
       list_filtered.set_visible_func(this.is_shown_by_filter);
 
-      var list_sorted = new TreeModelSort.with_model(list_filtered);
+      list_sorted = new TreeModelSort.with_model(list_filtered);
       list_sorted.sort_column_id = Columns.FAMILY;
       widget.set_model(list_sorted);
 
       // activating rows
-      widget.row_activated.connect( (path, column) => {
+      widget.row_activated.connect(this.on_row_activated);
+    }
+
+    private EditWindow editor;
+
+    private void on_row_activated (TreePath path, TreeViewColumn column) {
         TreeIter i; Vcard v;
         list_sorted.get_iter(out i, path);
         list_sorted.get(i, Columns.VCARD, out v);
 
-        var editor = new EditWindow.with_builder();
-        editor.win.set_transient_for(b.get_object("main_win") as Window);
+        editor = new EditWindow.with_builder();
+        editor.win.set_transient_for(builder.get_object("main_win") as Window);
         editor.open_path(v.filepath);
         editor.win.show_all();
-      });
     }
 
     /* Filters (by category, by folder) */
     public Gee.HashSet<string> cat_filter;
     public Gee.HashSet<string> dir_filter;
-
-    private TreeModelFilter list_filtered;
 
     public void refilter() {
       list_filtered.refilter();
