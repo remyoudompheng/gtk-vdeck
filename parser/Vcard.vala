@@ -45,15 +45,18 @@ namespace Cardinal {
     public void open(string filename) {
       filepath = filename;
       FileStream? source = FileStream.open(filename, "r");
-      while(!source.eof())
+      assert (source != null);
+      unowned FileStream fd = (!)source;
+      while(! fd.eof())
 	{
-	  string? l = source.read_line();
+	  string? l = fd.read_line();
 	  read_field(l);
 	}
     }
 
-    public void read_field(string? line) {
-      if (line == null) return;
+    public void read_field(string? l) {
+      if (l == null) return;
+      string line = (!)l;
       // Split %field:%content
       string[] chunks = line.split(":", 2);
       if(chunks.length < 2) return;

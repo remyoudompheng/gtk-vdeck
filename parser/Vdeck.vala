@@ -50,12 +50,10 @@ namespace Cardinal {
 	return;
       }
 
-      if (directory == null) return;
-      
-      unowned string file;
+      unowned string? file;
       while ((file = directory.read_name()) != null) {
-	string fullpath = Path.build_filename(path, file);
-	if (file.has_suffix(".vcf") && !FileUtils.test(fullpath,FileTest.IS_DIR)) {
+	string fullpath = Path.build_filename(path, (!)file);
+	if (fullpath.has_suffix(".vcf") && !FileUtils.test(fullpath,FileTest.IS_DIR)) {
 	  Vcard v = new Vcard.from_file(fullpath);
           /* extract relative path */
           v.relpath = fullpath.substring(dirpath.length + 1);
@@ -77,7 +75,8 @@ namespace Cardinal {
       v.filepath = path;
       v.relpath = path.substring(dirpath.length + 1);
       var f = FileStream.open(path, "w");
-      v.write(f);
+      assert(f != null);
+      v.write((!)f);
       items.append(v);
     }
   }

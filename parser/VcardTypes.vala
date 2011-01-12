@@ -64,7 +64,7 @@ namespace Cardinal {
       if(! is_set) return "";
       string t = title;
       if(types != null)
-	t += ";TYPE=" + Cardinal.join(",", types);
+	t += ";TYPE=" + Cardinal.join(",", (!)types);
       return t + ":" + str + "\n";
     }
   }
@@ -72,8 +72,8 @@ namespace Cardinal {
   public class SimpleField : Field {
     public SimpleField(string t) { title = t; }
     public SimpleField.from_string(string s) { Field.from_string(s); }
-    public override string str { owned get; set; }
-    public override bool is_set { get { return (str != null) && (str.length > 0); } }
+    public override string str { owned get; set; default = "";}
+    public override bool is_set { get { return (str.length > 0); } }
   }
 
   public class CompoundField : Field {

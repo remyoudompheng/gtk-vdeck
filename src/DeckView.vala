@@ -45,13 +45,7 @@ namespace Vdeck {
       cat_filter = new Gee.HashSet<string>();
       dir_filter = new Gee.HashSet<string>();
 
-      try {
-        widget = b.get_object ("tree_main") as TreeView;
-      } catch (Error e) {
-        stderr.printf ("Could not load widget: %s\n", e.message);
-        widget = null;
-        return;
-      }
+      widget = b.get_object ("tree_main") as TreeView;
 
       list_store = new ListStore(7, typeof(string), typeof(string),
         typeof(string), typeof(string), typeof(string), typeof(string), typeof(Cardinal.Vcard));

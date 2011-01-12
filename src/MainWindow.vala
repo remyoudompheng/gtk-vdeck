@@ -145,8 +145,8 @@ namespace Vdeck {
       var dialog = new FileChooserDialog(
         "Choose the path of the library",
         null, FileChooserAction.SELECT_FOLDER);
-      dialog.add_button(STOCK_CANCEL, ResponseType.CANCEL);
-      dialog.add_button(STOCK_OPEN, ResponseType.OK);
+      dialog.add_button(Stock.CANCEL, ResponseType.CANCEL);
+      dialog.add_button(Stock.OPEN, ResponseType.OK);
       dialog.set_default_response(ResponseType.OK);
       if (dialog.run() == ResponseType.OK)
         set_path(dialog.get_filename());
@@ -159,8 +159,8 @@ namespace Vdeck {
         "Choose the name of the file to create",
         null, FileChooserAction.OPEN);
       dialog.set_current_folder(dir_path);
-      dialog.add_button(STOCK_CANCEL, ResponseType.CANCEL);
-      dialog.add_button(STOCK_NEW, ResponseType.OK);
+      dialog.add_button(Stock.CANCEL, ResponseType.CANCEL);
+      dialog.add_button(Stock.NEW, ResponseType.OK);
       dialog.set_default_response(ResponseType.OK);
       if (dialog.run() == ResponseType.OK) {
         string file = dialog.get_filename();

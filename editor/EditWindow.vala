@@ -251,13 +251,12 @@ namespace Vdeck {
       }
     }
 
-    private unowned string? get_text(string objname) {
+    private unowned string get_text(string objname) {
       var obj = builder.get_object(objname) as Entry;
-      if(obj != null) {
-	return obj.text;
-      } else {
-	return null;
-      }
+      if (obj == null) 
+        return "";
+      else
+        return obj.text;
     }
 
   }
