@@ -1,11 +1,11 @@
 vala_add_library(vdeck_editor STATIC
                  EditWindow.vala
-                 PACKAGES cardinal gtk+-2.0
+                 PACKAGES cardinal ${GTK_MODULE}
                  GENERATE_VAPI vdeck_editor.vapi
                  GENERATE_HEADER vdeck_editor.h)
 
 vala_add_executable(vcard_gtk vcard_gtk.vala
-    PACKAGES cardinal vdeck_editor gtk+-2.0
+    PACKAGES cardinal vdeck_editor ${GTK_MODULE}
     VAPI_DIRS ${CMAKE_BINARY_DIR}/parser ${CMAKE_BINARY_DIR}/editor
 )
 

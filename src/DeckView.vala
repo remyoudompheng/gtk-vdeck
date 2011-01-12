@@ -58,7 +58,7 @@ namespace Vdeck {
       list_filtered.set_visible_func(this.is_shown_by_filter);
 
       list_sorted = new TreeModelSort.with_model(list_filtered);
-      list_sorted.sort_column_id = Columns.FAMILY;
+      list_sorted.set_sort_column_id(Columns.FAMILY, SortType.ASCENDING);
       widget.set_model(list_sorted);
 
       // activating rows
