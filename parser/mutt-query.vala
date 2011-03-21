@@ -77,12 +77,12 @@ static int main (string[] args) {
 }
 
 static bool matches(Vcard v, string needle) {
-  unowned string? found = v.fullname.str.str(needle);
-  if (found != null) return true;
+  int found = v.fullname.str.index_of(needle);
+  if (found < 0) return true;
 
   foreach(SimpleField email in v.email.items) {
-    found = email.str.str(needle);
-    if (found != null) return true;
+    found = email.str.index_of(needle);
+    if (found < 0) return true;
   }
   return false;
 }
